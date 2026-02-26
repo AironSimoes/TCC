@@ -6,6 +6,9 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>IronInvest</title>
       <link rel="shortcut icon" href="imagens/iron 512x512.png" type="image/x-icon">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="style.css">
     </head>
 
@@ -14,13 +17,19 @@
       <!--LOGO IRON INVEST-->
        <div  class="container">
         
-        <a href="index.html"><img src="imagens/iron 300x300.png" alt="Logo IronInvest"  class="logo"></a>
+        <a href="index.html"><img src="imagens/iron 300x300.png" alt="Logo IronInvest" class="logo" width="300" height="300"></a>
       
       
 
       <!--PARTE DE NAVEGAÇÃO-->
-       <nav   class="nav">
-          <ul class="menu">
+       <nav class="nav" role="navigation" aria-label="Menu principal">
+         <button class="menu-toggle" aria-expanded="false" aria-controls="main-menu">
+           <span class="sr-only">Abrir menu</span>
+           <span class="bar"></span>
+           <span class="bar"></span>
+           <span class="bar"></span>
+         </button>
+         <ul class="menu" id="main-menu">
 
             <li><a href="#">Sobre</a></li>
             <li><a href="#">Produtos</a></li>
@@ -28,15 +37,14 @@
             <li><a href="#">Educação</a></li>
             <li><a href="#">Suporte</a></li>
 
-          </ul>
-          </nav>
+         </ul>
+       </nav>
 
           <div class="actions">
-            <button class="theme-btn"><img src="imagens/lua_16_x_16.png" alt=""></button>  <!--TEMA ESCURO-->
+            <button class="theme-btn"><img src="imagens/lua_16_x_16.png" alt="Alternar tema" width="16" height="16" loading="lazy"></button>  <!--TEMA ESCURO-->
 
             <button class="login-btn">
-
-            <img src="imagens/user_16_x_16.png" alt="user image" >
+            <img src="imagens/user_16_x_16.png" alt="Ícone usuário" width="16" height="16" loading="lazy">
             <span>Entrar</span> </button> <!--LOGIN-->
 
             <button class="primary-btn">Abrir Conta</button> <!--CADASTRO-->
@@ -93,6 +101,18 @@
      </div>
 
      <div> <img class="img-invest" src="imagens/imagem-invest.jpeg" alt=""> </div>
+    <script>
+      (function(){
+        const toggle = document.querySelector('.menu-toggle');
+        const menu = document.getElementById('main-menu');
+        if(!toggle || !menu) return;
+        toggle.addEventListener('click', function(){
+          const open = menu.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      })();
+    </script>
+    
     </body>
   </html>
   
