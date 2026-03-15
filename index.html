@@ -1,118 +1,290 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IronInvest</title>
+    <link rel="shortcut icon" href="imagens/iron 512x512.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-  <!DOCTYPE html>
-  <html lang="pt-br">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>IronInvest</title>
-      <link rel="shortcut icon" href="imagens/iron 512x512.png" type="image/x-icon">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="style.css">
-    </head>
+<body>
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-link">
+                <img src="imagens/iron 300x300.png" alt="Logo IronInvest" class="logo">
+            </a>
 
-    <body>
-     <header class="header">
-      <!--LOGO IRON INVEST-->
-       <div  class="container">
-        
-        <a href="index.html"><img src="imagens/iron 300x300.png" alt="Logo IronInvest" class="logo" width="300" height="300"></a>
-      
-      
+            <nav class="nav" role="navigation" aria-label="Menu principal">
+                <button class="menu-toggle" aria-expanded="false" aria-controls="main-menu">
+                    <span class="sr-only">Abrir menu</span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+                <ul class="menu" id="main-menu">
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Produtos</a></li>
+                    <li><a href="#">Análises</a></li>
+                    <li><a href="#">Educação</a></li>
+                    <li><a href="#">Suporte</a></li>
+                </ul>
+            </nav>
 
-      <!--PARTE DE NAVEGAÇÃO-->
-       <nav class="nav" role="navigation" aria-label="Menu principal">
-         <button class="menu-toggle" aria-expanded="false" aria-controls="main-menu">
-           <span class="sr-only">Abrir menu</span>
-           <span class="bar"></span>
-           <span class="bar"></span>
-           <span class="bar"></span>
-         </button>
-         <ul class="menu" id="main-menu">
+            <div class="actions">
+                <button class="theme-btn"><img src="imagens/lua_16_x_16.png" alt="Alternar tema" width="16" height="16" loading="lazy"></button>
+                <button class="login-btn">
+                    <img src="imagens/user_16_x_16.png" alt="Ícone usuário" width="16" height="16" loading="lazy">
+                    <span>Entrar</span>
+                </button>
+                <button class="primary-btn">Abrir Conta</button>
+            </div>
+        </div>
+    </header>
 
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Produtos</a></li>
-            <li><a href="#">Análises</a></li>
-            <li><a href="#">Educação</a></li>
-            <li><a href="#">Suporte</a></li>
+    <main class="container hero-section">
+        <div class="hero-content">
+                    <div class="frase-eftc">
+                <h1><span class="no-wrap">Invista com <span class="destaque-p">confiança</span></span><br>no seu futuro</h1>
+                <p><span class="no-wrap">A plataforma completa de investimentos com as melhores taxas do mercado,</span><br>análises profissionais e atendimento especializado.</p>
+            </div>
 
-         </ul>
-       </nav>
+            <div class="hero-buttons">
+                <button class="btn btn-primary">Abrir Conta Gratuita</button>
+                <button class="btn btn-secondary">Simular Investimento</button>
+            </div>
 
-          <div class="actions">
-            <button class="theme-btn"><img src="imagens/lua_16_x_16.png" alt="Alternar tema" width="16" height="16" loading="lazy"></button>  <!--TEMA ESCURO-->
+            <div class="beneficios">
+                <div class="card-beneficio">
+                    <div class="icone icone-amarelo">📈</div>
+                    <div>
+                        <h4>Taxa Zero</h4>
+                        <p>Corretagem gratuita</p>
+                    </div>
+                </div>
 
-            <button class="login-btn">
-            <img src="imagens/user_16_x_16.png" alt="Ícone usuário" width="16" height="16" loading="lazy">
-            <span>Entrar</span> </button> <!--LOGIN-->
+                <div class="card-beneficio">
+                    <div class="icone icone-verde">🛡️</div>
+                    <div>
+                        <h4>Segurança</h4>
+                        <p>Regulamentada CVM</p>
+                    </div>
+                </div>
 
-            <button class="primary-btn">Abrir Conta</button> <!--CADASTRO-->
+                <div class="card-beneficio">
+                    <div class="icone icone-amarelo">🏅</div>
+                    <div>
+                        <h4>Premiada</h4>
+                        <p>Melhor corretora</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-          </div>
-       
+        <div class="hero-image">
+            <div class="image-wrapper">
+                <div class="badge badge-cdi">
+                    <span>CDI</span>
+                    <strong>13.65%</strong>
+                </div>
+                <div class="badge badge-ibov">
+                    <span>IBOV</span>
+                    <strong>+2.35%</strong>
+                </div>
+                
+                <img class="img-invest" src="imagens/imagem-invest.jpeg" alt="Pessoa montando blocos de madeira demonstrando crescimento">
+            </div>
+        </div>
+    </main>
 
-       </div>
-     </header>
+    <section class="simulador">
+        <div class="container">
 
-     
+            <h2>Simulador de Investimentos</h2>
+            <p>Descubra quanto você pode ganhar com investimentos inteligentes</p>
 
-     <div class="frase-eftc">
-      <h1>Invista com <span class="destaque-p">confiança</span> <br> no seu futuro </h1>
+            <div class="simulador-grid">
 
-      <div class="text-btn">
-        <p>A plataforma completa de investimentos com as melhores taxas do mercado,
-           análises profissionais e <br> atendimento especializado.</p>
+                <div class="simulador-form">
 
-           <button class="btn">Abrir conta Gratuita</button>
-           <button class="btn">Simular Investimentos</button>
+                    <h3>Tipo de Investimento</h3>
 
-      </div>
-     </div>
+                    <div class="tipo-investimento">
+                        <button class="ativo">CDB</button>
+                        <button>LCI/LCA</button>
+                        <button>Tesouro Direto</button>
+                    </div>
 
-        <div class="beneficios">
+                    <label>Valor do investimento</label>
+                    <input type="number" id="valor" placeholder="10000" value="10000">
 
-     <div class="card-beneficio">
-      <div class="icone">#</div>
-      <div>
-      <h4>Taxa zero</h4>
-      <p>Corretagem Gratuita</p>
-      </div>
-     </div>
+                    <label>Prazo</label>
+                    <input type="range" id="prazo" min="1" max="60" value="12">
 
-     
+                </div>
 
-     <div class="card-beneficio">
-      <div class="icone">#</div>
-      <div>
-        <h4>segurança</h4>
-        <p>Rgulamentada CVM</p>
-      </div>
-     </div>
+                <div class="resultado">
 
-     <div class="card-beneficio">
-      <div class="icone">#</div>
-      <div>
-        <h4>Premiada</h4>
-        <p>Melhor corretora</p>
-      </div>
-     </div>
- 
-     </div>
+                    <h3>Resultado da Simulação</h3>
 
-     <div> <img class="img-invest" src="imagens/imagem-invest.jpeg" alt=""> </div>
+                    <div class="valor-final" id="valorFinal">
+                        R$ 0
+                    </div>
+
+                    <div class="detalhes">
+                        <div>
+                            <span>Investido</span>
+                            <strong id="valorInvestido">R$ 0</strong>
+                        </div>
+
+                        <div>
+                            <span>Rendimento</span>
+                            <strong id="rendimento">+ R$ 0</strong>
+                        </div>
+                    </div>
+
+                    <button class="btn-investir">
+                        Começar a investir
+                    </button>
+
+                    <div class="grafico">
+                        <canvas id="graficoInvestimento"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="produtos">
+
+        <div class="container">
+
+            <h2>Produtos de Investimento</h2>
+
+            <div class="cards-produtos">
+
+                <div class="card-produto">
+                    <h3>CDB/LCI/LCA</h3>
+                    <p>130% do CDI</p>
+                    <button>Saiba Mais</button>
+                </div>
+
+                <div class="card-produto">
+                    <h3>COE</h3>
+                    <p>100% + prêmio</p>
+                    <button>Saiba Mais</button>
+                </div>
+
+                <div class="card-produto">
+                    <h3>Multimercado</h3>
+                    <p>CDI + 3%</p>
+                    <button>Saiba Mais</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
     <script>
-      (function(){
-        const toggle = document.querySelector('.menu-toggle');
-        const menu = document.getElementById('main-menu');
-        if(!toggle || !menu) return;
-        toggle.addEventListener('click', function(){
-          const open = menu.classList.toggle('open');
-          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        });
-      })();
+        (function(){
+            const toggle = document.querySelector('.menu-toggle');
+            const menu = document.getElementById('main-menu');
+            if(!toggle || !menu) return;
+            toggle.addEventListener('click', function(){
+                const open = menu.classList.toggle('open');
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+        })();
     </script>
-    
-    </body>
-  </html>
-  
+
+    <script>
+
+        const inputValor = document.querySelector("#valor");
+        const inputPrazo = document.querySelector("#prazo");
+
+        const valorFinal = document.querySelector("#valorFinal");
+        const valorInvestido = document.querySelector("#valorInvestido");
+        const rendimento = document.querySelector("#rendimento");
+
+        const ctx = document.getElementById('graficoInvestimento');
+
+        let grafico = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Evolução do investimento',
+                    data: [],
+                    borderColor: '#ffbb32',
+                    backgroundColor: 'rgba(255,187,50,0.2)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        function calcular(){
+
+            let valor = Number(inputValor.value);
+            let meses = Number(inputPrazo.value);
+
+            let taxa = 0.0115;
+
+            let dados = [];
+            let labels = [];
+
+            let montante = valor;
+
+            for(let i = 1; i <= meses; i++){
+
+                montante = montante * (1 + taxa);
+
+                dados.push(montante);
+                labels.push(i === 1 ? "1 mês" : i + " meses");
+
+            }
+
+            function formatarMoeda(valor){
+          return valor.toLocaleString("pt-BR", {
+           style: "currency",
+            currency: "BRL"
+    });
+  }
+
+            let lucro = montante - valor;
+
+            valorFinal.innerText = formatarMoeda(montante);
+            valorInvestido.innerText = formatarMoeda(valor);
+            rendimento.innerText = "+ " + formatarMoeda(lucro);
+
+            grafico.data.labels = labels;
+            grafico.data.datasets[0].data = dados;
+            grafico.update();
+
+        }
+
+        inputValor.addEventListener("input", calcular);
+        inputPrazo.addEventListener("input", calcular);
+
+        calcular();
+
+    </script>
+</body>
+</html>
