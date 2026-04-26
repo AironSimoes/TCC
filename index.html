@@ -1,14 +1,26 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-theme="light">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="IronInvest: plataforma de investimentos com simulador, produtos financeiros e atendimento especializado." />
     <title>IronInvest</title>
     <link rel="shortcut icon" href="imagens/iron 512x512.png" type="image/x-icon">
+    <link rel="preload" href="imagens/imagem-invest.jpeg" as="image" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        (() => {
+            try {
+                if (localStorage.getItem("ironinvest-theme") === "dark") {
+                    document.documentElement.dataset.theme = "dark";
+                }
+            } catch (erro) {
+                document.documentElement.dataset.theme = "light";
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,11 +28,11 @@
     <header class="header">
         <div class="container header-container">
             <a href="index.html" class="logo-link">
-                <img src="imagens/iron 300x300.png" alt="Logo IronInvest" class="logo">
+                <img src="imagens/iron 300x80.png" alt="Logo IronInvest" class="logo" width="300" height="80" decoding="async">
             </a>
 
             <nav class="nav" role="navigation" aria-label="Menu principal">
-                <button class="menu-toggle" aria-expanded="false" aria-controls="main-menu">
+                <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-menu">
                     <span class="sr-only">Abrir menu</span>
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -36,255 +48,822 @@
             </nav>
 
             <div class="actions">
-                <button class="theme-btn"><img src="imagens/lua_16_x_16.png" alt="Alternar tema" width="16" height="16" loading="lazy"></button>
-                <button class="login-btn">
-                    <img src="imagens/user_16_x_16.png" alt="Ícone usuário" width="16" height="16" loading="lazy">
+                <button class="theme-btn" type="button" aria-label="Ativar modo escuro" aria-pressed="false">
+                    <img src="imagens/lua_16_x_16.png" alt="" width="16" height="16" decoding="async">
+                </button>
+                <button class="login-btn" type="button">
+                    <img src="imagens/user_16_x_16.png" alt="" width="16" height="16" decoding="async">
                     <span>Entrar</span>
                 </button>
-                <button class="primary-btn">Abrir Conta</button>
+                <button class="primary-btn" type="button">Abrir Conta</button>
             </div>
         </div>
     </header>
 
-    <main class="container hero-section">
-        <div class="hero-content">
-                    <div class="frase-eftc">
-                <h1><span class="no-wrap">Invista com <span class="destaque-p">confiança</span></span><br>no seu futuro</h1>
-                <p><span class="no-wrap">A plataforma completa de investimentos com as melhores taxas do mercado,</span><br>análises profissionais e atendimento especializado.</p>
-            </div>
+    <main class="hero">
+        <div class="container hero-section">
+            <div class="hero-content">
+                <div class="frase-eftc">
+                    <h1><span class="no-wrap">Invista com <span class="destaque-p">confiança</span></span><br>no seu futuro</h1>
+                    <p>A plataforma completa de investimentos com as melhores taxas do mercado, análises profissionais e atendimento especializado.</p>
+                </div>
 
-            <div class="hero-buttons">
-                <button class="btn btn-primary">Abrir Conta Gratuita</button>
-                <button class="btn btn-secondary">Simular Investimento</button>
-            </div>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" type="button">Abrir Conta Gratuita</button>
+                    <button class="btn btn-secondary" type="button">Simular Investimento</button>
+                </div>
 
-            <div class="beneficios">
-                <div class="card-beneficio">
-                    <div class="icone icone-amarelo">📈</div>
-                    <div>
-                        <h4>Taxa Zero</h4>
-                        <p>Corretagem gratuita</p>
+                <div class="beneficios">
+                    <div class="card-beneficio">
+                        <div class="icone icone-amarelo">↗</div>
+                        <div>
+                            <h4>Taxa Zero</h4>
+                            <p>Corretagem gratuita</p>
+                        </div>
+                    </div>
+
+                    <div class="card-beneficio">
+                        <div class="icone icone-verde">♢</div>
+                        <div>
+                            <h4>Segurança</h4>
+                            <p>Regulamentada CVM</p>
+                        </div>
+                    </div>
+
+                    <div class="card-beneficio">
+                        <div class="icone icone-amarelo">♙</div>
+                        <div>
+                            <h4>Premiada</h4>
+                            <p>Melhor corretora</p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="card-beneficio">
-                    <div class="icone icone-verde">🛡️</div>
-                    <div>
-                        <h4>Segurança</h4>
-                        <p>Regulamentada CVM</p>
-                    </div>
-                </div>
-
-                <div class="card-beneficio">
-                    <div class="icone icone-amarelo">🏅</div>
-                    <div>
-                        <h4>Premiada</h4>
-                        <p>Melhor corretora</p>
-                    </div>
-                </div>
             </div>
-        </div>
 
-        <div class="hero-image">
-            <div class="image-wrapper">
-                <div class="badge badge-cdi">
-                    <span>CDI</span>
-                    <strong>13.65%</strong>
+            <div class="hero-image">
+                <div class="image-wrapper">
+                    <div class="badge badge-cdi">
+                        <span>CDI</span>
+                        <strong>13.65%</strong>
+                    </div>
+                    <div class="badge badge-ibov">
+                        <span>IBOV</span>
+                        <strong>+2.35%</strong>
+                    </div>
+
+                    <img
+                        class="img-invest"
+                        src="imagens/imagem-invest.jpeg"
+                        alt="Pessoa montando blocos de madeira demonstrando crescimento"
+                        width="1080"
+                        height="720"
+                        fetchpriority="high"
+                        decoding="async"
+                    >
                 </div>
-                <div class="badge badge-ibov">
-                    <span>IBOV</span>
-                    <strong>+2.35%</strong>
-                </div>
-                
-                <img class="img-invest" src="imagens/imagem-invest.jpeg" alt="Pessoa montando blocos de madeira demonstrando crescimento">
             </div>
         </div>
     </main>
 
-    <section class="simulador">
+    <section class="simulador" id="simulador">
         <div class="container">
+            <div class="simulador-header">
+                <h2>Simulador de Investimentos</h2>
+                <p>Descubra quanto você pode ganhar com investimentos inteligentes</p>
+            </div>
 
-            <h2>Simulador de Investimentos</h2>
-            <p>Descubra quanto você pode ganhar com investimentos inteligentes</p>
+            <div class="simulador-layout">
+                <div class="simulador-coluna">
+                    <div class="sim-card tipo-card">
+                        <h3>Tipo de Investimento</h3>
 
-            <div class="simulador-grid">
+                        <div class="tipo-investimento" aria-label="Tipo de investimento">
+                            <button type="button" class="ativo" data-taxa="0.0115" data-resumo="1.15% ao mês" aria-pressed="true">CDB</button>
+                            <button type="button" data-taxa="0.0095" data-resumo="0.95% ao mês" aria-pressed="false">LCI/LCA</button>
+                            <button type="button" data-taxa="0.01" data-resumo="1.00% ao mês" aria-pressed="false">Tesouro Direto</button>
+                        </div>
 
-                <div class="simulador-form">
-
-                    <h3>Tipo de Investimento</h3>
-
-                    <div class="tipo-investimento">
-                        <button class="ativo">CDB</button>
-                        <button>LCI/LCA</button>
-                        <button>Tesouro Direto</button>
+                        <div class="taxa-info">Taxa: <span id="taxaResumo">1.15% ao mês</span></div>
                     </div>
 
-                    <label>Valor do investimento</label>
-                    <input type="number" id="valor" placeholder="10000" value="10000">
+                    <div class="sim-card parametros-card">
+                        <div class="campo-bloco">
+                            <label for="valor">
+                                <span class="campo-icone">$</span>
+                                Valor do Investimento
+                            </label>
+                            <div class="input-com-prefixo">
+                                <span>R$</span>
+                                <input type="number" id="valor" min="0" step="100" placeholder="10000" value="10000">
+                            </div>
 
-                    <label>Prazo</label>
-                    <input type="range" id="prazo" min="1" max="60" value="12">
+                            <div class="atalhos-valor" aria-label="Valores rápidos">
+                                <button type="button" data-valor="1000">R$ 1 mil</button>
+                                <button type="button" data-valor="5000">R$ 5 mil</button>
+                                <button type="button" data-valor="10000">R$ 10 mil</button>
+                                <button type="button" data-valor="50000">R$ 50 mil</button>
+                            </div>
+                        </div>
 
+                        <div class="campo-bloco">
+                            <label for="prazo">
+                                <span class="campo-icone calendario-icone"></span>
+                                Prazo
+                            </label>
+                            <output class="prazo-pill" id="prazoValor" for="prazo">12 meses</output>
+                            <input type="range" id="prazo" min="1" max="60" value="12">
+                            <div class="range-legenda">
+                                <span>1 mês</span>
+                                <span>60 meses</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="resultado">
-
-                    <h3>Resultado da Simulação</h3>
-
-                    <div class="valor-final" id="valorFinal">
-                        R$ 0
+                    <div class="resultado-titulo">
+                        <span class="resultado-icone" aria-hidden="true">↗</span>
+                        <h3>Resultado da Simulação</h3>
                     </div>
 
+                    <span class="resultado-label">Valor Final</span>
+                    <div class="valor-final" id="valorFinal">R$ 0</div>
+
                     <div class="detalhes">
-                        <div>
+                        <div class="detalhe-card">
                             <span>Investido</span>
                             <strong id="valorInvestido">R$ 0</strong>
                         </div>
 
-                        <div>
+                        <div class="detalhe-card detalhe-rendimento">
                             <span>Rendimento</span>
                             <strong id="rendimento">+ R$ 0</strong>
                         </div>
                     </div>
 
-                    <button class="btn-investir">
-                        Começar a investir
-                    </button>
-
-                    <div class="grafico">
-                        <canvas id="graficoInvestimento"></canvas>
+                    <div class="rentabilidade-card">
+                        <span>Rentabilidade</span>
+                        <strong id="rentabilidade">+0%</strong>
                     </div>
 
+                    <button class="btn-investir" type="button">Começar a Investir <span aria-hidden="true">→</span></button>
                 </div>
-
             </div>
 
+            <p class="simulador-nota">*Valores simulados para fins ilustrativos. Rentabilidade passada não garante resultados futuros.</p>
         </div>
     </section>
 
-    <section class="produtos">
-
-        <div class="container">
-
-            <h2>Produtos de Investimento</h2>
-
-            <div class="cards-produtos">
-
-                <div class="card-produto">
-                    <h3>CDB/LCI/LCA</h3>
-                    <p>130% do CDI</p>
-                    <button>Saiba Mais</button>
-                </div>
-
-                <div class="card-produto">
-                    <h3>COE</h3>
-                    <p>100% + prêmio</p>
-                    <button>Saiba Mais</button>
-                </div>
-
-                <div class="card-produto">
-                    <h3>Multimercado</h3>
-                    <p>CDI + 3%</p>
-                    <button>Saiba Mais</button>
-                </div>
-
+    <section class="produtos" id="produtos">
+        <div class="container produtos-container">
+            <div class="produtos-header">
+                <h2 id="produtosTitulo">Produtos de Investimento</h2>
+                <p>Diversifique seus investimentos com nossa ampla gama de produtos financeiros, desde renda fixa até ações e fundos imobiliários.</p>
             </div>
 
-        </div>
+            <div class="carrossel-produtos" data-carousel aria-labelledby="produtosTitulo">
+                <button class="carrossel-controle carrossel-anterior" type="button" aria-label="Produtos anteriores" data-carousel-prev>‹</button>
 
+                <div class="carrossel-janela" tabindex="0" aria-roledescription="carrossel">
+                    <div class="carrossel-trilha" data-carousel-track>
+                        <article class="card-produto">
+                            <div class="produto-topo">
+                                <span class="produto-icone" aria-hidden="true">▥</span>
+                                <span class="risco risco-alto">Alto</span>
+                            </div>
+
+                            <h3>Ações</h3>
+                            <strong>Até 25% ao ano</strong>
+                            <p>Invista nas melhores empresas da B3 com taxa zero de corretagem</p>
+
+                            <ul>
+                                <li>Taxa zero</li>
+                                <li>Home broker gratuito</li>
+                                <li>Análises diárias</li>
+                            </ul>
+
+                            <button type="button">Saiba Mais</button>
+                        </article>
+
+                        <article class="card-produto">
+                            <div class="produto-topo">
+                                <span class="produto-icone" aria-hidden="true">▤</span>
+                                <span class="risco risco-medio">Médio</span>
+                            </div>
+
+                            <h3>Fundos Imobiliários</h3>
+                            <strong>8-12% ao ano</strong>
+                            <p>Receba renda mensal investindo em imóveis comerciais</p>
+
+                            <ul>
+                                <li>Renda mensal</li>
+                                <li>Isenção IR</li>
+                                <li>Diversificação</li>
+                            </ul>
+
+                            <button type="button">Saiba Mais</button>
+                        </article>
+
+                        <article class="card-produto">
+                            <div class="produto-topo">
+                                <span class="produto-icone" aria-hidden="true">◎</span>
+                                <span class="risco risco-baixo">Baixo</span>
+                            </div>
+
+                            <h3>Tesouro Direto</h3>
+                            <strong>Selic + 2%</strong>
+                            <p>Títulos públicos com segurança do governo federal</p>
+
+                            <ul>
+                                <li>Baixo risco</li>
+                                <li>Liquidez diária</li>
+                                <li>A partir de R$ 30</li>
+                            </ul>
+
+                            <button type="button">Saiba Mais</button>
+                        </article>
+
+                        <article class="card-produto">
+                            <div class="produto-topo">
+                                <span class="produto-icone" aria-hidden="true">↗</span>
+                                <span class="risco risco-baixo">Baixo</span>
+                            </div>
+
+                            <h3>CDB/LCI/LCA</h3>
+                            <strong>130% do CDI</strong>
+                            <p>Renda fixa com rendimentos acima da poupança</p>
+
+                            <ul>
+                                <li>Garantia FGC</li>
+                                <li>Isenção IR*</li>
+                                <li>Liquidez variada</li>
+                            </ul>
+
+                            <button type="button">Saiba Mais</button>
+                        </article>
+
+                        <article class="card-produto">
+                            <div class="produto-topo">
+                                <span class="produto-icone" aria-hidden="true">$</span>
+                                <span class="risco risco-medio">Médio</span>
+                            </div>
+
+                            <h3>COE</h3>
+                            <strong>100% + prêmio</strong>
+                            <p>Certificados estruturados com proteção do capital</p>
+
+                            <ul>
+                                <li>Capital protegido</li>
+                                <li>Exposição internacional</li>
+                                <li>Prazo definido</li>
+                            </ul>
+
+                            <button type="button">Saiba Mais</button>
+                        </article>
+
+                        <article class="card-produto">
+                            <div class="produto-topo">
+                                <span class="produto-icone" aria-hidden="true">◎</span>
+                                <span class="risco risco-medio">Médio</span>
+                            </div>
+
+                            <h3>Multimercado</h3>
+                            <strong>CDI + 3%</strong>
+                            <p>Fundos diversificados geridos por especialistas</p>
+
+                            <ul>
+                                <li>Gestão ativa</li>
+                                <li>Diversificação</li>
+                                <li>Liquidez semanal</li>
+                            </ul>
+
+                            <button type="button">Saiba Mais</button>
+                        </article>
+                    </div>
+                </div>
+
+                <button class="carrossel-controle carrossel-proximo" type="button" aria-label="Próximos produtos" data-carousel-next>›</button>
+                <div class="carrossel-pontos" aria-label="Navegação do carrossel" data-carousel-dots></div>
+            </div>
+
+            <div class="produtos-acao">
+                <button type="button">Ver Todos os Produtos</button>
+            </div>
+        </div>
     </section>
+
+    <section class="porque-escolher" id="porque-escolher">
+        <div class="container porque-container">
+            <div class="porque-header">
+                <h2>Por que escolher a <span>IronInvest?</span></h2>
+                <p>Somos mais que uma corretora, somos seu parceiro na construção de patrimônio.</p>
+            </div>
+
+            <div class="diferenciais-grid">
+                <article class="diferencial-card">
+                    <span class="diferencial-icone" aria-hidden="true">♢</span>
+                    <h3>Segurança Total</h3>
+                    <p>Regulamentada pela CVM e com recursos protegidos pelo FGC até R$ 1 milhão</p>
+                </article>
+
+                <article class="diferencial-card">
+                    <span class="diferencial-icone" aria-hidden="true">↗</span>
+                    <h3>Taxa Zero</h3>
+                    <p>Corretagem gratuita para ações, ETFs e fundos imobiliários</p>
+                </article>
+
+                <article class="diferencial-card">
+                    <span class="diferencial-icone" aria-hidden="true">☊</span>
+                    <h3>Assessoria Especializada</h3>
+                    <p>Equipe de assessores qualificados para orientar seus investimentos</p>
+                </article>
+
+                <article class="diferencial-card">
+                    <span class="diferencial-icone" aria-hidden="true">◷</span>
+                    <h3>Agilidade</h3>
+                    <p>Abertura de conta em minutos e transferências instantâneas</p>
+                </article>
+
+                <article class="diferencial-card">
+                    <span class="diferencial-icone" aria-hidden="true">▯</span>
+                    <h3>Plataforma Completa</h3>
+                    <p>App mobile e home broker web com todas as funcionalidades</p>
+                </article>
+
+                <article class="diferencial-card">
+                    <span class="diferencial-icone" aria-hidden="true">♙</span>
+                    <h3>Premiada</h3>
+                    <p>Eleita melhor corretora do Brasil por 3 anos consecutivos</p>
+                </article>
+
+                <article class="diferencial-card">
+                    <span class="diferencial-icone" aria-hidden="true">◠</span>
+                    <h3>Suporte 24/7</h3>
+                    <p>Atendimento especializado disponível todos os dias da semana</p>
+                </article>
+
+                <article class="diferencial-card">
+                    <span class="diferencial-icone" aria-hidden="true">▭</span>
+                    <h3>Educação Financeira</h3>
+                    <p>Cursos gratuitos, análises e conteúdo educativo para todos os níveis</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="depoimentos" id="depoimentos">
+        <div class="container depoimentos-container">
+            <div class="depoimentos-header">
+                <h2>O que nossos clientes dizem</h2>
+                <p>Mais de 500 mil clientes confiam na <strong>IronInvest</strong> para fazer seus investimentos crescerem. Veja alguns depoimentos reais.</p>
+            </div>
+
+            <div class="depoimentos-grid">
+                <article class="depoimento-card">
+                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <p>"A <strong>IronInvest</strong> transformou minha relação com os investimentos. A plataforma é intuitiva e o suporte é excepcional. Em 2 anos, minha carteira cresceu 180%."</p>
+
+                    <div class="cliente">
+                        <span class="cliente-avatar avatar-iniciais">MS</span>
+                        <div>
+                            <h3>Marina Silva</h3>
+                            <span>Empresária</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="depoimento-card">
+                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <p>"Como médico, preciso de praticidade. A <strong>IronInvest</strong> me oferece isso com taxa zero e assessoria qualificada. Recomendo para todos os colegas."</p>
+
+                    <div class="cliente">
+                        <span class="cliente-avatar avatar-carlos">CR</span>
+                        <div>
+                            <h3>Carlos Roberto</h3>
+                            <span>Médico</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="depoimento-card">
+                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <p>"Iniciante em investimentos, encontrei na <strong>IronInvest</strong> todo o suporte educacional que precisava. Hoje tenho uma carteira diversificada e rentável."</p>
+
+                    <div class="cliente">
+                        <span class="cliente-avatar avatar-ana">AB</span>
+                        <div>
+                            <h3>Ana Beatriz</h3>
+                            <span>Advogada</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="depoimento-card">
+                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <p>"A transparência nas taxas e a qualidade das análises fazem toda a diferença. Migrei de outro banco e não me arrependo da decisão."</p>
+
+                    <div class="cliente">
+                        <span class="cliente-avatar avatar-roberto">RM</span>
+                        <div>
+                            <h3>Roberto Mendes</h3>
+                            <span>Engenheiro</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="depoimento-card">
+                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <p>"O app é fantástico e muito fácil de usar. Consigo acompanhar meus investimentos onde estiver. O atendimento é sempre muito atencioso."</p>
+
+                    <div class="cliente">
+                        <span class="cliente-avatar avatar-juliana">JC</span>
+                        <div>
+                            <h3>Juliana Costa</h3>
+                            <span>Arquiteta</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="depoimento-card">
+                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <p>"Como contador, analiso números todos os dias. A <strong>IronInvest</strong> oferece as melhores condições do mercado. Já indiquei para dezenas de clientes."</p>
+
+                    <div class="cliente">
+                        <span class="cliente-avatar avatar-fernando">FL</span>
+                        <div>
+                            <h3>Fernando Lima</h3>
+                            <span>Contador</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="depoimentos-metricas" aria-label="Métricas de satisfação dos clientes">
+                <div>
+                    <strong>4.9</strong>
+                    <span>Avaliação média</span>
+                </div>
+
+                <div>
+                    <strong>500K+</strong>
+                    <span>Clientes satisfeitos</span>
+                </div>
+
+                <div>
+                    <strong>98%</strong>
+                    <span>Taxa de recomendação</span>
+                </div>
+
+                <div>
+                    <strong>15+</strong>
+                    <span>Anos de experiência</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer-site">
+        <div class="container footer-container">
+            <section class="newsletter" aria-labelledby="newsletterTitulo">
+                <div>
+                    <h2 id="newsletterTitulo">Receba dicas de investimento</h2>
+                    <p>Inscreva-se em nossa newsletter e receba análises exclusivas e oportunidades.</p>
+                </div>
+
+                <form class="newsletter-form">
+                    <label class="sr-only" for="newsletterEmail">Seu melhor e-mail</label>
+                    <input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail">
+                    <button type="submit">Inscrever-se</button>
+                </form>
+            </section>
+
+            <div class="footer-links">
+                <div class="footer-brand">
+                    <h2>IronInvest</h2>
+                    <p>Sua corretora de confiança há mais de 15 anos no mercado financeiro brasileiro.</p>
+
+                    <ul class="footer-contato">
+                        <li><span aria-hidden="true">⌖</span> São Paulo, SP</li>
+                        <li><span aria-hidden="true">☏</span> (11) 3000-0000</li>
+                        <li><span aria-hidden="true">✉</span> contato@ironinvest.com</li>
+                    </ul>
+
+                    <div class="footer-social" aria-label="Redes sociais">
+                        <a href="#" aria-label="Facebook">f</a>
+                        <a href="#" aria-label="Instagram">◎</a>
+                        <a href="#" aria-label="Twitter">𝕏</a>
+                        <a href="#" aria-label="YouTube">▶</a>
+                        <a href="#" aria-label="LinkedIn">in</a>
+                    </div>
+                </div>
+
+                <div class="footer-coluna">
+                    <h3>Produtos</h3>
+                    <a href="#">Ações</a>
+                    <a href="#">Fundos Imobiliários</a>
+                    <a href="#">Tesouro Direto</a>
+                    <a href="#">CDB/LCI/LCA</a>
+                    <a href="#">Fundos de Investimento</a>
+                    <a href="#">Previdência Privada</a>
+                </div>
+
+                <div class="footer-coluna">
+                    <h3>Empresa</h3>
+                    <a href="#">Sobre Nós</a>
+                    <a href="#">Carreiras</a>
+                    <a href="#">Imprensa</a>
+                    <a href="#">Investidores</a>
+                    <a href="#">Responsabilidade Social</a>
+                    <a href="#">Certificações</a>
+                </div>
+
+                <div class="footer-coluna">
+                    <h3>Suporte</h3>
+                    <a href="#">Central de Ajuda</a>
+                    <a href="#">Como Investir</a>
+                    <a href="#">Abertura de Conta</a>
+                    <a href="#">Transferência</a>
+                    <a href="#">Regulamentações</a>
+                    <a href="#">Fale Conosco</a>
+                </div>
+
+                <div class="footer-coluna">
+                    <h3>Educação</h3>
+                    <a href="#">Blog</a>
+                    <a href="#">Cursos Gratuitos</a>
+                    <a href="#">Webinars</a>
+                    <a href="#">E-books</a>
+                    <a href="#">Calculadora de Juros</a>
+                    <a href="#">Simuladores</a>
+                </div>
+            </div>
+
+            <div class="footer-base">
+                <div class="footer-legal">
+                    <span>© 2026 <strong>IronInvest</strong>. Todos os direitos reservados.</span>
+                    <a href="#">Privacidade</a>
+                    <a href="#">Termos de Uso</a>
+                    <a href="#">Cookies</a>
+                </div>
+
+                <div class="footer-selos">
+                    <span>Regulamentada por:</span>
+                    <strong>CVM</strong>
+                    <strong>ANBIMA</strong>
+                    <strong>FGC</strong>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        (function(){
-            const toggle = document.querySelector('.menu-toggle');
-            const menu = document.getElementById('main-menu');
-            if(!toggle || !menu) return;
-            toggle.addEventListener('click', function(){
-                const open = menu.classList.toggle('open');
-                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        (() => {
+            const seletor = {
+                menuToggle: ".menu-toggle",
+                investimento: ".tipo-investimento",
+                atalhoValor: ".atalhos-valor",
+                valor: "#valor",
+                prazo: "#prazo",
+                valorFinal: "#valorFinal",
+                valorInvestido: "#valorInvestido",
+                rendimento: "#rendimento",
+                prazoValor: "#prazoValor",
+                taxaResumo: "#taxaResumo",
+                rentabilidade: "#rentabilidade",
+                carrossel: "[data-carousel]",
+                carrosselTrack: "[data-carousel-track]",
+                carrosselAnterior: "[data-carousel-prev]",
+                carrosselProximo: "[data-carousel-next]",
+                carrosselPontos: "[data-carousel-dots]",
+                newsletter: ".newsletter-form",
+                temaBotao: ".theme-btn",
+                temaIcone: ".theme-btn img"
+            };
+
+            const moeda = new Intl.NumberFormat("pt-BR", {
+                style: "currency",
+                currency: "BRL"
             });
-        })();
-    </script>
 
-    <script>
+            const elementos = {
+                menuToggle: document.querySelector(seletor.menuToggle),
+                menu: document.getElementById("main-menu"),
+                investimento: document.querySelector(seletor.investimento),
+                atalhoValor: document.querySelector(seletor.atalhoValor),
+                valor: document.querySelector(seletor.valor),
+                prazo: document.querySelector(seletor.prazo),
+                valorFinal: document.querySelector(seletor.valorFinal),
+                valorInvestido: document.querySelector(seletor.valorInvestido),
+                rendimento: document.querySelector(seletor.rendimento),
+                prazoValor: document.querySelector(seletor.prazoValor),
+                taxaResumo: document.querySelector(seletor.taxaResumo),
+                rentabilidade: document.querySelector(seletor.rentabilidade),
+                carrossel: document.querySelector(seletor.carrossel),
+                carrosselTrack: document.querySelector(seletor.carrosselTrack),
+                carrosselAnterior: document.querySelector(seletor.carrosselAnterior),
+                carrosselProximo: document.querySelector(seletor.carrosselProximo),
+                carrosselPontos: document.querySelector(seletor.carrosselPontos),
+                newsletter: document.querySelector(seletor.newsletter),
+                temaBotao: document.querySelector(seletor.temaBotao),
+                temaIcone: document.querySelector(seletor.temaIcone)
+            };
 
-        const inputValor = document.querySelector("#valor");
-        const inputPrazo = document.querySelector("#prazo");
+            const chaveTema = "ironinvest-theme";
+            const iconeLua = "imagens/lua_16_x_16.png";
+            const iconeSol = "imagens/brightness_9253338.png";
+            let taxaMensal = 0.0115;
 
-        const valorFinal = document.querySelector("#valorFinal");
-        const valorInvestido = document.querySelector("#valorInvestido");
-        const rendimento = document.querySelector("#rendimento");
+            const formatarMoeda = (valor) => moeda.format(valor);
+            const textoMeses = (meses) => meses === 1 ? "1 mês" : `${meses} meses`;
 
-        const ctx = document.getElementById('graficoInvestimento');
+            function definirTema(tema, salvar = true) {
+                const escuro = tema === "dark";
+                document.documentElement.dataset.theme = escuro ? "dark" : "light";
 
-        let grafico = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Evolução do investimento',
-                    data: [],
-                    borderColor: '#ffbb32',
-                    backgroundColor: 'rgba(255,187,50,0.2)',
-                    tension: 0.3,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+                elementos.temaBotao?.setAttribute("aria-pressed", String(escuro));
+                elementos.temaBotao?.setAttribute("aria-label", escuro ? "Ativar modo claro" : "Ativar modo escuro");
+
+                if (elementos.temaIcone) {
+                    elementos.temaIcone.src = escuro ? iconeSol : iconeLua;
+                }
+
+                if (!salvar) return;
+
+                try {
+                    localStorage.setItem(chaveTema, escuro ? "dark" : "light");
+                } catch (erro) {
+                    // O tema ainda funciona mesmo se o navegador bloquear o armazenamento.
                 }
             }
-        });
 
-        function calcular(){
-
-            let valor = Number(inputValor.value);
-            let meses = Number(inputPrazo.value);
-
-            let taxa = 0.0115;
-
-            let dados = [];
-            let labels = [];
-
-            let montante = valor;
-
-            for(let i = 1; i <= meses; i++){
-
-                montante = montante * (1 + taxa);
-
-                dados.push(montante);
-                labels.push(i === 1 ? "1 mês" : i + " meses");
-
+            function alternarTema() {
+                const temaAtual = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+                definirTema(temaAtual === "dark" ? "light" : "dark");
             }
 
-            function formatarMoeda(valor){
-          return valor.toLocaleString("pt-BR", {
-           style: "currency",
-            currency: "BRL"
-    });
-  }
+            function alternarMenu() {
+                if (!elementos.menuToggle || !elementos.menu) return;
 
-            let lucro = montante - valor;
+                const menuAberto = elementos.menu.classList.toggle("open");
+                elementos.menuToggle.setAttribute("aria-expanded", String(menuAberto));
+            }
 
-            valorFinal.innerText = formatarMoeda(montante);
-            valorInvestido.innerText = formatarMoeda(valor);
-            rendimento.innerText = "+ " + formatarMoeda(lucro);
+            function calcularSimulacao() {
+                const valor = Math.max(Number(elementos.valor?.value) || 0, 0);
+                const meses = Math.max(Number(elementos.prazo?.value) || 1, 1);
+                const montante = valor * Math.pow(1 + taxaMensal, meses);
+                const lucro = montante - valor;
+                const percentual = valor > 0 ? (lucro / valor) * 100 : 0;
 
-            grafico.data.labels = labels;
-            grafico.data.datasets[0].data = dados;
-            grafico.update();
+                elementos.valorFinal.textContent = formatarMoeda(montante);
+                elementos.valorInvestido.textContent = formatarMoeda(valor);
+                elementos.rendimento.textContent = `+ ${formatarMoeda(lucro)}`;
+                elementos.rentabilidade.textContent = `+${percentual.toFixed(2).replace(".", ",")}%`;
+                elementos.prazoValor.textContent = textoMeses(meses);
+            }
 
-        }
+            function selecionarInvestimento(evento) {
+                const botao = evento.target.closest("button[data-taxa]");
+                if (!botao) return;
 
-        inputValor.addEventListener("input", calcular);
-        inputPrazo.addEventListener("input", calcular);
+                elementos.investimento.querySelectorAll("button").forEach((item) => {
+                    item.classList.toggle("ativo", item === botao);
+                    item.setAttribute("aria-pressed", String(item === botao));
+                });
 
-        calcular();
+                taxaMensal = Number(botao.dataset.taxa) || 0.0115;
+                elementos.taxaResumo.textContent = botao.dataset.resumo || "1.15% ao mês";
+                calcularSimulacao();
+            }
 
+            function aplicarValorRapido(evento) {
+                const botao = evento.target.closest("button[data-valor]");
+                if (!botao) return;
+
+                elementos.valor.value = botao.dataset.valor || "10000";
+                calcularSimulacao();
+            }
+
+            function iniciarCarrossel() {
+                const {
+                    carrossel,
+                    carrosselTrack,
+                    carrosselAnterior,
+                    carrosselProximo,
+                    carrosselPontos
+                } = elementos;
+
+                if (!carrossel || !carrosselTrack || !carrosselPontos) return;
+
+                const cards = Array.from(carrosselTrack.children);
+                let paginaAtual = 0;
+                let totalPaginas = 1;
+                let inicioToque = 0;
+                let quadroResize = 0;
+
+                const cardsPorTela = () => {
+                    const valor = getComputedStyle(carrosselTrack).getPropertyValue("--cards-visiveis");
+                    return Math.max(parseInt(valor, 10) || 1, 1);
+                };
+
+                function irParaPagina(pagina) {
+                    totalPaginas = Math.max(Math.ceil(cards.length / cardsPorTela()), 1);
+                    paginaAtual = (pagina + totalPaginas) % totalPaginas;
+                    atualizarCarrossel();
+                }
+
+                function criarPontos() {
+                    const pontos = Array.from({ length: totalPaginas }, (_, indice) => (
+                        `<button type="button" aria-label="Mostrar grupo ${indice + 1}" data-carousel-page="${indice}"></button>`
+                    ));
+
+                    carrosselPontos.innerHTML = pontos.join("");
+                }
+
+                function atualizarCarrossel() {
+                    const visiveis = cardsPorTela();
+                    const paginasCalculadas = Math.max(Math.ceil(cards.length / visiveis), 1);
+
+                    if (paginasCalculadas !== totalPaginas) {
+                        totalPaginas = paginasCalculadas;
+                        paginaAtual = Math.min(paginaAtual, totalPaginas - 1);
+                        criarPontos();
+                    }
+
+                    const gap = parseFloat(getComputedStyle(carrosselTrack).gap) || 0;
+                    const larguraCard = cards[0]?.getBoundingClientRect().width || 0;
+                    const deslocamento = paginaAtual * visiveis * (larguraCard + gap);
+
+                    carrosselTrack.style.transform = `translate3d(${-deslocamento}px, 0, 0)`;
+
+                    cards.forEach((card, indice) => {
+                        const inicio = paginaAtual * visiveis;
+                        const fim = inicio + visiveis;
+                        const escondido = indice < inicio || indice >= fim;
+                        const botao = card.querySelector("button");
+
+                        card.setAttribute("aria-hidden", String(escondido));
+                        if (botao) botao.tabIndex = escondido ? -1 : 0;
+                    });
+
+                    carrosselPontos.querySelectorAll("button").forEach((ponto, indice) => {
+                        const ativo = indice === paginaAtual;
+                        ponto.classList.toggle("ativo", ativo);
+                        ponto.setAttribute("aria-current", ativo ? "true" : "false");
+                    });
+                }
+
+                carrosselAnterior?.addEventListener("click", () => irParaPagina(paginaAtual - 1));
+                carrosselProximo?.addEventListener("click", () => irParaPagina(paginaAtual + 1));
+
+                carrosselPontos.addEventListener("click", (evento) => {
+                    const ponto = evento.target.closest("button[data-carousel-page]");
+                    if (!ponto) return;
+                    irParaPagina(Number(ponto.dataset.carouselPage) || 0);
+                });
+
+                carrossel.addEventListener("keydown", (evento) => {
+                    if (evento.key === "ArrowLeft") irParaPagina(paginaAtual - 1);
+                    if (evento.key === "ArrowRight") irParaPagina(paginaAtual + 1);
+                });
+
+                carrossel.addEventListener("pointerdown", (evento) => {
+                    inicioToque = evento.clientX;
+                });
+
+                carrossel.addEventListener("pointerup", (evento) => {
+                    const distancia = evento.clientX - inicioToque;
+                    if (Math.abs(distancia) < 45) return;
+                    irParaPagina(distancia > 0 ? paginaAtual - 1 : paginaAtual + 1);
+                });
+
+                window.addEventListener("resize", () => {
+                    cancelAnimationFrame(quadroResize);
+                    quadroResize = requestAnimationFrame(atualizarCarrossel);
+                });
+                totalPaginas = Math.max(Math.ceil(cards.length / cardsPorTela()), 1);
+                criarPontos();
+                atualizarCarrossel();
+            }
+
+            elementos.menuToggle?.addEventListener("click", alternarMenu);
+            elementos.investimento?.addEventListener("click", selecionarInvestimento);
+            elementos.atalhoValor?.addEventListener("click", aplicarValorRapido);
+            elementos.valor?.addEventListener("input", calcularSimulacao);
+            elementos.prazo?.addEventListener("input", calcularSimulacao);
+            elementos.temaBotao?.addEventListener("click", alternarTema);
+            elementos.newsletter?.addEventListener("submit", (evento) => {
+                evento.preventDefault();
+            });
+
+            definirTema(document.documentElement.dataset.theme === "dark" ? "dark" : "light", false);
+
+            if (elementos.valor && elementos.prazo) {
+                calcularSimulacao();
+            }
+
+            iniciarCarrossel();
+        })();
     </script>
 </body>
 </html>
