@@ -70,7 +70,7 @@
 
                 <div class="hero-buttons">
                     <button class="btn btn-primary" type="button">Abrir Conta Gratuita</button>
-                    <button class="btn btn-secondary" type="button">Simular Investimento</button>
+                    <a class="btn btn-secondary" href="#simulador">Simular Investimento</a>
                 </div>
 
                 <div class="beneficios">
@@ -760,6 +760,8 @@
                 let totalPaginas = 1;
                 let inicioToque = 0;
                 let quadroResize = 0;
+                let autoplayCarrossel = 0;
+                const intervaloAutoplay = 5000;
 
                 const cardsPorTela = () => {
                     const valor = getComputedStyle(carrosselTrack).getPropertyValue("--cards-visiveis");
@@ -813,37 +815,92 @@
                     });
                 }
 
-                carrosselAnterior?.addEventListener("click", () => irParaPagina(paginaAtual - 1));
-                carrosselProximo?.addEventListener("click", () => irParaPagina(paginaAtual + 1));
+                function pausarAutoplay() {
+                    clearInterval(autoplayCarrossel);
+                    autoplayCarrossel = 0;
+                }
+
+                function iniciarAutoplay() {
+                    pausarAutoplay();
+                    if (totalPaginas <= 1) return;
+                    autoplayCarrossel = setInterval(() => {
+                        irParaPagina(paginaAtual + 1);
+                    }, intervaloAutoplay);
+                }
+
+                function reiniciarAutoplay() {
+                    pausarAutoplay();
+                    iniciarAutoplay();
+                }
+
+                carrosselAnterior?.addEventListener("click", () => {
+                    irParaPagina(paginaAtual - 1);
+                    reiniciarAutoplay();
+                });
+
+                carrosselProximo?.addEventListener("click", () => {
+                    irParaPagina(paginaAtual + 1);
+                    reiniciarAutoplay();
+                });
 
                 carrosselPontos.addEventListener("click", (evento) => {
                     const ponto = evento.target.closest("button[data-carousel-page]");
                     if (!ponto) return;
                     irParaPagina(Number(ponto.dataset.carouselPage) || 0);
+                    reiniciarAutoplay();
                 });
 
                 carrossel.addEventListener("keydown", (evento) => {
-                    if (evento.key === "ArrowLeft") irParaPagina(paginaAtual - 1);
-                    if (evento.key === "ArrowRight") irParaPagina(paginaAtual + 1);
+                    if (evento.key === "ArrowLeft") {
+                        irParaPagina(paginaAtual - 1);
+                        reiniciarAutoplay();
+                    }
+
+                    if (evento.key === "ArrowRight") {
+                        irParaPagina(paginaAtual + 1);
+                        reiniciarAutoplay();
+                    }
                 });
 
                 carrossel.addEventListener("pointerdown", (evento) => {
                     inicioToque = evento.clientX;
+                    pausarAutoplay();
                 });
 
                 carrossel.addEventListener("pointerup", (evento) => {
                     const distancia = evento.clientX - inicioToque;
-                    if (Math.abs(distancia) < 45) return;
-                    irParaPagina(distancia > 0 ? paginaAtual - 1 : paginaAtual + 1);
+                    if (Math.abs(distancia) >= 45) {
+                        irParaPagina(distancia > 0 ? paginaAtual - 1 : paginaAtual + 1);
+                    }
+
+                    iniciarAutoplay();
+                });
+
+                carrossel.addEventListener("mouseenter", pausarAutoplay);
+                carrossel.addEventListener("mouseleave", iniciarAutoplay);
+                carrossel.addEventListener("focusin", pausarAutoplay);
+                carrossel.addEventListener("focusout", iniciarAutoplay);
+
+                document.addEventListener("visibilitychange", () => {
+                    if (document.hidden) {
+                        pausarAutoplay();
+                        return;
+                    }
+
+                    iniciarAutoplay();
                 });
 
                 window.addEventListener("resize", () => {
                     cancelAnimationFrame(quadroResize);
-                    quadroResize = requestAnimationFrame(atualizarCarrossel);
+                    quadroResize = requestAnimationFrame(() => {
+                        atualizarCarrossel();
+                        reiniciarAutoplay();
+                    });
                 });
                 totalPaginas = Math.max(Math.ceil(cards.length / cardsPorTela()), 1);
                 criarPontos();
                 atualizarCarrossel();
+                iniciarAutoplay();
             }
 
             elementos.menuToggle?.addEventListener("click", alternarMenu);
