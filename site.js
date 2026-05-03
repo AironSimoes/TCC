@@ -18,6 +18,18 @@
         carrosselPontos: "[data-carousel-dots]",
         newsletter: ".newsletter-form",
         busca: ".suporte-busca",
+        loginBotao: ".login-btn",
+        loginModal: "#loginModal",
+        loginFechar: "[data-login-close]",
+        loginForm: ".login-form",
+        loginEmail: "#loginEmail",
+        loginStatus: ".login-status",
+        cadastroForm: ".cadastro-form",
+        cadastroCpf: "#cadastroCpf",
+        cadastroTelefone: "#cadastroTelefone",
+        cadastroSenha: "#cadastroSenha",
+        cadastroConfirmarSenha: "#cadastroConfirmarSenha",
+        cadastroStatus: ".cadastro-status",
         temaBotao: ".theme-btn",
         temaIcone: ".theme-btn img"
     };
@@ -47,6 +59,18 @@
         carrosselPontos: document.querySelector(seletor.carrosselPontos),
         newsletter: document.querySelector(seletor.newsletter),
         busca: document.querySelector(seletor.busca),
+        loginBotao: document.querySelector(seletor.loginBotao),
+        loginModal: document.querySelector(seletor.loginModal),
+        loginFechar: document.querySelectorAll(seletor.loginFechar),
+        loginForm: document.querySelector(seletor.loginForm),
+        loginEmail: document.querySelector(seletor.loginEmail),
+        loginStatus: document.querySelector(seletor.loginStatus),
+        cadastroForm: document.querySelector(seletor.cadastroForm),
+        cadastroCpf: document.querySelector(seletor.cadastroCpf),
+        cadastroTelefone: document.querySelector(seletor.cadastroTelefone),
+        cadastroSenha: document.querySelector(seletor.cadastroSenha),
+        cadastroConfirmarSenha: document.querySelector(seletor.cadastroConfirmarSenha),
+        cadastroStatus: document.querySelector(seletor.cadastroStatus),
         temaBotao: document.querySelector(seletor.temaBotao),
         temaIcone: document.querySelector(seletor.temaIcone)
     };
@@ -55,8 +79,19 @@
     const iconeLua = "imagens/lua_16_x_16.png";
     const iconeSol = "imagens/brightness_9253338.png";
     let taxaMensal = 0.0115;
+    let focoAntesLogin = null;
 
     const formatarMoeda = (valor) => moeda.format(valor);
+    const somenteDigitos = (valor) => valor.replace(/\D/g, "");
+    function salvarCookie(nome, valor, dias) {
+        const maxAge = Math.max(dias, 1) * 24 * 60 * 60;
+        const seguro = window.location.protocol === "https:" ? "; Secure" : "";
+        document.cookie = `${nome}=${encodeURIComponent(valor)}; Max-Age=${maxAge}; Path=/; SameSite=Lax${seguro}`;
+    }
+
+    function parametrosLogin() {
+        return new URLSearchParams(window.location.search).get("login") || "";
+    }
     const textoMeses = (meses) => meses === 1 ? "1 mês" : `${meses} meses`;
 
     function definirTema(tema, salvar = true) {
@@ -71,6 +106,12 @@
         }
 
         if (!salvar) return;
+
+        try {
+            salvarCookie("ironinvest_theme", escuro ? "dark" : "light", 365);
+        } catch (erro) {
+            // O tema continua funcionando mesmo se o navegador bloquear cookies.
+        }
 
         try {
             localStorage.setItem(chaveTema, escuro ? "dark" : "light");
@@ -93,6 +134,32 @@
 
     function alternarMenu() {
         definirMenu(!elementos.menu?.classList.contains("open"));
+    }
+
+    function abrirLogin() {
+        if (!elementos.loginModal) return;
+
+        focoAntesLogin = document.activeElement;
+        definirMenu(false);
+        elementos.loginModal.hidden = false;
+        elementos.loginModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("login-modal-aberto");
+        if (elementos.loginStatus) {
+            elementos.loginStatus.textContent = "";
+        }
+        elementos.loginEmail?.focus();
+    }
+
+    function fecharLogin() {
+        if (!elementos.loginModal || elementos.loginModal.hidden) return;
+
+        elementos.loginModal.setAttribute("aria-hidden", "true");
+        elementos.loginModal.hidden = true;
+        document.body.classList.remove("login-modal-aberto");
+
+        if (focoAntesLogin instanceof HTMLElement) {
+            focoAntesLogin.focus();
+        }
     }
 
     function calcularSimulacao() {
@@ -141,6 +208,70 @@
 
         elementos.valor.value = botao.dataset.valor || "10000";
         calcularSimulacao();
+    }
+
+    function formatarCpf(valor) {
+        return somenteDigitos(valor)
+            .slice(0, 11)
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    }
+
+    function formatarTelefone(valor) {
+        const digitos = somenteDigitos(valor).slice(0, 11);
+
+        if (digitos.length <= 10) {
+            return digitos
+                .replace(/(\d{2})(\d)/, "($1) $2")
+                .replace(/(\d{4})(\d)/, "$1-$2");
+        }
+
+        return digitos
+            .replace(/(\d{2})(\d)/, "($1) $2")
+            .replace(/(\d{5})(\d)/, "$1-$2");
+    }
+
+    function validarCpf(valor) {
+        const cpf = somenteDigitos(valor);
+        if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+
+        const calcularDigito = (base) => {
+            const soma = base
+                .split("")
+                .reduce((total, numero, indice) => total + Number(numero) * (base.length + 1 - indice), 0);
+            const resto = (soma * 10) % 11;
+            return resto === 10 ? 0 : resto;
+        };
+
+        return calcularDigito(cpf.slice(0, 9)) === Number(cpf[9])
+            && calcularDigito(cpf.slice(0, 10)) === Number(cpf[10]);
+    }
+
+    function validarCadastro(evento) {
+        if (!elementos.cadastroForm) return;
+
+        const senha = elementos.cadastroSenha?.value || "";
+        const confirmarSenha = elementos.cadastroConfirmarSenha?.value || "";
+        const cpfValido = validarCpf(elementos.cadastroCpf?.value || "");
+
+        elementos.cadastroCpf?.setCustomValidity(cpfValido ? "" : "Informe um CPF válido.");
+        elementos.cadastroConfirmarSenha?.setCustomValidity(
+            senha === confirmarSenha ? "" : "As senhas precisam ser iguais."
+        );
+
+        if (!elementos.cadastroForm.checkValidity()) {
+            evento.preventDefault();
+            elementos.cadastroForm.reportValidity();
+            return;
+        }
+
+        if (window.location.protocol === "file:") {
+            evento.preventDefault();
+            if (elementos.cadastroStatus) {
+                elementos.cadastroStatus.textContent = "Formulário validado. Ao conectar o PHP, envie para cadastro.php.";
+            }
+        }
     }
 
     function iniciarCarrossel() {
@@ -318,7 +449,40 @@
     elementos.atalhoValor?.addEventListener("click", aplicarValorRapido);
     elementos.valor?.addEventListener("input", calcularSimulacao);
     elementos.prazo?.addEventListener("input", calcularSimulacao);
+    elementos.cadastroCpf?.addEventListener("input", () => {
+        elementos.cadastroCpf.value = formatarCpf(elementos.cadastroCpf.value);
+        elementos.cadastroCpf.setCustomValidity("");
+    });
+    elementos.cadastroTelefone?.addEventListener("input", () => {
+        elementos.cadastroTelefone.value = formatarTelefone(elementos.cadastroTelefone.value);
+    });
+    elementos.cadastroSenha?.addEventListener("input", () => {
+        elementos.cadastroConfirmarSenha?.setCustomValidity("");
+    });
+    elementos.cadastroConfirmarSenha?.addEventListener("input", () => {
+        elementos.cadastroConfirmarSenha.setCustomValidity("");
+    });
+    elementos.cadastroForm?.addEventListener("submit", validarCadastro);
     elementos.temaBotao?.addEventListener("click", alternarTema);
+    elementos.loginBotao?.addEventListener("click", abrirLogin);
+    elementos.loginFechar.forEach((controle) => {
+        controle.addEventListener("click", fecharLogin);
+    });
+    elementos.loginForm?.addEventListener("submit", (evento) => {
+        if (!elementos.loginForm.checkValidity()) {
+            evento.preventDefault();
+            elementos.loginForm.reportValidity();
+            return;
+        }
+
+        if (window.location.protocol === "file:") {
+            evento.preventDefault();
+            if (elementos.loginStatus) {
+                elementos.loginStatus.textContent = "Login validado. Rode em PHP para criar a sessão.";
+            }
+            elementos.loginForm.reset();
+        }
+    });
     elementos.newsletter?.addEventListener("submit", (evento) => {
         evento.preventDefault();
     });
@@ -327,6 +491,7 @@
     });
     document.addEventListener("keydown", (evento) => {
         if (evento.key === "Escape") {
+            fecharLogin();
             definirMenu(false);
         }
     });
@@ -338,4 +503,18 @@
     }
 
     iniciarCarrossel();
+
+    if (parametrosLogin() === "erro") {
+        abrirLogin();
+        if (elementos.loginStatus) {
+            elementos.loginStatus.textContent = "E-mail ou senha inválidos.";
+        }
+    } else if (parametrosLogin() === "sessao") {
+        abrirLogin();
+        if (elementos.loginStatus) {
+            elementos.loginStatus.textContent = "Sessão iniciada com segurança.";
+        }
+    } else if (window.location.hash === "#login") {
+        abrirLogin();
+    }
 })();

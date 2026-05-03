@@ -43,14 +43,52 @@
                 <button class="theme-btn" type="button" aria-label="Ativar modo escuro" aria-pressed="false">
                     <img src="imagens/lua_16_x_16.png" alt="" width="16" height="16" decoding="async">
                 </button>
-                <button class="login-btn" type="button">
+                <button class="login-btn" type="button" aria-haspopup="dialog" aria-controls="loginModal">
                     <img src="imagens/user_16_x_16.png" alt="" width="16" height="16" decoding="async">
                     <span>Entrar</span>
                 </button>
-                <button class="primary-btn" type="button">Abrir Conta</button>
+                <a class="primary-btn" href="cadastro.html">Abrir Conta</a>
             </div>
         </div>
     </header>
+
+    <div class="login-modal" id="loginModal" hidden aria-hidden="true">
+        <div class="login-backdrop" data-login-close></div>
+        <section class="login-dialog" role="dialog" aria-modal="true" aria-labelledby="loginTitulo">
+            <div class="login-topo">
+                <h2 id="loginTitulo">Fazer Login</h2>
+                <button class="login-close" type="button" aria-label="Fechar login" data-login-close>×</button>
+            </div>
+
+            <form class="login-form" action="login.php" method="post" autocomplete="on">
+                <div class="login-campo">
+                    <label for="loginEmail">
+                        <span class="login-label-icon login-label-email" aria-hidden="true"></span>
+                        E-mail
+                    </label>
+                    <input type="email" id="loginEmail" name="email" inputmode="email" autocomplete="email" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="login-campo">
+                    <label for="loginSenha">
+                        <span class="login-label-icon login-label-lock" aria-hidden="true"></span>
+                        Senha
+                    </label>
+                    <input type="password" id="loginSenha" name="senha" autocomplete="current-password" minlength="8" placeholder="Mínimo 8 caracteres" required>
+                </div>
+
+                <button class="login-submit" type="submit">
+                    Fazer Login
+                    <span aria-hidden="true">→</span>
+                </button>
+
+                <button class="login-link" type="button">Esqueci minha senha</button>
+
+                <p class="login-cadastro">Não tem uma conta? <a href="cadastro.html">Criar conta</a></p>
+                <p class="login-status" role="status" aria-live="polite"></p>
+            </form>
+        </section>
+    </div>
 
     <main class="hero">
         <div class="container hero-section">
@@ -61,7 +99,7 @@
                 </div>
 
                 <div class="hero-buttons">
-                    <button class="btn btn-primary" type="button">Abrir Conta Gratuita</button>
+                    <a class="btn btn-primary" href="cadastro.html">Abrir Conta Gratuita</a>
                     <a class="btn btn-secondary" href="#simulador">Simular Investimento</a>
                 </div>
 

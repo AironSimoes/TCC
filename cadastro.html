@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Abra sua conta na IronInvest preenchendo seus dados cadastrais." />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'; upgrade-insecure-requests">
+    <title>Abrir Conta | IronInvest</title>
+    <link rel="shortcut icon" href="imagens/iron 512x512.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="theme-init.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="cadastro-page">
+    <header class="cadastro-header">
+        <div class="container cadastro-header-container">
+            <a href="index.html" class="logo-link">
+                <img src="imagens/iron 300x80.png" alt="Logo IronInvest" class="logo" width="300" height="80" decoding="async">
+            </a>
+
+            <a class="cadastro-voltar" href="index.html">Voltar</a>
+        </div>
+    </header>
+
+    <main class="cadastro-main">
+        <div class="container cadastro-layout">
+            <section class="cadastro-copy" aria-labelledby="cadastroTitulo">
+                <h1 id="cadastroTitulo">Abra sua conta na <span>IronInvest</span></h1>
+                <p>Comece a investir com taxa zero e tenha acesso às melhores oportunidades do mercado financeiro.</p>
+
+                <div class="cadastro-beneficios" aria-label="Benefícios da conta IronInvest">
+                    <article class="cadastro-beneficio">
+                        <span class="cadastro-beneficio-icone cadastro-icone-amarelo" aria-hidden="true">✓</span>
+                        <div>
+                            <h2>Abertura 100% gratuita</h2>
+                            <p>Sem taxas de manutenção ou abertura de conta</p>
+                        </div>
+                    </article>
+
+                    <article class="cadastro-beneficio">
+                        <span class="cadastro-beneficio-icone cadastro-icone-verde" aria-hidden="true">✓</span>
+                        <div>
+                            <h2>Processo 100% digital</h2>
+                            <p>Abra sua conta em minutos, direto do seu celular</p>
+                        </div>
+                    </article>
+
+                    <article class="cadastro-beneficio">
+                        <span class="cadastro-beneficio-icone cadastro-icone-amarelo" aria-hidden="true">✓</span>
+                        <div>
+                            <h2>Segurança e transparência</h2>
+                            <p>Regulamentada pela CVM e protegida pelo FGC</p>
+                        </div>
+                    </article>
+                </div>
+
+                <aside class="cadastro-seguranca" aria-label="Selos de segurança">
+                    <p>Seus dados estão seguros conosco</p>
+                    <div>
+                        <span>SSL 256-bit</span>
+                        <span>CVM</span>
+                        <span>FGC</span>
+                    </div>
+                </aside>
+            </section>
+
+            <section class="cadastro-card" aria-labelledby="cadastroFormTitulo">
+                <h2 id="cadastroFormTitulo">Criar minha conta</h2>
+                <p>Preencha seus dados para começar</p>
+
+                <form class="cadastro-form" action="cadastro.php" method="post" autocomplete="on">
+                    <input type="hidden" name="origem" value="site_ironinvest">
+
+                    <div class="cadastro-campo">
+                        <label for="cadastroNome">
+                            <span class="cadastro-label-icon cadastro-icon-user" aria-hidden="true"></span>
+                            Nome Completo
+                        </label>
+                        <input type="text" id="cadastroNome" name="nome_completo" autocomplete="name" placeholder="Digite seu nome completo" minlength="3" maxlength="120" required>
+                    </div>
+
+                    <div class="cadastro-campo">
+                        <label for="cadastroEmail">
+                            <span class="cadastro-label-icon cadastro-icon-email" aria-hidden="true"></span>
+                            E-mail
+                        </label>
+                        <input type="email" id="cadastroEmail" name="email" inputmode="email" autocomplete="email" placeholder="seu@email.com" maxlength="160" required>
+                    </div>
+
+                    <div class="cadastro-campo">
+                        <label for="cadastroCpf">
+                            <span class="cadastro-label-icon cadastro-icon-doc" aria-hidden="true"></span>
+                            CPF
+                        </label>
+                        <input type="text" id="cadastroCpf" name="cpf" inputmode="numeric" autocomplete="off" placeholder="000.000.000-00" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required>
+                    </div>
+
+                    <div class="cadastro-campo">
+                        <label for="cadastroTelefone">
+                            <span class="cadastro-label-icon cadastro-icon-phone" aria-hidden="true"></span>
+                            Telefone
+                        </label>
+                        <input type="tel" id="cadastroTelefone" name="telefone" inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" maxlength="15" required>
+                    </div>
+
+                    <div class="cadastro-campo">
+                        <label for="cadastroSenha">
+                            <span class="cadastro-label-icon cadastro-icon-lock" aria-hidden="true"></span>
+                            Senha
+                        </label>
+                        <input type="password" id="cadastroSenha" name="senha" autocomplete="new-password" placeholder="Mínimo 8 caracteres" minlength="8" maxlength="72" required>
+                    </div>
+
+                    <div class="cadastro-campo">
+                        <label for="cadastroConfirmarSenha">
+                            <span class="cadastro-label-icon cadastro-icon-lock" aria-hidden="true"></span>
+                            Confirmar Senha
+                        </label>
+                        <input type="password" id="cadastroConfirmarSenha" name="confirmar_senha" autocomplete="new-password" placeholder="Digite a senha novamente" minlength="8" maxlength="72" required>
+                    </div>
+
+                    <label class="cadastro-termos" for="cadastroTermos">
+                        <input type="checkbox" id="cadastroTermos" name="aceite_termos" value="1" required>
+                        <span>Eu li e aceito os <a href="suporte.html#perguntas">Termos de Uso</a> e a <a href="sobre.html#certificacoes">Política de Privacidade</a></span>
+                    </label>
+
+                    <button class="cadastro-submit" type="submit">
+                        Criar Conta Gratuita
+                        <span aria-hidden="true">→</span>
+                    </button>
+
+                    <p class="cadastro-login">Já tem uma conta? <a href="index.html#login">Fazer login</a></p>
+                    <p class="cadastro-status" role="status" aria-live="polite"></p>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer class="cadastro-footer">
+        <p>© 2026 <strong>IronInvest</strong>. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="site.js" defer></script>
+</body>
+</html>
