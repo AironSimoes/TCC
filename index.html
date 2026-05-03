@@ -4,23 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="IronInvest: plataforma de investimentos com simulador, produtos financeiros e atendimento especializado." />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'; upgrade-insecure-requests">
     <title>IronInvest</title>
     <link rel="shortcut icon" href="imagens/iron 512x512.png" type="image/x-icon">
     <link rel="preload" href="imagens/imagem-invest.jpeg" as="image" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        (() => {
-            try {
-                if (localStorage.getItem("ironinvest-theme") === "dark") {
-                    document.documentElement.dataset.theme = "dark";
-                }
-            } catch (erro) {
-                document.documentElement.dataset.theme = "light";
-            }
-        })();
-    </script>
+    <script src="theme-init.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -39,11 +31,11 @@
                     <span class="bar"></span>
                 </button>
                 <ul class="menu" id="main-menu">
-                    <li><a href="#">Sobre</a></li>
-                    <li><a href="#">Produtos</a></li>
-                    <li><a href="#">Análises</a></li>
-                    <li><a href="#">Educação</a></li>
-                    <li><a href="#">Suporte</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="#produtos">Produtos</a></li>
+                    <li><span class="menu-disabled" aria-disabled="true">Análises</span></li>
+                    <li><span class="menu-disabled" aria-disabled="true">Educação</span></li>
+                    <li><a href="suporte.html">Suporte</a></li>
                 </ul>
             </nav>
 
@@ -154,7 +146,7 @@
                             </label>
                             <div class="input-com-prefixo">
                                 <span>R$</span>
-                                <input type="number" id="valor" min="0" step="100" placeholder="10000" value="10000">
+                                <input type="number" id="valor" min="0" step="100" inputmode="decimal" placeholder="10000" value="10000">
                             </div>
 
                             <div class="atalhos-valor" aria-label="Valores rápidos">
@@ -532,7 +524,7 @@
 
                 <form class="newsletter-form">
                     <label class="sr-only" for="newsletterEmail">Seu melhor e-mail</label>
-                    <input type="email" id="newsletterEmail" placeholder="Seu melhor e-mail">
+                    <input type="email" id="newsletterEmail" inputmode="email" autocomplete="email" placeholder="Seu melhor e-mail">
                     <button type="submit">Inscrever-se</button>
                 </form>
             </section>
@@ -549,61 +541,61 @@
                     </ul>
 
                     <div class="footer-social" aria-label="Redes sociais">
-                        <a href="#" aria-label="Facebook">f</a>
-                        <a href="#" aria-label="Instagram">◎</a>
-                        <a href="#" aria-label="Twitter">𝕏</a>
-                        <a href="#" aria-label="YouTube">▶</a>
-                        <a href="#" aria-label="LinkedIn">in</a>
+                        <span class="footer-social-placeholder" aria-label="Facebook">f</span>
+                        <span class="footer-social-placeholder" aria-label="Instagram">◎</span>
+                        <span class="footer-social-placeholder" aria-label="Twitter">𝕏</span>
+                        <span class="footer-social-placeholder" aria-label="YouTube">▶</span>
+                        <span class="footer-social-placeholder" aria-label="LinkedIn">in</span>
                     </div>
                 </div>
 
                 <div class="footer-coluna">
                     <h3>Produtos</h3>
-                    <a href="#">Ações</a>
-                    <a href="#">Fundos Imobiliários</a>
-                    <a href="#">Tesouro Direto</a>
-                    <a href="#">CDB/LCI/LCA</a>
-                    <a href="#">Fundos de Investimento</a>
-                    <a href="#">Previdência Privada</a>
+                    <a href="#produtos">Ações</a>
+                    <a href="#produtos">Fundos Imobiliários</a>
+                    <a href="#produtos">Tesouro Direto</a>
+                    <a href="#produtos">CDB/LCI/LCA</a>
+                    <a href="#produtos">Fundos de Investimento</a>
+                    <a href="#produtos">Previdência Privada</a>
                 </div>
 
                 <div class="footer-coluna">
                     <h3>Empresa</h3>
-                    <a href="#">Sobre Nós</a>
-                    <a href="#">Carreiras</a>
-                    <a href="#">Imprensa</a>
-                    <a href="#">Investidores</a>
-                    <a href="#">Responsabilidade Social</a>
-                    <a href="#">Certificações</a>
+                    <a href="sobre.html">Sobre Nós</a>
+                    <span class="footer-link-disabled" aria-disabled="true">Carreiras</span>
+                    <span class="footer-link-disabled" aria-disabled="true">Imprensa</span>
+                    <span class="footer-link-disabled" aria-disabled="true">Investidores</span>
+                    <span class="footer-link-disabled" aria-disabled="true">Responsabilidade Social</span>
+                    <a href="sobre.html#certificacoes">Certificações</a>
                 </div>
 
                 <div class="footer-coluna">
                     <h3>Suporte</h3>
-                    <a href="#">Central de Ajuda</a>
-                    <a href="#">Como Investir</a>
-                    <a href="#">Abertura de Conta</a>
-                    <a href="#">Transferência</a>
-                    <a href="#">Regulamentações</a>
-                    <a href="#">Fale Conosco</a>
+                    <a href="suporte.html#perguntas">Central de Ajuda</a>
+                    <a href="suporte.html#perguntas">Como Investir</a>
+                    <a href="suporte.html#perguntas">Abertura de Conta</a>
+                    <a href="suporte.html#perguntas">Transferência</a>
+                    <a href="suporte.html#perguntas">Regulamentações</a>
+                    <a href="suporte.html#contato">Fale Conosco</a>
                 </div>
 
                 <div class="footer-coluna">
                     <h3>Educação</h3>
-                    <a href="#">Blog</a>
-                    <a href="#">Cursos Gratuitos</a>
-                    <a href="#">Webinars</a>
-                    <a href="#">E-books</a>
-                    <a href="#">Calculadora de Juros</a>
-                    <a href="#">Simuladores</a>
+                    <span class="footer-link-disabled" aria-disabled="true">Blog</span>
+                    <span class="footer-link-disabled" aria-disabled="true">Cursos Gratuitos</span>
+                    <span class="footer-link-disabled" aria-disabled="true">Webinars</span>
+                    <span class="footer-link-disabled" aria-disabled="true">E-books</span>
+                    <a href="#simulador">Calculadora de Juros</a>
+                    <a href="#simulador">Simuladores</a>
                 </div>
             </div>
 
             <div class="footer-base">
                 <div class="footer-legal">
                     <span>© 2026 <strong>IronInvest</strong>. Todos os direitos reservados.</span>
-                    <a href="#">Privacidade</a>
-                    <a href="#">Termos de Uso</a>
-                    <a href="#">Cookies</a>
+                    <span class="footer-link-disabled" aria-disabled="true">Privacidade</span>
+                    <span class="footer-link-disabled" aria-disabled="true">Termos de Uso</span>
+                    <span class="footer-link-disabled" aria-disabled="true">Cookies</span>
                 </div>
 
                 <div class="footer-selos">
@@ -616,311 +608,6 @@
         </div>
     </footer>
 
-    <script>
-        (() => {
-            const seletor = {
-                menuToggle: ".menu-toggle",
-                investimento: ".tipo-investimento",
-                atalhoValor: ".atalhos-valor",
-                valor: "#valor",
-                prazo: "#prazo",
-                valorFinal: "#valorFinal",
-                valorInvestido: "#valorInvestido",
-                rendimento: "#rendimento",
-                prazoValor: "#prazoValor",
-                taxaResumo: "#taxaResumo",
-                rentabilidade: "#rentabilidade",
-                carrossel: "[data-carousel]",
-                carrosselTrack: "[data-carousel-track]",
-                carrosselAnterior: "[data-carousel-prev]",
-                carrosselProximo: "[data-carousel-next]",
-                carrosselPontos: "[data-carousel-dots]",
-                newsletter: ".newsletter-form",
-                temaBotao: ".theme-btn",
-                temaIcone: ".theme-btn img"
-            };
-
-            const moeda = new Intl.NumberFormat("pt-BR", {
-                style: "currency",
-                currency: "BRL"
-            });
-
-            const elementos = {
-                menuToggle: document.querySelector(seletor.menuToggle),
-                menu: document.getElementById("main-menu"),
-                investimento: document.querySelector(seletor.investimento),
-                atalhoValor: document.querySelector(seletor.atalhoValor),
-                valor: document.querySelector(seletor.valor),
-                prazo: document.querySelector(seletor.prazo),
-                valorFinal: document.querySelector(seletor.valorFinal),
-                valorInvestido: document.querySelector(seletor.valorInvestido),
-                rendimento: document.querySelector(seletor.rendimento),
-                prazoValor: document.querySelector(seletor.prazoValor),
-                taxaResumo: document.querySelector(seletor.taxaResumo),
-                rentabilidade: document.querySelector(seletor.rentabilidade),
-                carrossel: document.querySelector(seletor.carrossel),
-                carrosselTrack: document.querySelector(seletor.carrosselTrack),
-                carrosselAnterior: document.querySelector(seletor.carrosselAnterior),
-                carrosselProximo: document.querySelector(seletor.carrosselProximo),
-                carrosselPontos: document.querySelector(seletor.carrosselPontos),
-                newsletter: document.querySelector(seletor.newsletter),
-                temaBotao: document.querySelector(seletor.temaBotao),
-                temaIcone: document.querySelector(seletor.temaIcone)
-            };
-
-            const chaveTema = "ironinvest-theme";
-            const iconeLua = "imagens/lua_16_x_16.png";
-            const iconeSol = "imagens/brightness_9253338.png";
-            let taxaMensal = 0.0115;
-
-            const formatarMoeda = (valor) => moeda.format(valor);
-            const textoMeses = (meses) => meses === 1 ? "1 mês" : `${meses} meses`;
-
-            function definirTema(tema, salvar = true) {
-                const escuro = tema === "dark";
-                document.documentElement.dataset.theme = escuro ? "dark" : "light";
-
-                elementos.temaBotao?.setAttribute("aria-pressed", String(escuro));
-                elementos.temaBotao?.setAttribute("aria-label", escuro ? "Ativar modo claro" : "Ativar modo escuro");
-
-                if (elementos.temaIcone) {
-                    elementos.temaIcone.src = escuro ? iconeSol : iconeLua;
-                }
-
-                if (!salvar) return;
-
-                try {
-                    localStorage.setItem(chaveTema, escuro ? "dark" : "light");
-                } catch (erro) {
-                    // O tema ainda funciona mesmo se o navegador bloquear o armazenamento.
-                }
-            }
-
-            function alternarTema() {
-                const temaAtual = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
-                definirTema(temaAtual === "dark" ? "light" : "dark");
-            }
-
-            function alternarMenu() {
-                if (!elementos.menuToggle || !elementos.menu) return;
-
-                const menuAberto = elementos.menu.classList.toggle("open");
-                elementos.menuToggle.setAttribute("aria-expanded", String(menuAberto));
-            }
-
-            function calcularSimulacao() {
-                const valor = Math.max(Number(elementos.valor?.value) || 0, 0);
-                const meses = Math.max(Number(elementos.prazo?.value) || 1, 1);
-                const montante = valor * Math.pow(1 + taxaMensal, meses);
-                const lucro = montante - valor;
-                const percentual = valor > 0 ? (lucro / valor) * 100 : 0;
-
-                elementos.valorFinal.textContent = formatarMoeda(montante);
-                elementos.valorInvestido.textContent = formatarMoeda(valor);
-                elementos.rendimento.textContent = `+ ${formatarMoeda(lucro)}`;
-                elementos.rentabilidade.textContent = `+${percentual.toFixed(2).replace(".", ",")}%`;
-                elementos.prazoValor.textContent = textoMeses(meses);
-            }
-
-            function selecionarInvestimento(evento) {
-                const botao = evento.target.closest("button[data-taxa]");
-                if (!botao) return;
-
-                elementos.investimento.querySelectorAll("button").forEach((item) => {
-                    item.classList.toggle("ativo", item === botao);
-                    item.setAttribute("aria-pressed", String(item === botao));
-                });
-
-                taxaMensal = Number(botao.dataset.taxa) || 0.0115;
-                elementos.taxaResumo.textContent = botao.dataset.resumo || "1.15% ao mês";
-                calcularSimulacao();
-            }
-
-            function aplicarValorRapido(evento) {
-                const botao = evento.target.closest("button[data-valor]");
-                if (!botao) return;
-
-                elementos.valor.value = botao.dataset.valor || "10000";
-                calcularSimulacao();
-            }
-
-            function iniciarCarrossel() {
-                const {
-                    carrossel,
-                    carrosselTrack,
-                    carrosselAnterior,
-                    carrosselProximo,
-                    carrosselPontos
-                } = elementos;
-
-                if (!carrossel || !carrosselTrack || !carrosselPontos) return;
-
-                const cards = Array.from(carrosselTrack.children);
-                let paginaAtual = 0;
-                let totalPaginas = 1;
-                let inicioToque = 0;
-                let quadroResize = 0;
-                let autoplayCarrossel = 0;
-                const intervaloAutoplay = 5000;
-
-                const cardsPorTela = () => {
-                    const valor = getComputedStyle(carrosselTrack).getPropertyValue("--cards-visiveis");
-                    return Math.max(parseInt(valor, 10) || 1, 1);
-                };
-
-                function irParaPagina(pagina) {
-                    totalPaginas = Math.max(Math.ceil(cards.length / cardsPorTela()), 1);
-                    paginaAtual = (pagina + totalPaginas) % totalPaginas;
-                    atualizarCarrossel();
-                }
-
-                function criarPontos() {
-                    const pontos = Array.from({ length: totalPaginas }, (_, indice) => (
-                        `<button type="button" aria-label="Mostrar grupo ${indice + 1}" data-carousel-page="${indice}"></button>`
-                    ));
-
-                    carrosselPontos.innerHTML = pontos.join("");
-                }
-
-                function atualizarCarrossel() {
-                    const visiveis = cardsPorTela();
-                    const paginasCalculadas = Math.max(Math.ceil(cards.length / visiveis), 1);
-
-                    if (paginasCalculadas !== totalPaginas) {
-                        totalPaginas = paginasCalculadas;
-                        paginaAtual = Math.min(paginaAtual, totalPaginas - 1);
-                        criarPontos();
-                    }
-
-                    const gap = parseFloat(getComputedStyle(carrosselTrack).gap) || 0;
-                    const larguraCard = cards[0]?.getBoundingClientRect().width || 0;
-                    const deslocamento = paginaAtual * visiveis * (larguraCard + gap);
-
-                    carrosselTrack.style.transform = `translate3d(${-deslocamento}px, 0, 0)`;
-
-                    cards.forEach((card, indice) => {
-                        const inicio = paginaAtual * visiveis;
-                        const fim = inicio + visiveis;
-                        const escondido = indice < inicio || indice >= fim;
-                        const botao = card.querySelector("button");
-
-                        card.setAttribute("aria-hidden", String(escondido));
-                        if (botao) botao.tabIndex = escondido ? -1 : 0;
-                    });
-
-                    carrosselPontos.querySelectorAll("button").forEach((ponto, indice) => {
-                        const ativo = indice === paginaAtual;
-                        ponto.classList.toggle("ativo", ativo);
-                        ponto.setAttribute("aria-current", ativo ? "true" : "false");
-                    });
-                }
-
-                function pausarAutoplay() {
-                    clearInterval(autoplayCarrossel);
-                    autoplayCarrossel = 0;
-                }
-
-                function iniciarAutoplay() {
-                    pausarAutoplay();
-                    if (totalPaginas <= 1) return;
-                    autoplayCarrossel = setInterval(() => {
-                        irParaPagina(paginaAtual + 1);
-                    }, intervaloAutoplay);
-                }
-
-                function reiniciarAutoplay() {
-                    pausarAutoplay();
-                    iniciarAutoplay();
-                }
-
-                carrosselAnterior?.addEventListener("click", () => {
-                    irParaPagina(paginaAtual - 1);
-                    reiniciarAutoplay();
-                });
-
-                carrosselProximo?.addEventListener("click", () => {
-                    irParaPagina(paginaAtual + 1);
-                    reiniciarAutoplay();
-                });
-
-                carrosselPontos.addEventListener("click", (evento) => {
-                    const ponto = evento.target.closest("button[data-carousel-page]");
-                    if (!ponto) return;
-                    irParaPagina(Number(ponto.dataset.carouselPage) || 0);
-                    reiniciarAutoplay();
-                });
-
-                carrossel.addEventListener("keydown", (evento) => {
-                    if (evento.key === "ArrowLeft") {
-                        irParaPagina(paginaAtual - 1);
-                        reiniciarAutoplay();
-                    }
-
-                    if (evento.key === "ArrowRight") {
-                        irParaPagina(paginaAtual + 1);
-                        reiniciarAutoplay();
-                    }
-                });
-
-                carrossel.addEventListener("pointerdown", (evento) => {
-                    inicioToque = evento.clientX;
-                    pausarAutoplay();
-                });
-
-                carrossel.addEventListener("pointerup", (evento) => {
-                    const distancia = evento.clientX - inicioToque;
-                    if (Math.abs(distancia) >= 45) {
-                        irParaPagina(distancia > 0 ? paginaAtual - 1 : paginaAtual + 1);
-                    }
-
-                    iniciarAutoplay();
-                });
-
-                carrossel.addEventListener("mouseenter", pausarAutoplay);
-                carrossel.addEventListener("mouseleave", iniciarAutoplay);
-                carrossel.addEventListener("focusin", pausarAutoplay);
-                carrossel.addEventListener("focusout", iniciarAutoplay);
-
-                document.addEventListener("visibilitychange", () => {
-                    if (document.hidden) {
-                        pausarAutoplay();
-                        return;
-                    }
-
-                    iniciarAutoplay();
-                });
-
-                window.addEventListener("resize", () => {
-                    cancelAnimationFrame(quadroResize);
-                    quadroResize = requestAnimationFrame(() => {
-                        atualizarCarrossel();
-                        reiniciarAutoplay();
-                    });
-                });
-                totalPaginas = Math.max(Math.ceil(cards.length / cardsPorTela()), 1);
-                criarPontos();
-                atualizarCarrossel();
-                iniciarAutoplay();
-            }
-
-            elementos.menuToggle?.addEventListener("click", alternarMenu);
-            elementos.investimento?.addEventListener("click", selecionarInvestimento);
-            elementos.atalhoValor?.addEventListener("click", aplicarValorRapido);
-            elementos.valor?.addEventListener("input", calcularSimulacao);
-            elementos.prazo?.addEventListener("input", calcularSimulacao);
-            elementos.temaBotao?.addEventListener("click", alternarTema);
-            elementos.newsletter?.addEventListener("submit", (evento) => {
-                evento.preventDefault();
-            });
-
-            definirTema(document.documentElement.dataset.theme === "dark" ? "dark" : "light", false);
-
-            if (elementos.valor && elementos.prazo) {
-                calcularSimulacao();
-            }
-
-            iniciarCarrossel();
-        })();
-    </script>
+    <script src="site.js" defer></script>
 </body>
 </html>
