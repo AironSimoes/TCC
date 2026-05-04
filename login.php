@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-require __DIR__ . '/auth.php';
+require __DIR__ . '/app/auth.php';
 
 ironinvest_iniciar_sessao();
 
@@ -9,11 +9,49 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     ironinvest_redirecionar('index.html#login');
 }
 
-$email = trim($_POST['email'] ?? '');
+function ironinvest_login_responder_json(array $dados, int $status): never
+{
+    http_response_code($status);
+    ironinvest_header_json();
+    echo json_encode($dados, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+function ironinvest_login_falhar(string $destinoErro, bool $responderJson): never
+{
+    if ($responderJson) {
+        ironinvest_login_responder_json([
+            'sucesso' => false,
+            'erro' => 'E-mail ou senha invalidos.',
+        ], 401);
+    }
+
+    ironinvest_redirecionar('index.html?login=erro' . $destinoErro . '#login');
+}
+
+function ironinvest_login_sucesso(string $destino, bool $responderJson): never
+{
+    if ($responderJson) {
+        ironinvest_login_responder_json([
+            'sucesso' => true,
+            'mensagem' => 'Login realizado com sucesso.',
+        ], 200);
+    }
+
+    ironinvest_redirecionar($destino);
+}
+
+$email = strtolower(trim($_POST['email'] ?? ''));
 $senha = $_POST['senha'] ?? '';
+$destinoInformado = trim($_POST['destino'] ?? '');
+$destino = ironinvest_destino_login($destinoInformado);
+$destinoErro = ironinvest_destino_permitido($destinoInformado)
+    ? '&destino=' . rawurlencode($destinoInformado)
+    : '';
+$responderJson = str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json');
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($senha) < 8) {
-    ironinvest_redirecionar('index.html?login=erro#login');
+    ironinvest_login_falhar($destinoErro, $responderJson);
 }
 
 try {
@@ -25,7 +63,7 @@ try {
     $cliente = $stmt->fetch();
 
     if (!$cliente || !password_verify($senha, $cliente['senha_hash'])) {
-        ironinvest_redirecionar('index.html?login=erro#login');
+        ironinvest_login_falhar($destinoErro, $responderJson);
     }
 
     session_regenerate_id(true);
@@ -34,7 +72,10 @@ try {
     $_SESSION['cliente_email'] = $cliente['email'];
     $_SESSION['logado_em'] = time();
 
-    ironinvest_redirecionar('index.html?login=sessao');
+    $stmt = $pdo->prepare('UPDATE clientes SET ultimo_login_em = NOW() WHERE id = :id');
+    $stmt->execute([':id' => (int) $cliente['id']]);
+
+    ironinvest_login_sucesso($destino, $responderJson);
 } catch (PDOException $erro) {
-    ironinvest_redirecionar('index.html?login=erro#login');
+    ironinvest_login_falhar($destinoErro, $responderJson);
 }

@@ -76,10 +76,11 @@
     };
 
     const chaveTema = "ironinvest-theme";
-    const iconeLua = "imagens/lua_16_x_16.png";
-    const iconeSol = "imagens/brightness_9253338.png";
+    const iconeLua = "assets/img/lua_16_x_16.png";
+    const iconeSol = "assets/img/brightness_9253338.png";
     let taxaMensal = 0.0115;
     let focoAntesLogin = null;
+    let usuarioLogado = false;
 
     const formatarMoeda = (valor) => moeda.format(valor);
     const somenteDigitos = (valor) => valor.replace(/\D/g, "");
@@ -89,10 +90,173 @@
         document.cookie = `${nome}=${encodeURIComponent(valor)}; Max-Age=${maxAge}; Path=/; SameSite=Lax${seguro}`;
     }
 
+    function parametroBusca(nome) {
+        return new URLSearchParams(window.location.search).get(nome) || "";
+    }
+
     function parametrosLogin() {
-        return new URLSearchParams(window.location.search).get("login") || "";
+        return parametroBusca("login");
+    }
+
+    function parametrosCadastro() {
+        return parametroBusca("cadastro");
+    }
+
+    function destinoLoginAtual() {
+        const destino = parametroBusca("destino");
+
+        if (!destino || destino.includes("://")) {
+            return "";
+        }
+
+        return destino;
+    }
+
+    function limparUrlLogin() {
+        if (!window.history?.replaceState) return;
+
+        const url = new URL(window.location.href);
+        url.searchParams.delete("login");
+        url.searchParams.delete("cadastro");
+        url.searchParams.delete("destino");
+
+        if (url.hash === "#login") {
+            url.hash = "";
+        }
+
+        window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    }
+
+    function preencherDestinoLogin() {
+        if (!elementos.loginForm) return;
+
+        const destino = destinoLoginAtual();
+        let campo = elementos.loginForm.querySelector('input[name="destino"]');
+
+        if (!destino) {
+            campo?.remove();
+            return;
+        }
+
+        if (!campo) {
+            campo = document.createElement("input");
+            campo.type = "hidden";
+            campo.name = "destino";
+            elementos.loginForm.append(campo);
+        }
+
+        campo.value = destino;
+    }
+
+    async function carregarSessao() {
+        if (window.location.protocol === "file:") return;
+
+        try {
+            const resposta = await fetch("sessao.php", {
+                headers: {
+                    Accept: "application/json"
+                },
+                credentials: "same-origin"
+            });
+
+            if (!resposta.ok) return;
+
+            const sessao = await resposta.json();
+            usuarioLogado = Boolean(sessao.logado);
+
+            if (!elementos.loginBotao) return;
+
+            const textoBotao = elementos.loginBotao.querySelector("span");
+
+            if (usuarioLogado) {
+                textoBotao && (textoBotao.textContent = "Sair");
+                elementos.loginBotao.removeAttribute("aria-haspopup");
+                elementos.loginBotao.removeAttribute("aria-controls");
+                elementos.loginBotao.setAttribute("aria-label", "Sair da conta");
+            } else {
+                textoBotao && (textoBotao.textContent = "Entrar");
+                elementos.loginBotao.setAttribute("aria-haspopup", "dialog");
+                elementos.loginBotao.setAttribute("aria-controls", "loginModal");
+                elementos.loginBotao.removeAttribute("aria-label");
+            }
+        } catch (erro) {
+            // Sem sessao carregada, o login continua funcionando pelo formulario.
+        }
     }
     const textoMeses = (meses) => meses === 1 ? "1 mês" : `${meses} meses`;
+
+    async function enviarLogin(evento) {
+        if (!elementos.loginForm) return;
+
+        if (!elementos.loginForm.checkValidity()) {
+            evento.preventDefault();
+            elementos.loginForm.reportValidity();
+            return;
+        }
+
+        preencherDestinoLogin();
+
+        if (window.location.protocol === "file:") {
+            evento.preventDefault();
+            if (elementos.loginStatus) {
+                elementos.loginStatus.textContent = "Login validado. Rode em PHP para criar a sessao.";
+            }
+            elementos.loginForm.reset();
+            return;
+        }
+
+        const destino = elementos.loginForm.querySelector('input[name="destino"]')?.value || "";
+
+        if (destino) {
+            return;
+        }
+
+        evento.preventDefault();
+
+        const botao = elementos.loginForm.querySelector('[type="submit"]');
+
+        if (botao) {
+            botao.disabled = true;
+        }
+        elementos.loginForm.setAttribute("aria-busy", "true");
+
+        if (elementos.loginStatus) {
+            elementos.loginStatus.textContent = "Verificando login...";
+        }
+
+        try {
+            const resposta = await fetch(elementos.loginForm.action, {
+                method: "POST",
+                body: new FormData(elementos.loginForm),
+                headers: {
+                    Accept: "application/json"
+                },
+                credentials: "same-origin"
+            });
+            const dados = await resposta.json().catch(() => ({}));
+
+            if (!resposta.ok) {
+                if (elementos.loginStatus) {
+                    elementos.loginStatus.textContent = dados.erro || "E-mail ou senha invalidos.";
+                }
+                return;
+            }
+
+            elementos.loginForm.reset();
+            fecharLogin();
+            limparUrlLogin();
+            await carregarSessao();
+        } catch (erro) {
+            if (elementos.loginStatus) {
+                elementos.loginStatus.textContent = "Nao foi possivel conectar ao servidor agora.";
+            }
+        } finally {
+            if (botao) {
+                botao.disabled = false;
+            }
+            elementos.loginForm.removeAttribute("aria-busy");
+        }
+    }
 
     function definirTema(tema, salvar = true) {
         const escuro = tema === "dark";
@@ -248,7 +412,7 @@
             && calcularDigito(cpf.slice(0, 10)) === Number(cpf[10]);
     }
 
-    function validarCadastro(evento) {
+    async function validarCadastro(evento) {
         if (!elementos.cadastroForm) return;
 
         const senha = elementos.cadastroSenha?.value || "";
@@ -270,6 +434,65 @@
             evento.preventDefault();
             if (elementos.cadastroStatus) {
                 elementos.cadastroStatus.textContent = "Formulário validado. Ao conectar o PHP, envie para cadastro.php.";
+            }
+            return;
+        }
+
+        evento.preventDefault();
+
+        const botao = elementos.cadastroForm.querySelector('[type="submit"]');
+        let redirecionando = false;
+
+        if (botao) {
+            botao.disabled = true;
+        }
+        elementos.cadastroForm.setAttribute("aria-busy", "true");
+
+        if (elementos.cadastroStatus) {
+            elementos.cadastroStatus.textContent = "Criando sua conta...";
+        }
+
+        try {
+            const resposta = await fetch(elementos.cadastroForm.action, {
+                method: "POST",
+                body: new FormData(elementos.cadastroForm),
+                headers: {
+                    Accept: "application/json"
+                },
+                credentials: "same-origin"
+            });
+            const dados = await resposta.json().catch(() => ({}));
+
+            if (!resposta.ok) {
+                const erros = dados.erros ? Object.values(dados.erros).filter(Boolean) : [];
+                const mensagem = erros[0] || dados.erro || "Nao foi possivel criar sua conta agora.";
+
+                if (elementos.cadastroStatus) {
+                    elementos.cadastroStatus.textContent = mensagem;
+                }
+                return;
+            }
+
+            redirecionando = true;
+            elementos.cadastroForm.reset();
+
+            if (elementos.cadastroStatus) {
+                elementos.cadastroStatus.textContent = "Conta criada com sucesso. Redirecionando para o login...";
+            }
+
+            window.setTimeout(() => {
+                window.location.href = "index.html?cadastro=sucesso#login";
+            }, 800);
+        } catch (erro) {
+            if (elementos.cadastroStatus) {
+                elementos.cadastroStatus.textContent = "Nao foi possivel conectar ao servidor agora.";
+            }
+        } finally {
+            if (!redirecionando && botao) {
+                botao.disabled = false;
+            }
+            if (!redirecionando) {
+                elementos.cadastroForm.removeAttribute("aria-busy");
             }
         }
     }
@@ -464,25 +687,18 @@
     });
     elementos.cadastroForm?.addEventListener("submit", validarCadastro);
     elementos.temaBotao?.addEventListener("click", alternarTema);
-    elementos.loginBotao?.addEventListener("click", abrirLogin);
-    elementos.loginFechar.forEach((controle) => {
-        controle.addEventListener("click", fecharLogin);
-    });
-    elementos.loginForm?.addEventListener("submit", (evento) => {
-        if (!elementos.loginForm.checkValidity()) {
-            evento.preventDefault();
-            elementos.loginForm.reportValidity();
+    elementos.loginBotao?.addEventListener("click", () => {
+        if (usuarioLogado) {
+            window.location.href = "logout.php";
             return;
         }
 
-        if (window.location.protocol === "file:") {
-            evento.preventDefault();
-            if (elementos.loginStatus) {
-                elementos.loginStatus.textContent = "Login validado. Rode em PHP para criar a sessão.";
-            }
-            elementos.loginForm.reset();
-        }
+        abrirLogin();
     });
+    elementos.loginFechar.forEach((controle) => {
+        controle.addEventListener("click", fecharLogin);
+    });
+    elementos.loginForm?.addEventListener("submit", enviarLogin);
     elementos.newsletter?.addEventListener("submit", (evento) => {
         evento.preventDefault();
     });
@@ -497,6 +713,8 @@
     });
 
     definirTema(document.documentElement.dataset.theme === "dark" ? "dark" : "light", false);
+    preencherDestinoLogin();
+    carregarSessao();
 
     if (elementos.valor && elementos.prazo) {
         calcularSimulacao();
@@ -504,7 +722,17 @@
 
     iniciarCarrossel();
 
-    if (parametrosLogin() === "erro") {
+    if (parametrosCadastro() === "sucesso") {
+        abrirLogin();
+        if (elementos.loginStatus) {
+            elementos.loginStatus.textContent = "Conta criada com sucesso. Faca login para continuar.";
+        }
+    } else if (parametrosLogin() === "necessario") {
+        abrirLogin();
+        if (elementos.loginStatus) {
+            elementos.loginStatus.textContent = "Faca login para acessar essa area.";
+        }
+    } else if (parametrosLogin() === "erro") {
         abrirLogin();
         if (elementos.loginStatus) {
             elementos.loginStatus.textContent = "E-mail ou senha inválidos.";

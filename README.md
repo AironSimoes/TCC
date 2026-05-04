@@ -1,48 +1,63 @@
-# Teste de Responsividade — IronInvest
+# IronInvest
 
-Resumo
-- Instruções rápidas para verificar comportamento responsivo do projeto e checklist de verificação.
+Projeto web em HTML, CSS, JavaScript, PHP e MySQL com cadastro, login e áreas protegidas por sessão.
 
-Como abrir localmente
-1. Abra um terminal na pasta do projeto (`index.html` está na raiz).
-2. Inicie um servidor simples (recomendado):
+## Rodar Localmente
 
-```bash
-python -m http.server 8000
+1. Abra o XAMPP.
+2. Ligue `Apache` e `MySQL`.
+3. No PowerShell, dentro da pasta do projeto, rode:
+
+```powershell
+C:\xampp\php\php.exe -S 127.0.0.1:8000 -t C:\Users\USER\Documents\TCC
 ```
 
-Abra no navegador: http://localhost:8000
+4. Abra no navegador:
 
-Passos de verificação (manual)
-- Abra as Ferramentas de Desenvolvedor (F12) → ícone de dispositivo (Toggle device toolbar) e teste nos seguintes breakpoints: 480px, 768px, 1024px.
-- Verifique o cabeçalho fixo: o logo, o botão hambúrguer e as ações devem permanecer acessíveis e não sobrepor o conteúdo.
-- Teste o menu móvel: clique no botão hambúrguer e confirme que o menu aparece/fecha (ver `aria-expanded`).
-- Imagens: confirme que `imagem-invest.jpeg` escala proporcionalmente e não causa overflow.
-- Botões: `Abrir conta` e `Simular Investimentos` devem ser facilmente acionáveis em touch (tamanho e espaçamento).
-- Fontes: a família `Inter` deve carregar; verifique ausência de flash de layout (FOIT/FOUT) rápido.
-- Performance: execute Lighthouse (Desktop e Mobile) para checar pontuações de Performance/Accessibility/Best Practices.
+```text
+http://127.0.0.1:8000/index.html
+```
 
-Checklist (marcar manualmente)
-- [ ] Header fixo sem sobreposição no conteúdo
-- [ ] Menu móvel abre/fecha corretamente (teclado e toque)
-- [ ] Imagens responsivas com `max-width:100%` e `height:auto`
-- [ ] Textos legíveis em 320–1440px
-- [ ] Botões com targets táteis adequados (>44px)
-- [ ] Fontes carregam com `preconnect` e `display=swap`
-- [ ] Lighthouse: Performance >= 80 (desktop), Accessibility >= 90
+## Banco De Dados Local
 
-Sugestões adicionais
-- Otimizar imagens (WebP e diferentes tamanhos + srcset) para melhorar LCP e transferência.
-- Incluir atributos `rel="preload"` para fontes críticas caso perceba atraso no carregamento.
-- Considerar lazy-loading condicional para imagens acima da dobra apenas quando necessário.
+Importe `database/banco.sql` no phpMyAdmin local:
 
-Se quiser, eu posso:
-- Gerar versões otimizadas das imagens (WebP + srcset).
-- Executar um checklist automatizado com Lighthouse (se você autorizar execução localmente).
+```text
+http://localhost/phpmyadmin
+```
 
-Arquivo(s) alterado(s)
-- [index.html](index.html)
-- [style.css](style.css)
+O arquivo cria o banco `ironinvest` e a tabela `clientes`.
 
----
-Arquivo gerado automaticamente para auxiliar nos testes de responsividade.
+## InfinityFree
+
+No InfinityFree, primeiro crie o banco pelo painel. Depois importe `database/banco-infinityfree.sql` no phpMyAdmin do próprio InfinityFree.
+
+Para configurar a conexão, copie os dados do painel para `app/config.php`:
+
+```php
+return [
+    'db_dsn' => 'mysql:host=sqlXXX.infinityfree.com;dbname=if0_00000000_ironinvest;charset=utf8mb4',
+    'db_user' => 'if0_00000000',
+    'db_pass' => 'SUA_SENHA_DO_INFINITYFREE',
+];
+```
+
+## Arquivos Principais
+
+- `index.html`: página inicial.
+- `cadastro.html` e `cadastro.php`: criação de conta.
+- `login.php`, `logout.php` e `sessao.php`: autenticação.
+- `acesso.php`: roteador das áreas protegidas.
+- `sobre.php`, `suporte.php` e `area-restrita.php`: páginas acessíveis apenas com login.
+- `app/auth.php`: sessão, conexão PDO e funções compartilhadas.
+- `app/config.php`: configuração do banco.
+- `assets/css/style.css` e `assets/js/site.js`: visual e interações.
+- `assets/img/`: imagens do site.
+- `database/`: scripts SQL para banco local e InfinityFree.
+
+## Checklist Rápido
+
+- Use o site sempre por `http://127.0.0.1:8000/index.html`, não abrindo o HTML direto pelo explorador.
+- Ao testar cadastro/login, confirme que o MySQL está ligado.
+- Para recriar o banco local, importe `database/banco.sql`.
+- Para subir no InfinityFree, importe `database/banco-infinityfree.sql` e ajuste `app/config.php`.

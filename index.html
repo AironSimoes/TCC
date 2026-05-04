@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br" data-theme="light">
 <head>
     <meta charset="UTF-8" />
@@ -7,20 +7,20 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self'; upgrade-insecure-requests">
     <title>IronInvest</title>
-    <link rel="shortcut icon" href="imagens/iron 512x512.png" type="image/x-icon">
-    <link rel="preload" href="imagens/imagem-invest.jpeg" as="image" fetchpriority="high">
+    <link rel="shortcut icon" href="assets/img/iron 512x512.png" type="image/x-icon">
+    <link rel="preload" href="assets/img/imagem-invest.jpeg" as="image" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="theme-init.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <script src="assets/js/theme-init.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
     <header class="header">
         <div class="container header-container">
             <a href="index.html" class="logo-link">
-                <img src="imagens/iron 300x80.png" alt="Logo IronInvest" class="logo" width="300" height="80" decoding="async">
+                <img src="assets/img/iron 300x80.png" alt="Logo IronInvest" class="logo" width="300" height="80" decoding="async">
             </a>
 
             <nav class="nav" role="navigation" aria-label="Menu principal">
@@ -31,20 +31,20 @@
                     <span class="bar"></span>
                 </button>
                 <ul class="menu" id="main-menu">
-                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="acesso.php?pagina=sobre">Sobre</a></li>
                     <li><a href="#produtos">Produtos</a></li>
-                    <li><span class="menu-disabled" aria-disabled="true">Análises</span></li>
-                    <li><span class="menu-disabled" aria-disabled="true">Educação</span></li>
-                    <li><a href="suporte.html">Suporte</a></li>
+                    <li><a class="menu-restrito" href="acesso.php?pagina=analises">Análises</a></li>
+                    <li><a class="menu-restrito" href="acesso.php?pagina=educacao">Educação</a></li>
+                    <li><a href="acesso.php?pagina=suporte">Suporte</a></li>
                 </ul>
             </nav>
 
             <div class="actions">
                 <button class="theme-btn" type="button" aria-label="Ativar modo escuro" aria-pressed="false">
-                    <img src="imagens/lua_16_x_16.png" alt="" width="16" height="16" decoding="async">
+                    <img src="assets/img/lua_16_x_16.png" alt="" width="16" height="16" decoding="async">
                 </button>
                 <button class="login-btn" type="button" aria-haspopup="dialog" aria-controls="loginModal">
-                    <img src="imagens/user_16_x_16.png" alt="" width="16" height="16" decoding="async">
+                    <img src="assets/img/user_16_x_16.png" alt="" width="16" height="16" decoding="async">
                     <span>Entrar</span>
                 </button>
                 <a class="primary-btn" href="cadastro.html">Abrir Conta</a>
@@ -143,7 +143,7 @@
 
                     <img
                         class="img-invest"
-                        src="imagens/imagem-invest.jpeg"
+                        src="assets/img/imagem-invest.jpeg"
                         alt="Pessoa montando blocos de madeira demonstrando crescimento"
                         width="1080"
                         height="720"
@@ -599,22 +599,22 @@
 
                 <div class="footer-coluna">
                     <h3>Empresa</h3>
-                    <a href="sobre.html">Sobre Nós</a>
+                    <a href="acesso.php?pagina=sobre">Sobre Nós</a>
                     <span class="footer-link-disabled" aria-disabled="true">Carreiras</span>
                     <span class="footer-link-disabled" aria-disabled="true">Imprensa</span>
                     <span class="footer-link-disabled" aria-disabled="true">Investidores</span>
                     <span class="footer-link-disabled" aria-disabled="true">Responsabilidade Social</span>
-                    <a href="sobre.html#certificacoes">Certificações</a>
+                    <a href="acesso.php?pagina=sobre&amp;ancora=certificacoes">Certificações</a>
                 </div>
 
                 <div class="footer-coluna">
                     <h3>Suporte</h3>
-                    <a href="suporte.html#perguntas">Central de Ajuda</a>
-                    <a href="suporte.html#perguntas">Como Investir</a>
-                    <a href="suporte.html#perguntas">Abertura de Conta</a>
-                    <a href="suporte.html#perguntas">Transferência</a>
-                    <a href="suporte.html#perguntas">Regulamentações</a>
-                    <a href="suporte.html#contato">Fale Conosco</a>
+                    <a href="acesso.php?pagina=suporte&amp;ancora=perguntas">Central de Ajuda</a>
+                    <a href="acesso.php?pagina=suporte&amp;ancora=perguntas">Como Investir</a>
+                    <a href="acesso.php?pagina=suporte&amp;ancora=perguntas">Abertura de Conta</a>
+                    <a href="acesso.php?pagina=suporte&amp;ancora=perguntas">Transferência</a>
+                    <a href="acesso.php?pagina=suporte&amp;ancora=perguntas">Regulamentações</a>
+                    <a href="acesso.php?pagina=suporte&amp;ancora=contato">Fale Conosco</a>
                 </div>
 
                 <div class="footer-coluna">
@@ -646,6 +646,6 @@
         </div>
     </footer>
 
-    <script src="site.js" defer></script>
+    <script src="assets/js/site.js" defer></script>
 </body>
 </html>

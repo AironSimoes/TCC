@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-header('Content-Type: application/json; charset=utf-8');
+require __DIR__ . '/app/auth.php';
+
+ironinvest_header_json();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -38,7 +40,7 @@ function cpf_valido(string $cpf): bool
 }
 
 $nome = trim($_POST['nome_completo'] ?? '');
-$email = trim($_POST['email'] ?? '');
+$email = strtolower(trim($_POST['email'] ?? ''));
 $cpf = somente_digitos($_POST['cpf'] ?? '');
 $telefone = somente_digitos($_POST['telefone'] ?? '');
 $senha = $_POST['senha'] ?? '';
@@ -84,15 +86,7 @@ if ($erros !== []) {
 $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
 try {
-    $dsn = getenv('DB_DSN') ?: 'mysql:host=localhost;dbname=ironinvest;charset=utf8mb4';
-    $usuario = getenv('DB_USER') ?: 'root';
-    $senhaBanco = getenv('DB_PASS') ?: '';
-
-    $pdo = new PDO($dsn, $usuario, $senhaBanco, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES => false,
-    ]);
+    $pdo = ironinvest_pdo();
 
     $sql = <<<SQL
         INSERT INTO clientes (nome_completo, email, cpf, telefone, senha_hash, aceite_termos, criado_em)
@@ -110,8 +104,18 @@ try {
     ]);
 
     http_response_code(201);
-    echo json_encode(['sucesso' => true, 'mensagem' => 'Conta criada com sucesso.']);
+    echo json_encode(['sucesso' => true, 'mensagem' => 'Conta criada com sucesso.'], JSON_UNESCAPED_UNICODE);
 } catch (PDOException $erro) {
+    if ($erro->getCode() === '23000') {
+        http_response_code(409);
+        echo json_encode([
+            'erros' => [
+                'email' => 'E-mail ou CPF ja cadastrado.',
+            ],
+        ], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
     http_response_code(500);
-    echo json_encode(['erro' => 'Nao foi possivel concluir o cadastro agora.']);
+    echo json_encode(['erro' => 'Nao foi possivel concluir o cadastro agora.'], JSON_UNESCAPED_UNICODE);
 }

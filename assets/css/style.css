@@ -1,4 +1,4 @@
-﻿@charset "UTF-8";
+@charset "UTF-8";
 
 :root {
     --color-page: #f3efe0;
@@ -135,7 +135,7 @@ summary {
 }
 
 .menu a,
-.menu-disabled {
+.menu-restrito {
     text-decoration: none;
     font-size: 14px;
     line-height: 1.2;
@@ -143,8 +143,8 @@ summary {
     font-weight: 600;
 }
 
-.menu-disabled {
-    cursor: default;
+.menu-restrito {
+    cursor: pointer;
 }
 
 .menu a:hover {
@@ -412,6 +412,13 @@ body.login-modal-aberto {
 
 .login-submit:hover {
     filter: brightness(0.97);
+}
+
+.login-submit:disabled,
+.cadastro-submit:disabled {
+    cursor: wait;
+    opacity: 0.72;
+    filter: none;
 }
 
 .login-link,
@@ -1160,7 +1167,7 @@ body.login-modal-aberto {
 }
 
 .menu.open a,
-.menu.open .menu-disabled {
+.menu.open .menu-restrito {
     text-decoration: none;
     color: #000;
     font-weight: 600;
@@ -3627,7 +3634,7 @@ html[data-theme="dark"] .logo-link {
 }
 
 html[data-theme="dark"] .menu a,
-html[data-theme="dark"] .menu-disabled,
+html[data-theme="dark"] .menu-restrito,
 html[data-theme="dark"] .login-btn,
 html[data-theme="dark"] .frase-eftc h1,
 html[data-theme="dark"] .simulador-header h2,
