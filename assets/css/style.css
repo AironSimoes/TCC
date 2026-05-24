@@ -3435,6 +3435,10 @@ SIMULADOR
     font-weight: 700;
 }
 
+.newsletter-form button:hover {
+    background: #e6a629;
+}
+
 .footer-links {
     border-top: 1px solid #2b2b2b;
     display: grid;
