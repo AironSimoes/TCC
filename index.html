@@ -16,7 +16,118 @@
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
-<body>
+<body class="home-page">
+    <svg class="svg-sprite" aria-hidden="true" focusable="false">
+        <symbol id="icon-trend" viewBox="0 0 24 24">
+            <path d="M3 17L9 11L13 15L21 7" />
+            <path d="M15 7H21V13" />
+        </symbol>
+        <symbol id="icon-shield" viewBox="0 0 24 24">
+            <path d="M12 3.5L5.5 6.2V11C5.5 15.5 8.2 19.4 12 20.7C15.8 19.4 18.5 15.5 18.5 11V6.2L12 3.5Z" />
+        </symbol>
+        <symbol id="icon-award" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M9.4 11.5L7.8 20L12 17.7L16.2 20L14.6 11.5" />
+        </symbol>
+        <symbol id="icon-star" viewBox="0 0 24 24">
+            <path d="M12 4L14.4 9L20 9.8L16 13.8L16.9 19.4L12 16.8L7.1 19.4L8 13.8L4 9.8L9.6 9L12 4Z" />
+        </symbol>
+        <symbol id="icon-dollar" viewBox="0 0 24 24">
+            <path d="M12 3V21" />
+            <path d="M17 7.5C15.7 6.5 14.1 6 12.3 6C9.9 6 8.2 7.1 8.2 8.9C8.2 12.3 16.5 10.6 16.5 15.3C16.5 17.1 14.7 18.2 12.1 18.2C10.1 18.2 8.3 17.6 7 16.4" />
+        </symbol>
+        <symbol id="icon-calendar" viewBox="0 0 24 24">
+            <rect x="4" y="5.5" width="16" height="15" rx="2.5" />
+            <path d="M8 3.5V7.5" />
+            <path d="M16 3.5V7.5" />
+            <path d="M4 10H20" />
+        </symbol>
+        <symbol id="icon-bars" viewBox="0 0 24 24">
+            <path d="M4 20H20" />
+            <path d="M7 17V10" />
+            <path d="M12 17V5" />
+            <path d="M17 17V13" />
+        </symbol>
+        <symbol id="icon-document" viewBox="0 0 24 24">
+            <rect x="7" y="3.5" width="10" height="17" rx="2" />
+            <path d="M10 8H14" />
+            <path d="M10 12H14" />
+            <path d="M10 16H12.5" />
+            <path d="M5 7H7" />
+            <path d="M5 17H7" />
+            <path d="M17 7H19" />
+            <path d="M17 17H19" />
+        </symbol>
+        <symbol id="icon-coins" viewBox="0 0 24 24">
+            <circle cx="9" cy="8" r="3.5" />
+            <circle cx="15" cy="14" r="3.5" />
+            <path d="M8.5 6.5H9.6V9.5" />
+            <path d="M14.5 12.5H15.6V15.5" />
+        </symbol>
+        <symbol id="icon-globe" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="8" />
+            <path d="M4 12H20" />
+            <path d="M12 4C14 6.2 15 8.8 15 12C15 15.2 14 17.8 12 20" />
+            <path d="M12 4C10 6.2 9 8.8 9 12C9 15.2 10 17.8 12 20" />
+        </symbol>
+        <symbol id="icon-users" viewBox="0 0 24 24">
+            <circle cx="9" cy="8" r="3" />
+            <path d="M4 18C4.5 15.8 6.4 14.5 9 14.5C11.6 14.5 13.5 15.8 14 18" />
+            <path d="M15 6.2C17.1 6.6 18.5 8 18.5 10C18.5 11.1 18 12.1 17.2 12.7" />
+            <path d="M16.5 15C18.5 15.4 19.8 16.5 20.2 18" />
+        </symbol>
+        <symbol id="icon-clock" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="8" />
+            <path d="M12 7.5V12L15 14" />
+        </symbol>
+        <symbol id="icon-smartphone" viewBox="0 0 24 24">
+            <rect x="7" y="3.5" width="10" height="17" rx="2" />
+            <path d="M11.5 17.5H12.5" />
+        </symbol>
+        <symbol id="icon-headphones" viewBox="0 0 24 24">
+            <path d="M5 14V12C5 8.1 8.1 5 12 5C15.9 5 19 8.1 19 12V14" />
+            <path d="M5 14.5C5 13.7 5.7 13 6.5 13H8V19H6.5C5.7 19 5 18.3 5 17.5V14.5Z" />
+            <path d="M19 14.5C19 13.7 18.3 13 17.5 13H16V19H17.5C18.3 19 19 18.3 19 17.5V14.5Z" />
+        </symbol>
+        <symbol id="icon-book" viewBox="0 0 24 24">
+            <path d="M5 5.5H10C11.1 5.5 12 6.4 12 7.5V19C12 17.9 11.1 17 10 17H5V5.5Z" />
+            <path d="M19 5.5H14C12.9 5.5 12 6.4 12 7.5V19C12 17.9 12.9 17 14 17H19V5.5Z" />
+        </symbol>
+        <symbol id="icon-map-pin" viewBox="0 0 24 24">
+            <path d="M12 21C12 21 18 15.6 18 10.5C18 7.2 15.3 4.5 12 4.5C8.7 4.5 6 7.2 6 10.5C6 15.6 12 21 12 21Z" />
+            <circle cx="12" cy="10.5" r="2" />
+        </symbol>
+        <symbol id="icon-phone" viewBox="0 0 24 24">
+            <path d="M7.5 5.5L10 8L8.5 10.2C9.5 12.4 11.2 14.1 13.8 15.5L16 14L18.5 16.5L17.4 19.1C17.1 19.8 16.3 20.2 15.5 20C9.8 18.8 5.2 14.2 4 8.5C3.8 7.7 4.2 6.9 4.9 6.6L7.5 5.5Z" />
+        </symbol>
+        <symbol id="icon-mail" viewBox="0 0 24 24">
+            <rect x="4" y="6.5" width="16" height="11" rx="2" />
+            <path d="M5 8L12 13L19 8" />
+        </symbol>
+        <symbol id="icon-instagram" viewBox="0 0 24 24">
+            <rect x="5" y="5" width="14" height="14" rx="4" />
+            <circle cx="12" cy="12" r="3" />
+            <path d="M16.5 7.8H16.6" />
+        </symbol>
+        <symbol id="icon-x" viewBox="0 0 24 24">
+            <path d="M6 6L18 18" />
+            <path d="M18 6L6 18" />
+        </symbol>
+        <symbol id="icon-youtube" viewBox="0 0 24 24">
+            <rect x="4" y="7" width="16" height="10" rx="3" />
+            <path d="M10.5 10L14.5 12L10.5 14V10Z" />
+        </symbol>
+        <symbol id="icon-facebook" viewBox="0 0 24 24">
+            <path d="M14.5 5H13C11.1 5 10 6.2 10 8.2V10.5H7.8V13H10V20H12.8V13H15L15.4 10.5H12.8V8.4C12.8 7.7 13.1 7.4 13.8 7.4H14.5V5Z" />
+        </symbol>
+        <symbol id="icon-linkedin" viewBox="0 0 24 24">
+            <path d="M6.5 10V18" />
+            <path d="M6.5 6.5V6.6" />
+            <path d="M10.5 18V10" />
+            <path d="M10.5 13.4C10.5 11.4 11.8 10 13.9 10C16 10 17.5 11.5 17.5 14.1V18" />
+        </symbol>
+    </svg>
+
     <header class="header">
         <div class="container header-container">
             <a href="index.html" class="logo-link">
@@ -105,7 +216,11 @@
 
                 <div class="beneficios">
                     <div class="card-beneficio">
-                        <div class="icone icone-amarelo">↗</div>
+                        <div class="icone icone-amarelo icone-taxa-zero" aria-hidden="true">
+                            <svg class="site-icon" focusable="false">
+                                <use href="#icon-trend"></use>
+                            </svg>
+                        </div>
                         <div>
                             <h4>Taxa Zero</h4>
                             <p>Corretagem gratuita</p>
@@ -113,7 +228,11 @@
                     </div>
 
                     <div class="card-beneficio">
-                        <div class="icone icone-verde">♢</div>
+                        <div class="icone icone-verde icone-seguranca" aria-hidden="true">
+                            <svg class="site-icon" focusable="false">
+                                <use href="#icon-shield"></use>
+                            </svg>
+                        </div>
                         <div>
                             <h4>Segurança</h4>
                             <p>Regulamentada CVM</p>
@@ -121,7 +240,11 @@
                     </div>
 
                     <div class="card-beneficio">
-                        <div class="icone icone-amarelo">♙</div>
+                        <div class="icone icone-amarelo icone-premiada" aria-hidden="true">
+                            <svg class="site-icon" focusable="false">
+                                <use href="#icon-award"></use>
+                            </svg>
+                        </div>
                         <div>
                             <h4>Premiada</h4>
                             <p>Melhor corretora</p>
@@ -179,7 +302,11 @@
                     <div class="sim-card parametros-card">
                         <div class="campo-bloco">
                             <label for="valor">
-                                <span class="campo-icone">$</span>
+                                <span class="campo-icone" aria-hidden="true">
+                                    <svg class="site-icon" focusable="false">
+                                        <use href="#icon-dollar"></use>
+                                    </svg>
+                                </span>
                                 Valor do Investimento
                             </label>
                             <div class="input-com-prefixo">
@@ -197,7 +324,11 @@
 
                         <div class="campo-bloco">
                             <label for="prazo">
-                                <span class="campo-icone calendario-icone"></span>
+                                <span class="campo-icone" aria-hidden="true">
+                                    <svg class="site-icon" focusable="false">
+                                        <use href="#icon-calendar"></use>
+                                    </svg>
+                                </span>
                                 Prazo
                             </label>
                             <output class="prazo-pill" id="prazoValor" for="prazo">12 meses</output>
@@ -212,7 +343,11 @@
 
                 <div class="resultado">
                     <div class="resultado-titulo">
-                        <span class="resultado-icone" aria-hidden="true">↗</span>
+                        <span class="resultado-icone" aria-hidden="true">
+                            <svg class="site-icon" focusable="false">
+                                <use href="#icon-trend"></use>
+                            </svg>
+                        </span>
                         <h3>Resultado da Simulação</h3>
                     </div>
 
@@ -258,7 +393,11 @@
                     <div class="carrossel-trilha" data-carousel-track>
                         <article class="card-produto">
                             <div class="produto-topo">
-                                <span class="produto-icone" aria-hidden="true">▥</span>
+                                <span class="produto-icone" aria-hidden="true">
+                                    <svg class="site-icon" focusable="false">
+                                        <use href="#icon-bars"></use>
+                                    </svg>
+                                </span>
                                 <span class="risco risco-alto">Alto</span>
                             </div>
 
@@ -277,7 +416,11 @@
 
                         <article class="card-produto">
                             <div class="produto-topo">
-                                <span class="produto-icone" aria-hidden="true">▤</span>
+                                <span class="produto-icone" aria-hidden="true">
+                                    <svg class="site-icon" focusable="false">
+                                        <use href="#icon-document"></use>
+                                    </svg>
+                                </span>
                                 <span class="risco risco-medio">Médio</span>
                             </div>
 
@@ -296,7 +439,11 @@
 
                         <article class="card-produto">
                             <div class="produto-topo">
-                                <span class="produto-icone" aria-hidden="true">◎</span>
+                                <span class="produto-icone" aria-hidden="true">
+                                    <svg class="site-icon" focusable="false">
+                                        <use href="#icon-coins"></use>
+                                    </svg>
+                                </span>
                                 <span class="risco risco-baixo">Baixo</span>
                             </div>
 
@@ -315,7 +462,11 @@
 
                         <article class="card-produto">
                             <div class="produto-topo">
-                                <span class="produto-icone" aria-hidden="true">↗</span>
+                                <span class="produto-icone" aria-hidden="true">
+                                    <svg class="site-icon" focusable="false">
+                                        <use href="#icon-trend"></use>
+                                    </svg>
+                                </span>
                                 <span class="risco risco-baixo">Baixo</span>
                             </div>
 
@@ -334,7 +485,11 @@
 
                         <article class="card-produto">
                             <div class="produto-topo">
-                                <span class="produto-icone" aria-hidden="true">$</span>
+                                <span class="produto-icone" aria-hidden="true">
+                                    <svg class="site-icon" focusable="false">
+                                        <use href="#icon-dollar"></use>
+                                    </svg>
+                                </span>
                                 <span class="risco risco-medio">Médio</span>
                             </div>
 
@@ -353,7 +508,11 @@
 
                         <article class="card-produto">
                             <div class="produto-topo">
-                                <span class="produto-icone" aria-hidden="true">◎</span>
+                                <span class="produto-icone" aria-hidden="true">
+                                    <svg class="site-icon" focusable="false">
+                                        <use href="#icon-globe"></use>
+                                    </svg>
+                                </span>
                                 <span class="risco risco-medio">Médio</span>
                             </div>
 
@@ -391,49 +550,81 @@
 
             <div class="diferenciais-grid">
                 <article class="diferencial-card">
-                    <span class="diferencial-icone" aria-hidden="true">♢</span>
+                    <span class="diferencial-icone" aria-hidden="true">
+                        <svg class="site-icon" focusable="false">
+                            <use href="#icon-shield"></use>
+                        </svg>
+                    </span>
                     <h3>Segurança Total</h3>
                     <p>Regulamentada pela CVM e com recursos protegidos pelo FGC até R$ 1 milhão</p>
                 </article>
 
                 <article class="diferencial-card">
-                    <span class="diferencial-icone" aria-hidden="true">↗</span>
+                    <span class="diferencial-icone" aria-hidden="true">
+                        <svg class="site-icon" focusable="false">
+                            <use href="#icon-trend"></use>
+                        </svg>
+                    </span>
                     <h3>Taxa Zero</h3>
                     <p>Corretagem gratuita para ações, ETFs e fundos imobiliários</p>
                 </article>
 
                 <article class="diferencial-card">
-                    <span class="diferencial-icone" aria-hidden="true">☊</span>
+                    <span class="diferencial-icone" aria-hidden="true">
+                        <svg class="site-icon" focusable="false">
+                            <use href="#icon-users"></use>
+                        </svg>
+                    </span>
                     <h3>Assessoria Especializada</h3>
                     <p>Equipe de assessores qualificados para orientar seus investimentos</p>
                 </article>
 
                 <article class="diferencial-card">
-                    <span class="diferencial-icone" aria-hidden="true">◷</span>
+                    <span class="diferencial-icone" aria-hidden="true">
+                        <svg class="site-icon" focusable="false">
+                            <use href="#icon-clock"></use>
+                        </svg>
+                    </span>
                     <h3>Agilidade</h3>
                     <p>Abertura de conta em minutos e transferências instantâneas</p>
                 </article>
 
                 <article class="diferencial-card">
-                    <span class="diferencial-icone" aria-hidden="true">▯</span>
+                    <span class="diferencial-icone" aria-hidden="true">
+                        <svg class="site-icon" focusable="false">
+                            <use href="#icon-smartphone"></use>
+                        </svg>
+                    </span>
                     <h3>Plataforma Completa</h3>
                     <p>App mobile e home broker web com todas as funcionalidades</p>
                 </article>
 
                 <article class="diferencial-card">
-                    <span class="diferencial-icone" aria-hidden="true">♙</span>
+                    <span class="diferencial-icone" aria-hidden="true">
+                        <svg class="site-icon" focusable="false">
+                            <use href="#icon-award"></use>
+                        </svg>
+                    </span>
                     <h3>Premiada</h3>
                     <p>Eleita melhor corretora do Brasil por 3 anos consecutivos</p>
                 </article>
 
                 <article class="diferencial-card">
-                    <span class="diferencial-icone" aria-hidden="true">◠</span>
+                    <span class="diferencial-icone" aria-hidden="true">
+                        <svg class="site-icon" focusable="false">
+                            <use href="#icon-headphones"></use>
+                        </svg>
+                    </span>
                     <h3>Suporte 24/7</h3>
                     <p>Atendimento especializado disponível todos os dias da semana</p>
                 </article>
 
                 <article class="diferencial-card">
-                    <span class="diferencial-icone" aria-hidden="true">▭</span>
+                    <span class="diferencial-icone" aria-hidden="true">
+                        <svg class="site-icon" focusable="false">
+                            <use href="#icon-book"></use>
+                        </svg>
+                    </span>
                     <h3>Educação Financeira</h3>
                     <p>Cursos gratuitos, análises e conteúdo educativo para todos os níveis</p>
                 </article>
@@ -450,7 +641,13 @@
 
             <div class="depoimentos-grid">
                 <article class="depoimento-card">
-                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <div class="estrelas" aria-label="5 estrelas">
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                    </div>
                     <p>"A <strong>IronInvest</strong> transformou minha relação com os investimentos. A plataforma é intuitiva e o suporte é excepcional. Em 2 anos, minha carteira cresceu 180%."</p>
 
                     <div class="cliente">
@@ -463,7 +660,13 @@
                 </article>
 
                 <article class="depoimento-card">
-                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <div class="estrelas" aria-label="5 estrelas">
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                    </div>
                     <p>"Como médico, preciso de praticidade. A <strong>IronInvest</strong> me oferece isso com taxa zero e assessoria qualificada. Recomendo para todos os colegas."</p>
 
                     <div class="cliente">
@@ -476,7 +679,13 @@
                 </article>
 
                 <article class="depoimento-card">
-                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <div class="estrelas" aria-label="5 estrelas">
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                    </div>
                     <p>"Iniciante em investimentos, encontrei na <strong>IronInvest</strong> todo o suporte educacional que precisava. Hoje tenho uma carteira diversificada e rentável."</p>
 
                     <div class="cliente">
@@ -489,7 +698,13 @@
                 </article>
 
                 <article class="depoimento-card">
-                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <div class="estrelas" aria-label="5 estrelas">
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                    </div>
                     <p>"A transparência nas taxas e a qualidade das análises fazem toda a diferença. Migrei de outro banco e não me arrependo da decisão."</p>
 
                     <div class="cliente">
@@ -502,7 +717,13 @@
                 </article>
 
                 <article class="depoimento-card">
-                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <div class="estrelas" aria-label="5 estrelas">
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                    </div>
                     <p>"O app é fantástico e muito fácil de usar. Consigo acompanhar meus investimentos onde estiver. O atendimento é sempre muito atencioso."</p>
 
                     <div class="cliente">
@@ -515,7 +736,13 @@
                 </article>
 
                 <article class="depoimento-card">
-                    <div class="estrelas" aria-label="5 estrelas">★★★★★</div>
+                    <div class="estrelas" aria-label="5 estrelas">
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                        <svg class="site-icon" focusable="false"><use href="#icon-star"></use></svg>
+                    </div>
                     <p>"Como contador, analiso números todos os dias. A <strong>IronInvest</strong> oferece as melhores condições do mercado. Já indiquei para dezenas de clientes."</p>
 
                     <div class="cliente">
@@ -573,17 +800,58 @@
                     <p>Sua corretora de confiança há mais de 15 anos no mercado financeiro brasileiro.</p>
 
                     <ul class="footer-contato">
-                        <li><span aria-hidden="true">⌖</span> São Paulo, SP</li>
-                        <li><span aria-hidden="true">☏</span> (11) 3000-0000</li>
-                        <li><span aria-hidden="true">✉</span> contato@ironinvest.com</li>
+                        <li>
+                            <span class="footer-icon" aria-hidden="true">
+                                <svg class="site-icon" focusable="false">
+                                    <use href="#icon-map-pin"></use>
+                                </svg>
+                            </span>
+                            São Paulo, SP
+                        </li>
+                        <li>
+                            <span class="footer-icon" aria-hidden="true">
+                                <svg class="site-icon" focusable="false">
+                                    <use href="#icon-phone"></use>
+                                </svg>
+                            </span>
+                            (11) 3000-0000
+                        </li>
+                        <li>
+                            <span class="footer-icon" aria-hidden="true">
+                                <svg class="site-icon" focusable="false">
+                                    <use href="#icon-mail"></use>
+                                </svg>
+                            </span>
+                            contato@ironinvest.com
+                        </li>
                     </ul>
 
                     <div class="footer-social" aria-label="Redes sociais">
-                        <span class="footer-social-placeholder" aria-label="Facebook">f</span>
-                        <span class="footer-social-placeholder" aria-label="Instagram">◎</span>
-                        <span class="footer-social-placeholder" aria-label="Twitter">𝕏</span>
-                        <span class="footer-social-placeholder" aria-label="YouTube">▶</span>
-                        <span class="footer-social-placeholder" aria-label="LinkedIn">in</span>
+                        <span class="footer-social-placeholder" aria-label="Facebook">
+                            <svg class="site-icon" focusable="false">
+                                <use href="#icon-facebook"></use>
+                            </svg>
+                        </span>
+                        <span class="footer-social-placeholder" aria-label="Instagram">
+                            <svg class="site-icon" focusable="false">
+                                <use href="#icon-instagram"></use>
+                            </svg>
+                        </span>
+                        <span class="footer-social-placeholder" aria-label="Twitter">
+                            <svg class="site-icon" focusable="false">
+                                <use href="#icon-x"></use>
+                            </svg>
+                        </span>
+                        <span class="footer-social-placeholder" aria-label="YouTube">
+                            <svg class="site-icon" focusable="false">
+                                <use href="#icon-youtube"></use>
+                            </svg>
+                        </span>
+                        <span class="footer-social-placeholder" aria-label="LinkedIn">
+                            <svg class="site-icon" focusable="false">
+                                <use href="#icon-linkedin"></use>
+                            </svg>
+                        </span>
                     </div>
                 </div>
 

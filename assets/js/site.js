@@ -497,6 +497,78 @@
         }
     }
 
+    function iniciarAnalises() {
+        const botoesFiltro = document.querySelectorAll("[data-analise-filter]");
+        const cards = document.querySelectorAll("[data-analise-card]");
+        const mensagemVazia = document.querySelector("[data-analise-empty]");
+        const modal = document.getElementById("analiseModal");
+        const abrirAnalise = document.querySelector("[data-analise-open]");
+        const fecharAnaliseBotoes = document.querySelectorAll("[data-analise-close]");
+        let focoAntesAnalise = null;
+
+        function filtrarAnalises(categoria) {
+            let visiveis = 0;
+
+            botoesFiltro.forEach((botao) => {
+                const ativo = botao.dataset.analiseFilter === categoria;
+                botao.classList.toggle("ativo", ativo);
+                botao.setAttribute("aria-pressed", String(ativo));
+            });
+
+            cards.forEach((card) => {
+                const mostrar = categoria === "todos" || card.dataset.category === categoria;
+                card.hidden = !mostrar;
+                if (mostrar) visiveis += 1;
+            });
+
+            if (mensagemVazia) {
+                const label = document.querySelector(`[data-analise-filter="${categoria}"]`)?.textContent || "essa categoria";
+                mensagemVazia.textContent = `Nenhuma análise encontrada para ${label}.`;
+                mensagemVazia.hidden = visiveis > 0;
+            }
+        }
+
+        function abrirModalAnalise() {
+            if (!modal) return;
+
+            focoAntesAnalise = document.activeElement;
+            modal.hidden = false;
+            modal.setAttribute("aria-hidden", "false");
+            document.body.classList.add("analise-modal-aberta");
+            modal.querySelector("[data-analise-close]")?.focus();
+        }
+
+        function fecharModalAnalise() {
+            if (!modal || modal.hidden) return;
+
+            modal.setAttribute("aria-hidden", "true");
+            modal.hidden = true;
+            document.body.classList.remove("analise-modal-aberta");
+
+            if (focoAntesAnalise instanceof HTMLElement) {
+                focoAntesAnalise.focus();
+            }
+        }
+
+        botoesFiltro.forEach((botao) => {
+            botao.addEventListener("click", () => {
+                filtrarAnalises(botao.dataset.analiseFilter || "todos");
+            });
+        });
+
+        abrirAnalise?.addEventListener("click", abrirModalAnalise);
+
+        fecharAnaliseBotoes.forEach((botao) => {
+            botao.addEventListener("click", fecharModalAnalise);
+        });
+
+        document.addEventListener("keydown", (evento) => {
+            if (evento.key === "Escape") {
+                fecharModalAnalise();
+            }
+        });
+    }
+
     function iniciarCarrossel() {
         const {
             carrossel,
@@ -721,6 +793,7 @@
     }
 
     iniciarCarrossel();
+    iniciarAnalises();
 
     if (parametrosCadastro() === "sucesso") {
         abrirLogin();

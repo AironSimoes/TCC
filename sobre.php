@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require __DIR__ . '/app/auth.php';
+require __DIR__ . '/app/icon-sprite.php';
 
 ironinvest_iniciar_sessao();
 ironinvest_exigir_login('acesso.php?pagina=sobre');
@@ -25,6 +26,7 @@ ironinvest_header_html();
 </head>
 
 <body>
+    <?php ironinvest_svg_sprite(); ?>
     <header class="header">
         <div class="container header-container">
             <a href="index.html" class="logo-link">
@@ -141,8 +143,8 @@ ironinvest_header_html();
 
                 <figure class="sobre-historia-imagem">
                     <img src="assets/img/sede-ironinvest.jpg" alt="Prédio corporativo representando a sede da IronInvest" width="459" height="374" fetchpriority="high" decoding="async">
-                    <span class="sobre-foto-selo sobre-foto-selo-topo" aria-hidden="true">♙</span>
-                    <span class="sobre-foto-selo sobre-foto-selo-baixo" aria-hidden="true">▦</span>
+                    <span class="sobre-foto-selo sobre-foto-selo-topo" aria-hidden="true"><?php ironinvest_icon('icon-award'); ?></span>
+                    <span class="sobre-foto-selo sobre-foto-selo-baixo" aria-hidden="true"><?php ironinvest_icon('icon-building'); ?></span>
                 </figure>
             </div>
         </section>
@@ -151,13 +153,13 @@ ironinvest_header_html();
             <div class="container sobre-container">
                 <div class="sobre-missao-grid">
                     <article class="sobre-missao-card sobre-card-amarelo">
-                        <span class="sobre-card-icone sobre-icone-amarelo" aria-hidden="true">◎</span>
+                        <span class="sobre-card-icone sobre-icone-amarelo" aria-hidden="true"><?php ironinvest_icon('icon-target'); ?></span>
                         <h3>Nossa Missão</h3>
                         <p>Democratizar o acesso aos investimentos no Brasil, oferecendo ferramentas, conhecimento e suporte necessários para que cada pessoa possa construir um futuro financeiro sólido e próspero.</p>
                     </article>
 
                     <article class="sobre-missao-card sobre-card-verde">
-                        <span class="sobre-card-icone sobre-icone-verde" aria-hidden="true">◌</span>
+                        <span class="sobre-card-icone sobre-icone-verde" aria-hidden="true"><?php ironinvest_icon('icon-lightbulb'); ?></span>
                         <h3>Nossa Visão</h3>
                         <p>Ser a corretora de investimentos mais confiável e inovadora do Brasil, reconhecida pela excelência no atendimento e por transformar positivamente a vida financeira de milhões de brasileiros.</p>
                     </article>
@@ -174,19 +176,19 @@ ironinvest_header_html();
 
                 <div class="sobre-valores-grid">
                     <article class="sobre-valor-card">
-                        <span class="sobre-valor-icone" aria-hidden="true">♢</span>
+                        <span class="sobre-valor-icone" aria-hidden="true"><?php ironinvest_icon('icon-shield'); ?></span>
                         <h3>Segurança</h3>
                         <p>Protegemos seus investimentos com as mais rigorosas medidas de segurança e regulamentação CVM.</p>
                     </article>
 
                     <article class="sobre-valor-card">
-                        <span class="sobre-valor-icone" aria-hidden="true">♡</span>
+                        <span class="sobre-valor-icone" aria-hidden="true"><?php ironinvest_icon('icon-heart'); ?></span>
                         <h3>Transparência</h3>
                         <p>Todas as taxas, custos e informações são claras e acessíveis para nossos clientes.</p>
                     </article>
 
                     <article class="sobre-valor-card">
-                        <span class="sobre-valor-icone" aria-hidden="true">◇</span>
+                        <span class="sobre-valor-icone" aria-hidden="true"><?php ironinvest_icon('icon-handshake'); ?></span>
                         <h3>Confiança</h3>
                         <p>Relacionamentos duradouros baseados em ética e comprometimento com seu sucesso.</p>
                     </article>
@@ -203,25 +205,25 @@ ironinvest_header_html();
 
                 <div class="sobre-certificacoes-grid">
                     <article class="sobre-certificacao-card">
-                        <span class="sobre-certificacao-icone" aria-hidden="true">✓</span>
+                        <span class="sobre-certificacao-icone" aria-hidden="true"><?php ironinvest_icon('icon-check-circle'); ?></span>
                         <h3>CVM Regulada</h3>
                         <p>Autorizada e fiscalizada pela Comissão de Valores Mobiliários</p>
                     </article>
 
                     <article class="sobre-certificacao-card">
-                        <span class="sobre-certificacao-icone" aria-hidden="true">▢</span>
+                        <span class="sobre-certificacao-icone" aria-hidden="true"><?php ironinvest_icon('icon-lock'); ?></span>
                         <h3>ISO 27001</h3>
                         <p>Certificação internacional em segurança da informação</p>
                     </article>
 
                     <article class="sobre-certificacao-card">
-                        <span class="sobre-certificacao-icone" aria-hidden="true">♙</span>
+                        <span class="sobre-certificacao-icone" aria-hidden="true"><?php ironinvest_icon('icon-award'); ?></span>
                         <h3>B3 Oficial</h3>
                         <p>Membro oficial da B3 (Bolsa de Valores Brasileira)</p>
                     </article>
 
                     <article class="sobre-certificacao-card">
-                        <span class="sobre-certificacao-icone" aria-hidden="true">♢</span>
+                        <span class="sobre-certificacao-icone" aria-hidden="true"><?php ironinvest_icon('icon-shield'); ?></span>
                         <h3>FGC Protegido</h3>
                         <p>Seus investimentos protegidos pelo Fundo Garantidor de Créditos</p>
                     </article>
@@ -264,17 +266,17 @@ ironinvest_header_html();
                     <p>Sua corretora de confiança há mais de 15 anos no mercado financeiro brasileiro.</p>
 
                     <ul class="footer-contato">
-                        <li><span aria-hidden="true">⌖</span> São Paulo, SP</li>
-                        <li><span aria-hidden="true">☏</span> (11) 3000-0000</li>
-                        <li><span aria-hidden="true">✉</span> contato@ironinvest.com</li>
+                        <li><span class="footer-icon" aria-hidden="true"><?php ironinvest_icon('icon-map-pin'); ?></span> São Paulo, SP</li>
+                        <li><span class="footer-icon" aria-hidden="true"><?php ironinvest_icon('icon-phone'); ?></span> (11) 3000-0000</li>
+                        <li><span class="footer-icon" aria-hidden="true"><?php ironinvest_icon('icon-mail'); ?></span> contato@ironinvest.com</li>
                     </ul>
 
                     <div class="footer-social" aria-label="Redes sociais">
-                        <span class="footer-social-placeholder" aria-label="Facebook">f</span>
-                        <span class="footer-social-placeholder" aria-label="Instagram">◎</span>
-                        <span class="footer-social-placeholder" aria-label="Twitter">𝕏</span>
-                        <span class="footer-social-placeholder" aria-label="YouTube">▶</span>
-                        <span class="footer-social-placeholder" aria-label="LinkedIn">in</span>
+                        <span class="footer-social-placeholder" aria-label="Facebook"><?php ironinvest_icon('icon-facebook'); ?></span>
+                        <span class="footer-social-placeholder" aria-label="Instagram"><?php ironinvest_icon('icon-instagram'); ?></span>
+                        <span class="footer-social-placeholder" aria-label="Twitter"><?php ironinvest_icon('icon-x'); ?></span>
+                        <span class="footer-social-placeholder" aria-label="YouTube"><?php ironinvest_icon('icon-youtube'); ?></span>
+                        <span class="footer-social-placeholder" aria-label="LinkedIn"><?php ironinvest_icon('icon-linkedin'); ?></span>
                     </div>
                 </div>
 

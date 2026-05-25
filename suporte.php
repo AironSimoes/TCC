@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require __DIR__ . '/app/auth.php';
+require __DIR__ . '/app/icon-sprite.php';
 
 ironinvest_iniciar_sessao();
 ironinvest_exigir_login('acesso.php?pagina=suporte');
@@ -24,6 +25,7 @@ ironinvest_header_html();
 </head>
 
 <body>
+    <?php ironinvest_svg_sprite(); ?>
     <header class="header">
         <div class="container header-container">
             <a href="index.html" class="logo-link">
@@ -101,13 +103,13 @@ ironinvest_header_html();
         <section class="suporte-hero">
             <div class="container suporte-container">
                 <div class="suporte-hero-conteudo">
-                    <span class="suporte-hero-icone" aria-hidden="true">?</span>
+                    <span class="suporte-hero-icone" aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span>
                     <h1>Como Podemos <span>Ajudar?</span></h1>
                     <p>Encontre respostas rápidas para as perguntas mais frequentes sobre a <strong>IronInvest</strong></p>
 
                     <form class="suporte-busca" role="search">
                         <label class="sr-only" for="suporteBusca">Buscar por pergunta ou palavra-chave</label>
-                        <span aria-hidden="true">⌕</span>
+                        <span aria-hidden="true"><?php ironinvest_icon('icon-search'); ?></span>
                         <input type="search" id="suporteBusca" autocomplete="off" placeholder="Buscar por pergunta ou palavra-chave...">
                     </form>
                 </div>
@@ -119,24 +121,24 @@ ironinvest_header_html();
                 <div class="suporte-categorias" aria-label="Perguntas frequentes">
                     <details class="suporte-categoria suporte-categoria-amarela">
                         <summary>
-                            <span class="suporte-categoria-icone" aria-hidden="true">♙</span>
+                            <span class="suporte-categoria-icone" aria-hidden="true"><?php ironinvest_icon('icon-users'); ?></span>
                             <strong>Conta e Cadastro</strong>
                             <span class="suporte-categoria-acao" aria-hidden="true"></span>
                         </summary>
 
                         <div class="suporte-perguntas">
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Como faço para abrir minha conta na IronInvest?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Como faço para abrir minha conta na IronInvest?</summary>
                                 <p>Você pode abrir sua conta pelo botão "Abrir Conta", preencher seus dados e enviar a documentação solicitada. A análise costuma ser concluída em poucos minutos.</p>
                             </details>
 
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Existe taxa para abertura de conta?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Existe taxa para abertura de conta?</summary>
                                 <p>Não. A abertura e a manutenção da conta são gratuitas para clientes IronInvest.</p>
                             </details>
 
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Encerrei minha conta, como faço para reabri-la?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Encerrei minha conta, como faço para reabri-la?</summary>
                                 <p>Entre em contato com nossa equipe de suporte para confirmar seus dados e solicitar a reativação com segurança.</p>
                             </details>
                         </div>
@@ -144,24 +146,24 @@ ironinvest_header_html();
 
                     <details class="suporte-categoria suporte-categoria-verde">
                         <summary>
-                            <span class="suporte-categoria-icone" aria-hidden="true">↗</span>
+                            <span class="suporte-categoria-icone" aria-hidden="true"><?php ironinvest_icon('icon-trend'); ?></span>
                             <strong>Investimentos</strong>
                             <span class="suporte-categoria-acao" aria-hidden="true"></span>
                         </summary>
 
                         <div class="suporte-perguntas">
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Qual o valor mínimo para começar a investir?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Qual o valor mínimo para começar a investir?</summary>
                                 <p>Você pode começar com valores baixos em produtos como Tesouro Direto e renda fixa. Cada produto mostra o valor mínimo antes da aplicação.</p>
                             </details>
 
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Como funciona a tributação dos investimentos?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Como funciona a tributação dos investimentos?</summary>
                                 <p>A tributação depende do tipo de investimento, prazo e produto escolhido. A plataforma mostra as informações principais antes da confirmação.</p>
                             </details>
 
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Como escolher o melhor investimento para mim?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Como escolher o melhor investimento para mim?</summary>
                                 <p>Use o simulador, confira seu perfil de investidor e conte com nossos conteúdos educativos para comparar risco, prazo e rentabilidade.</p>
                             </details>
                         </div>
@@ -169,24 +171,24 @@ ironinvest_header_html();
 
                     <details class="suporte-categoria suporte-categoria-amarela">
                         <summary>
-                            <span class="suporte-categoria-icone" aria-hidden="true">▭</span>
+                            <span class="suporte-categoria-icone" aria-hidden="true"><?php ironinvest_icon('icon-credit-card'); ?></span>
                             <strong>Depósitos e Saques</strong>
                             <span class="suporte-categoria-acao" aria-hidden="true"></span>
                         </summary>
 
                         <div class="suporte-perguntas">
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Como fazer um depósito na minha conta?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Como fazer um depósito na minha conta?</summary>
                                 <p>Transfira via Pix ou TED usando uma conta bancária de mesma titularidade. Assim que confirmado, o saldo aparece na plataforma.</p>
                             </details>
 
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Quanto tempo demora para o saldo aparecer?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Quanto tempo demora para o saldo aparecer?</summary>
                                 <p>Depósitos via Pix normalmente aparecem em poucos minutos. TEDs podem depender do horário de compensação bancária.</p>
                             </details>
 
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Como solicitar um saque?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Como solicitar um saque?</summary>
                                 <p>No painel da conta, acesse a área de transferências, escolha a conta cadastrada e confirme a solicitação de retirada.</p>
                             </details>
                         </div>
@@ -194,19 +196,19 @@ ironinvest_header_html();
 
                     <details class="suporte-categoria suporte-categoria-verde">
                         <summary>
-                            <span class="suporte-categoria-icone" aria-hidden="true">♢</span>
+                            <span class="suporte-categoria-icone" aria-hidden="true"><?php ironinvest_icon('icon-shield'); ?></span>
                             <strong>Segurança</strong>
                             <span class="suporte-categoria-acao" aria-hidden="true"></span>
                         </summary>
 
                         <div class="suporte-perguntas">
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Meu dinheiro está seguro na IronInvest?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Meu dinheiro está seguro na IronInvest?</summary>
                                 <p>Sim. Trabalhamos com proteção de dados, autenticação segura e produtos regulados conforme as regras do mercado financeiro.</p>
                             </details>
 
                             <details class="suporte-pergunta">
-                                <summary><span aria-hidden="true">⊙</span> Como protejo minha conta de fraudes?</summary>
+                                <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Como protejo minha conta de fraudes?</summary>
                                 <p>Ative recursos de segurança, nunca compartilhe senhas e confirme se está acessando os canais oficiais da IronInvest.</p>
                             </details>
                         </div>
@@ -224,21 +226,21 @@ ironinvest_header_html();
 
                 <div class="suporte-contato-grid">
                     <article class="suporte-contato-card suporte-contato-amarelo">
-                        <span class="suporte-contato-icone" aria-hidden="true">☏</span>
+                        <span class="suporte-contato-icone" aria-hidden="true"><?php ironinvest_icon('icon-phone'); ?></span>
                         <h3>Telefone</h3>
                         <strong>0800 123 4567</strong>
                         <p>Seg-Sex: 8h-20h | Sáb: 9h-15h</p>
                     </article>
 
                     <article class="suporte-contato-card suporte-contato-verde">
-                        <span class="suporte-contato-icone" aria-hidden="true">✉</span>
+                        <span class="suporte-contato-icone" aria-hidden="true"><?php ironinvest_icon('icon-mail'); ?></span>
                         <h3>E-mail</h3>
                         <strong>suporte@ironinvest.com.br</strong>
                         <p>Resposta em até 24 horas</p>
                     </article>
 
                     <article class="suporte-contato-card suporte-contato-amarelo">
-                        <span class="suporte-contato-icone" aria-hidden="true">◌</span>
+                        <span class="suporte-contato-icone" aria-hidden="true"><?php ironinvest_icon('icon-message'); ?></span>
                         <h3>Chat Online</h3>
                         <strong>Disponível no App</strong>
                         <p>Atendimento 24/7</p>
@@ -275,17 +277,17 @@ ironinvest_header_html();
                     <p>Sua corretora de confiança há mais de 15 anos no mercado financeiro brasileiro.</p>
 
                     <ul class="footer-contato">
-                        <li><span aria-hidden="true">⌖</span> São Paulo, SP</li>
-                        <li><span aria-hidden="true">☏</span> (11) 3000-0000</li>
-                        <li><span aria-hidden="true">✉</span> contato@ironinvest.com</li>
+                        <li><span class="footer-icon" aria-hidden="true"><?php ironinvest_icon('icon-map-pin'); ?></span> São Paulo, SP</li>
+                        <li><span class="footer-icon" aria-hidden="true"><?php ironinvest_icon('icon-phone'); ?></span> (11) 3000-0000</li>
+                        <li><span class="footer-icon" aria-hidden="true"><?php ironinvest_icon('icon-mail'); ?></span> contato@ironinvest.com</li>
                     </ul>
 
                     <div class="footer-social" aria-label="Redes sociais">
-                        <span class="footer-social-placeholder" aria-label="Facebook">f</span>
-                        <span class="footer-social-placeholder" aria-label="Instagram">◎</span>
-                        <span class="footer-social-placeholder" aria-label="Twitter">𝕏</span>
-                        <span class="footer-social-placeholder" aria-label="YouTube">▶</span>
-                        <span class="footer-social-placeholder" aria-label="LinkedIn">in</span>
+                        <span class="footer-social-placeholder" aria-label="Facebook"><?php ironinvest_icon('icon-facebook'); ?></span>
+                        <span class="footer-social-placeholder" aria-label="Instagram"><?php ironinvest_icon('icon-instagram'); ?></span>
+                        <span class="footer-social-placeholder" aria-label="Twitter"><?php ironinvest_icon('icon-x'); ?></span>
+                        <span class="footer-social-placeholder" aria-label="YouTube"><?php ironinvest_icon('icon-youtube'); ?></span>
+                        <span class="footer-social-placeholder" aria-label="LinkedIn"><?php ironinvest_icon('icon-linkedin'); ?></span>
                     </div>
                 </div>
 
