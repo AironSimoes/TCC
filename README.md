@@ -26,13 +26,13 @@ Importe `database/banco.sql` no phpMyAdmin local:
 http://localhost/phpmyadmin
 ```
 
-O arquivo cria o banco `ironinvest` e a tabela `clientes`.
+O arquivo cria o banco `ironinvest` e as tabelas `clientes` e `seguranca_tentativas`.
 
 ## InfinityFree
 
 No InfinityFree, primeiro crie o banco pelo painel. Depois importe `database/banco-infinityfree.sql` no phpMyAdmin do próprio InfinityFree.
 
-Para configurar a conexão, copie os dados do painel para `app/config.php`:
+Para configurar a conexão, copie `app/config.local.example.php` para `app/config.local.php` e coloque os dados do painel. Esse arquivo fica ignorado pelo Git para evitar senha real no repositório:
 
 ```php
 return [
@@ -50,7 +50,8 @@ return [
 - `acesso.php`: roteador das áreas protegidas.
 - `sobre.php`, `suporte.php` e `area-restrita.php`: páginas acessíveis apenas com login.
 - `app/auth.php`: sessão, conexão PDO e funções compartilhadas.
-- `app/config.php`: configuração do banco.
+- `app/config.php`: configuração padrão local sem senha real.
+- `app/config.local.php`: configuração privada do ambiente, não versionada.
 - `assets/css/style.css` e `assets/js/site.js`: visual e interações.
 - `assets/img/`: imagens do site.
 - `database/`: scripts SQL para banco local e InfinityFree.
@@ -60,4 +61,4 @@ return [
 - Use o site sempre por `http://127.0.0.1:8000/index.html`, não abrindo o HTML direto pelo explorador.
 - Ao testar cadastro/login, confirme que o MySQL está ligado.
 - Para recriar o banco local, importe `database/banco.sql`.
-- Para subir no InfinityFree, importe `database/banco-infinityfree.sql` e ajuste `app/config.php`.
+- Para subir no InfinityFree, importe `database/banco-infinityfree.sql` e crie `app/config.local.php` com as credenciais do painel.

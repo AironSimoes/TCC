@@ -40,7 +40,7 @@ if ($area === 'analises') {
     <?php if ($area === 'analises'): ?>
     <link rel="preload" href="assets/img/analise-destaque-clean.png" as="image" fetchpriority="high">
     <?php elseif ($area === 'educacao'): ?>
-    <link rel="preload" href="assets/img/educacao-destaque.png" as="image" fetchpriority="high">
+    <link rel="preload" href="assets/img/educacao-destaque-clean.jpg" as="image" fetchpriority="high">
     <?php endif; ?>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -95,6 +95,7 @@ if ($area === 'analises') {
             </div>
 
             <form class="login-form" action="login.php" method="post" autocomplete="on">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(ironinvest_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="login-campo">
                     <label for="loginEmail">
                         <span class="login-label-icon login-label-email" aria-hidden="true"></span>
@@ -242,8 +243,11 @@ if ($area === 'analises') {
 
                     <div class="analises-grid">
                         <article class="analise-card" data-analise-card data-category="renda-fixa">
-                            <img src="assets/img/analise-bond.png" alt="Blocos com a palavra bond" width="202" height="113" loading="lazy" decoding="async">
-                            <div>
+                            <figure class="analise-card-media">
+                                <img src="assets/img/analise-renda-fixa-hq.jpg" alt="Documentos financeiros, gráfico e calculadora sobre uma mesa" width="960" height="540" loading="lazy" decoding="async">
+                                <span class="analise-card-tag renda-fixa">Renda Fixa</span>
+                            </figure>
+                            <div class="analise-card-conteudo">
                                 <h3>CDB pós-fixado x Tesouro Selic: Qual escolher em 2026?</h3>
                                 <p>Comparamos os melhores produtos de renda fixa e te ajudamos a decidir.</p>
                                 <span class="analise-card-meta"><span>01 Mai 2026</span><span><?php ironinvest_icon('icon-clock'); ?>5 min</span></span>
@@ -251,8 +255,11 @@ if ($area === 'analises') {
                         </article>
 
                         <article class="analise-card" data-analise-card data-category="cripto">
-                            <img src="assets/img/analise-bitcoin.png" alt="Moeda de bitcoin sobre notas" width="202" height="113" loading="lazy" decoding="async">
-                            <div>
+                            <figure class="analise-card-media">
+                                <img src="assets/img/analise-cripto-hq.jpg" alt="Moeda de bitcoin sobre gráfico financeiro digital" width="960" height="540" loading="lazy" decoding="async">
+                                <span class="analise-card-tag cripto">Cripto</span>
+                            </figure>
+                            <div class="analise-card-conteudo">
                                 <h3>Bitcoin bate novos recordes: momento de entrar ou esperar?</h3>
                                 <p>Análise técnica e fundamentalista do BTC após a valorização recente.</p>
                                 <span class="analise-card-meta"><span>30 Abr 2026</span><span><?php ironinvest_icon('icon-clock'); ?>7 min</span></span>
@@ -260,8 +267,11 @@ if ($area === 'analises') {
                         </article>
 
                         <article class="analise-card" data-analise-card data-category="fiis">
-                            <img src="assets/img/analise-fii.png" alt="Vista aérea de prédios em uma cidade" width="202" height="113" loading="lazy" decoding="async">
-                            <div>
+                            <figure class="analise-card-media">
+                                <img src="assets/img/analise-fiis-hq.jpg" alt="Prédios comerciais e residenciais em uma cidade" width="960" height="540" loading="lazy" decoding="async">
+                                <span class="analise-card-tag fiis">FIIs</span>
+                            </figure>
+                            <div class="analise-card-conteudo">
                                 <h3>Os 5 FIIs com melhor dividend yield do mês de abril</h3>
                                 <p>Selecionamos os fundos imobiliários que mais distribuíram proventos.</p>
                                 <span class="analise-card-meta"><span>29 Abr 2026</span><span><?php ironinvest_icon('icon-clock'); ?>6 min</span></span>
@@ -269,8 +279,11 @@ if ($area === 'analises') {
                         </article>
 
                         <article class="analise-card" data-analise-card data-category="acoes">
-                            <img src="assets/img/analise-acoes.png" alt="Consultor apresentando análise para cliente" width="202" height="113" loading="lazy" decoding="async">
-                            <div>
+                            <figure class="analise-card-media">
+                                <img src="assets/img/analise-acoes-hq.jpg" alt="Consultor apresentando gráficos financeiros para um cliente" width="960" height="540" loading="lazy" decoding="async">
+                                <span class="analise-card-tag acoes">Ações</span>
+                            </figure>
+                            <div class="analise-card-conteudo">
                                 <h3>Carteira recomendada: as 10 ações para maio de 2026</h3>
                                 <p>Nossa equipe selecionou as principais oportunidades da Bolsa para o mês.</p>
                                 <span class="analise-card-meta"><span>28 Abr 2026</span><span><?php ironinvest_icon('icon-clock'); ?>9 min</span></span>
@@ -363,7 +376,10 @@ if ($area === 'analises') {
 
                     <article class="educacao-destaque-card">
                         <div class="educacao-destaque-img">
-                            <img src="assets/img/educacao-destaque.png" alt="Livro de investimento sobre mesa com uma xícara de café" width="427" height="538" fetchpriority="high" decoding="async">
+                            <img src="assets/img/educacao-destaque-clean.jpg" alt="Caderno com gráficos financeiros, livro e café sobre mesa de estudos" width="1280" height="687" fetchpriority="high" decoding="async">
+                            <button class="educacao-destaque-play" type="button" aria-label="Assistir prévia do curso">
+                                <?php ironinvest_icon('icon-play'); ?>
+                            </button>
                             <span>Curso em Destaque</span>
                         </div>
 
@@ -394,9 +410,9 @@ if ($area === 'analises') {
                     <div class="educacao-cursos-grid">
                         <article class="educacao-curso-card">
                             <div class="educacao-curso-img">
-                                <img src="assets/img/analise-bond.png" alt="Blocos com a palavra bond" width="202" height="113" loading="lazy" decoding="async">
+                                <img src="assets/img/curso-renda-fixa.jpg" alt="Caderno de estudos, gráfico financeiro e calculadora sobre uma mesa" width="960" height="540" loading="lazy" decoding="async">
                                 <span class="curso-selo-gratis">Grátis</span>
-                                <span class="curso-play" aria-hidden="true"><?php ironinvest_icon('icon-play'); ?></span>
+                                <button class="curso-play" type="button" aria-label="Assistir prévia do curso Renda Fixa Descomplicada"><?php ironinvest_icon('icon-play'); ?></button>
                             </div>
                             <div>
                                 <div class="curso-linha">
@@ -410,7 +426,8 @@ if ($area === 'analises') {
 
                         <article class="educacao-curso-card">
                             <div class="educacao-curso-img">
-                                <img src="assets/img/analise-acoes.png" alt="Consultor apresentando análise para cliente" width="202" height="113" loading="lazy" decoding="async">
+                                <img src="assets/img/curso-acoes.jpg" alt="Notebook com gráficos financeiros e materiais de estudo sobre ações" width="960" height="540" loading="lazy" decoding="async">
+                                <button class="curso-play" type="button" aria-label="Assistir prévia do curso Análise Fundamentalista de Ações"><?php ironinvest_icon('icon-play'); ?></button>
                             </div>
                             <div>
                                 <div class="curso-linha">
@@ -424,8 +441,9 @@ if ($area === 'analises') {
 
                         <article class="educacao-curso-card">
                             <div class="educacao-curso-img">
-                                <img src="assets/img/analise-fii.png" alt="Vista aérea de prédios em uma cidade" width="202" height="113" loading="lazy" decoding="async">
+                                <img src="assets/img/curso-fiis.jpg" alt="Maquetes de prédios e relatório financeiro sobre uma mesa" width="960" height="540" loading="lazy" decoding="async">
                                 <span class="curso-selo-gratis">Grátis</span>
+                                <button class="curso-play" type="button" aria-label="Assistir prévia do curso Fundos Imobiliários na Prática"><?php ironinvest_icon('icon-play'); ?></button>
                             </div>
                             <div>
                                 <div class="curso-linha">
@@ -439,8 +457,8 @@ if ($area === 'analises') {
 
                         <article class="educacao-curso-card">
                             <div class="educacao-curso-img">
-                                <img src="assets/img/analise-bitcoin.png" alt="Moeda de bitcoin sobre notas" width="202" height="113" loading="lazy" decoding="async">
-                                <span class="curso-play" aria-hidden="true"><?php ironinvest_icon('icon-play'); ?></span>
+                                <img src="assets/img/curso-cripto.jpg" alt="Tablet com gráficos de cripto e caderno de estudos sobre uma mesa" width="960" height="540" loading="lazy" decoding="async">
+                                <button class="curso-play" type="button" aria-label="Assistir prévia do curso Cripto para Iniciantes"><?php ironinvest_icon('icon-play'); ?></button>
                             </div>
                             <div>
                                 <div class="curso-linha">
@@ -461,7 +479,9 @@ if ($area === 'analises') {
                     <div class="educacao-webinars-grid">
                         <article class="educacao-webinar-card">
                             <div class="educacao-webinar-img">
-                                <img src="assets/img/educacao-webinar-live.png" alt="Especialista sorrindo em webinar ao vivo" width="123" height="220" loading="lazy" decoding="async">
+                                <img src="assets/img/webinar-live-clean.jpg" alt="Especialista apresentando um webinar de investimentos ao vivo" width="540" height="960" loading="lazy" decoding="async">
+                                <span class="webinar-live-badge">AO VIVO</span>
+                                <span class="webinar-play" aria-hidden="true"><?php ironinvest_icon('icon-play'); ?></span>
                             </div>
                             <div>
                                 <h3>Mercado ao Vivo: Perspectivas para o 2º Semestre 2026</h3>
@@ -473,8 +493,8 @@ if ($area === 'analises') {
 
                         <article class="educacao-webinar-card">
                             <div class="educacao-webinar-img">
-                                <img src="assets/img/educacao-webinar-gravado.png" alt="Notebook em mesa de estudos com iluminação baixa" width="123" height="220" loading="lazy" decoding="async">
-                                <span aria-hidden="true"><?php ironinvest_icon('icon-play'); ?></span>
+                                <img src="assets/img/webinar-gravado-clean.jpg" alt="Mesa de estudos com notebook e gráficos financeiros para webinar gravado" width="540" height="960" loading="lazy" decoding="async">
+                                <span class="webinar-play" aria-hidden="true"><?php ironinvest_icon('icon-play'); ?></span>
                             </div>
                             <div>
                                 <h3>Como montar uma carteira diversificada do zero</h3>
@@ -536,7 +556,10 @@ if ($area === 'analises') {
                 <p>Área restrita acessada com login. O conteúdo desta seção pode ser desenvolvido depois.</p>
                 <div class="hero-buttons">
                     <a class="btn btn-primary" href="index.html">Voltar ao início</a>
-                    <a class="btn btn-secondary" href="logout.php">Sair</a>
+                    <form class="logout-inline" action="logout.php" method="post">
+                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(ironinvest_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
+                        <button class="btn btn-secondary" type="submit">Sair</button>
+                    </form>
                 </div>
             </div>
         </section>

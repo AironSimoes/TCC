@@ -10,4 +10,5 @@ ironinvest_header_json();
 echo json_encode([
     'logado' => ironinvest_cliente_logado(),
     'nome' => $_SESSION['cliente_nome'] ?? null,
+    'csrf_token' => ironinvest_csrf_token(),
 ], JSON_UNESCAPED_UNICODE);

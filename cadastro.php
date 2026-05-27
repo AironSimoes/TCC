@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/app/auth.php';
 
+ironinvest_iniciar_sessao();
 ironinvest_header_json();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -10,6 +11,22 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['erro' => 'Metodo nao permitido.']);
     exit;
 }
+
+$ip = ironinvest_ip_cliente();
+
+if (!ironinvest_csrf_valido()) {
+    http_response_code(403);
+    echo json_encode(['erro' => 'Sessao expirada. Recarregue a pagina e tente novamente.'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+if (ironinvest_rate_limit_bloqueado('cadastro_ip', $ip)) {
+    http_response_code(429);
+    echo json_encode(['erro' => 'Muitas tentativas. Aguarde alguns minutos e tente novamente.'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+ironinvest_rate_limit_registrar('cadastro_ip', $ip, 8, 3600, 3600);
 
 function somente_digitos(string $valor): string
 {

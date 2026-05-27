@@ -71,6 +71,7 @@ ironinvest_header_html();
             </div>
 
             <form class="login-form" action="login.php" method="post" autocomplete="on">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(ironinvest_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="login-campo">
                     <label for="loginEmail">
                         <span class="login-label-icon login-label-email" aria-hidden="true"></span>

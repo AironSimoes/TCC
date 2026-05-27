@@ -81,9 +81,16 @@
     let taxaMensal = 0.0115;
     let focoAntesLogin = null;
     let usuarioLogado = false;
+    let csrfToken = "";
 
     const formatarMoeda = (valor) => moeda.format(valor);
     const somenteDigitos = (valor) => valor.replace(/\D/g, "");
+    const normalizarBusca = (valor) => valor
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .trim();
+
     function salvarCookie(nome, valor, dias) {
         const maxAge = Math.max(dias, 1) * 24 * 60 * 60;
         const seguro = window.location.protocol === "https:" ? "; Secure" : "";
@@ -163,6 +170,7 @@
 
             const sessao = await resposta.json();
             usuarioLogado = Boolean(sessao.logado);
+            csrfToken = typeof sessao.csrf_token === "string" ? sessao.csrf_token : csrfToken;
 
             if (!elementos.loginBotao) return;
 
@@ -184,6 +192,68 @@
         }
     }
     const textoMeses = (meses) => meses === 1 ? "1 mês" : `${meses} meses`;
+
+    async function obterCsrfToken() {
+        if (csrfToken || window.location.protocol === "file:") {
+            return csrfToken;
+        }
+
+        const resposta = await fetch("sessao.php", {
+            headers: {
+                Accept: "application/json"
+            },
+            credentials: "same-origin"
+        });
+
+        if (!resposta.ok) {
+            return "";
+        }
+
+        const sessao = await resposta.json().catch(() => ({}));
+        csrfToken = typeof sessao.csrf_token === "string" ? sessao.csrf_token : "";
+        usuarioLogado = Boolean(sessao.logado);
+
+        return csrfToken;
+    }
+
+    function definirCsrfCampo(formulario, token) {
+        if (!formulario || !token) return;
+
+        let campo = formulario.querySelector('input[name="csrf_token"]');
+
+        if (!campo) {
+            campo = document.createElement("input");
+            campo.type = "hidden";
+            campo.name = "csrf_token";
+            formulario.append(campo);
+        }
+
+        campo.value = token;
+    }
+
+    async function prepararCsrfFormulario(formulario) {
+        const token = await obterCsrfToken();
+        definirCsrfCampo(formulario, token);
+        return token;
+    }
+
+    async function enviarLogout() {
+        if (window.location.protocol === "file:") return;
+
+        const formulario = document.createElement("form");
+        formulario.method = "post";
+        formulario.action = "logout.php";
+        formulario.hidden = true;
+
+        const token = await prepararCsrfFormulario(formulario);
+        if (!token) {
+            window.location.href = "index.html?login=csrf#login";
+            return;
+        }
+
+        document.body.append(formulario);
+        formulario.submit();
+    }
 
     async function enviarLogin(evento) {
         if (!elementos.loginForm) return;
@@ -207,11 +277,21 @@
 
         const destino = elementos.loginForm.querySelector('input[name="destino"]')?.value || "";
 
+        evento.preventDefault();
+
         if (destino) {
+            const token = await prepararCsrfFormulario(elementos.loginForm);
+
+            if (!token) {
+                if (elementos.loginStatus) {
+                    elementos.loginStatus.textContent = "Sessao expirada. Recarregue a pagina e tente novamente.";
+                }
+                return;
+            }
+
+            HTMLFormElement.prototype.submit.call(elementos.loginForm);
             return;
         }
-
-        evento.preventDefault();
 
         const botao = elementos.loginForm.querySelector('[type="submit"]');
 
@@ -225,6 +305,12 @@
         }
 
         try {
+            const token = await prepararCsrfFormulario(elementos.loginForm);
+
+            if (!token) {
+                throw new Error("csrf");
+            }
+
             const resposta = await fetch(elementos.loginForm.action, {
                 method: "POST",
                 body: new FormData(elementos.loginForm),
@@ -453,9 +539,17 @@
         }
 
         try {
+            const dadosCadastro = new FormData(elementos.cadastroForm);
+            const token = await obterCsrfToken();
+            dadosCadastro.set("csrf_token", token);
+
+            if (!token) {
+                throw new Error("csrf");
+            }
+
             const resposta = await fetch(elementos.cadastroForm.action, {
                 method: "POST",
-                body: new FormData(elementos.cadastroForm),
+                body: dadosCadastro,
                 headers: {
                     Accept: "application/json"
                 },
@@ -565,6 +659,89 @@
         document.addEventListener("keydown", (evento) => {
             if (evento.key === "Escape") {
                 fecharModalAnalise();
+            }
+        });
+    }
+
+    function iniciarBuscaSuporte() {
+        if (!elementos.busca) return;
+
+        const campo = elementos.busca.querySelector('input[type="search"]');
+        const categorias = Array.from(document.querySelectorAll(".suporte-categoria"));
+        if (!campo || categorias.length === 0) return;
+
+        const mensagemVazia = document.createElement("p");
+        mensagemVazia.className = "suporte-busca-vazio";
+        mensagemVazia.hidden = true;
+        mensagemVazia.textContent = "Nenhuma pergunta encontrada para essa busca.";
+        document.querySelector(".suporte-categorias")?.after(mensagemVazia);
+
+        const dados = categorias.map((categoria) => {
+            const titulo = categoria.querySelector("summary strong")?.textContent || "";
+            const perguntas = Array.from(categoria.querySelectorAll(".suporte-pergunta")).map((pergunta) => ({
+                elemento: pergunta,
+                texto: normalizarBusca(`${titulo} ${pergunta.textContent || ""}`)
+            }));
+
+            return {
+                elemento: categoria,
+                perguntas,
+                texto: normalizarBusca(`${titulo} ${categoria.textContent || ""}`)
+            };
+        });
+
+        function limparBusca() {
+            dados.forEach(({ elemento, perguntas }) => {
+                elemento.hidden = false;
+                perguntas.forEach(({ elemento: pergunta }) => {
+                    pergunta.hidden = false;
+                    pergunta.open = false;
+                });
+            });
+            mensagemVazia.hidden = true;
+        }
+
+        function filtrarPerguntas() {
+            const termo = normalizarBusca(campo.value);
+            let resultados = 0;
+
+            if (!termo) {
+                limparBusca();
+                return;
+            }
+
+            dados.forEach(({ elemento, perguntas, texto }) => {
+                let categoriaTemResultado = texto.includes(termo);
+                let perguntasVisiveis = 0;
+
+                perguntas.forEach(({ elemento: pergunta, texto: textoPergunta }) => {
+                    const mostrar = textoPergunta.includes(termo);
+                    pergunta.hidden = !mostrar;
+                    pergunta.open = false;
+
+                    if (mostrar) {
+                        perguntasVisiveis += 1;
+                    }
+                });
+
+                categoriaTemResultado = categoriaTemResultado || perguntasVisiveis > 0;
+                elemento.hidden = !categoriaTemResultado;
+                elemento.open = categoriaTemResultado;
+                resultados += perguntasVisiveis;
+            });
+
+            mensagemVazia.hidden = resultados > 0;
+        }
+
+        campo.addEventListener("input", filtrarPerguntas);
+        elementos.busca.addEventListener("submit", (evento) => {
+            evento.preventDefault();
+            filtrarPerguntas();
+
+            const primeiraPergunta = document.querySelector(".suporte-pergunta:not([hidden])");
+            if (primeiraPergunta instanceof HTMLDetailsElement) {
+                primeiraPergunta.open = true;
+                primeiraPergunta.scrollIntoView({ behavior: "smooth", block: "center" });
             }
         });
     }
@@ -761,7 +938,7 @@
     elementos.temaBotao?.addEventListener("click", alternarTema);
     elementos.loginBotao?.addEventListener("click", () => {
         if (usuarioLogado) {
-            window.location.href = "logout.php";
+            void enviarLogout();
             return;
         }
 
@@ -772,9 +949,6 @@
     });
     elementos.loginForm?.addEventListener("submit", enviarLogin);
     elementos.newsletter?.addEventListener("submit", (evento) => {
-        evento.preventDefault();
-    });
-    elementos.busca?.addEventListener("submit", (evento) => {
         evento.preventDefault();
     });
     document.addEventListener("keydown", (evento) => {
@@ -794,6 +968,7 @@
 
     iniciarCarrossel();
     iniciarAnalises();
+    iniciarBuscaSuporte();
 
     if (parametrosCadastro() === "sucesso") {
         abrirLogin();
@@ -809,6 +984,16 @@
         abrirLogin();
         if (elementos.loginStatus) {
             elementos.loginStatus.textContent = "E-mail ou senha inválidos.";
+        }
+    } else if (parametrosLogin() === "csrf") {
+        abrirLogin();
+        if (elementos.loginStatus) {
+            elementos.loginStatus.textContent = "Sessao expirada. Recarregue a pagina e tente novamente.";
+        }
+    } else if (parametrosLogin() === "bloqueado") {
+        abrirLogin();
+        if (elementos.loginStatus) {
+            elementos.loginStatus.textContent = "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
         }
     } else if (parametrosLogin() === "sessao") {
         abrirLogin();

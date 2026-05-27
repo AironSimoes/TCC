@@ -19,6 +19,15 @@ function ironinvest_login_responder_json(array $dados, int $status): never
 
 function ironinvest_login_falhar(string $destinoErro, bool $responderJson): never
 {
+    $email = strtolower(trim($_POST['email'] ?? ''));
+    $ip = ironinvest_ip_cliente();
+
+    ironinvest_rate_limit_registrar('login_ip', $ip, 30, 900, 900);
+
+    if ($email !== '') {
+        ironinvest_rate_limit_registrar('login_email', "{$ip}|{$email}", 5, 900, 900);
+    }
+
     if ($responderJson) {
         ironinvest_login_responder_json([
             'sucesso' => false,
@@ -27,6 +36,30 @@ function ironinvest_login_falhar(string $destinoErro, bool $responderJson): neve
     }
 
     ironinvest_redirecionar('index.html?login=erro' . $destinoErro . '#login');
+}
+
+function ironinvest_login_csrf_invalido(string $destinoErro, bool $responderJson): never
+{
+    if ($responderJson) {
+        ironinvest_login_responder_json([
+            'sucesso' => false,
+            'erro' => 'Sessao expirada. Recarregue a pagina e tente novamente.',
+        ], 403);
+    }
+
+    ironinvest_redirecionar('index.html?login=csrf' . $destinoErro . '#login');
+}
+
+function ironinvest_login_limite_excedido(string $destinoErro, bool $responderJson): never
+{
+    if ($responderJson) {
+        ironinvest_login_responder_json([
+            'sucesso' => false,
+            'erro' => 'Muitas tentativas. Aguarde alguns minutos e tente novamente.',
+        ], 429);
+    }
+
+    ironinvest_redirecionar('index.html?login=bloqueado' . $destinoErro . '#login');
 }
 
 function ironinvest_login_sucesso(string $destino, bool $responderJson): never
@@ -49,6 +82,19 @@ $destinoErro = ironinvest_destino_permitido($destinoInformado)
     ? '&destino=' . rawurlencode($destinoInformado)
     : '';
 $responderJson = str_contains($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json');
+$ip = ironinvest_ip_cliente();
+$chaveLogin = "{$ip}|{$email}";
+
+if (!ironinvest_csrf_valido()) {
+    ironinvest_login_csrf_invalido($destinoErro, $responderJson);
+}
+
+if (
+    ironinvest_rate_limit_bloqueado('login_ip', $ip)
+    || ($email !== '' && ironinvest_rate_limit_bloqueado('login_email', $chaveLogin))
+) {
+    ironinvest_login_limite_excedido($destinoErro, $responderJson);
+}
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($senha) < 8) {
     ironinvest_login_falhar($destinoErro, $responderJson);
@@ -71,9 +117,13 @@ try {
     $_SESSION['cliente_nome'] = $cliente['nome_completo'];
     $_SESSION['cliente_email'] = $cliente['email'];
     $_SESSION['logado_em'] = time();
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 
     $stmt = $pdo->prepare('UPDATE clientes SET ultimo_login_em = NOW() WHERE id = :id');
     $stmt->execute([':id' => (int) $cliente['id']]);
+
+    ironinvest_rate_limit_limpar('login_ip', $ip);
+    ironinvest_rate_limit_limpar('login_email', $chaveLogin);
 
     ironinvest_login_sucesso($destino, $responderJson);
 } catch (PDOException $erro) {

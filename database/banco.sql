@@ -21,3 +21,18 @@ CREATE TABLE IF NOT EXISTS clientes (
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS seguranca_tentativas (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    escopo VARCHAR(40) NOT NULL,
+    chave_hash CHAR(64) NOT NULL,
+    tentativas INT UNSIGNED NOT NULL DEFAULT 0,
+    primeira_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    ultima_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    bloqueado_ate DATETIME NULL DEFAULT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_seguranca_tentativas (escopo, chave_hash),
+    KEY idx_seguranca_bloqueio (bloqueado_ate)
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;

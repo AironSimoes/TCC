@@ -70,6 +70,7 @@ ironinvest_header_html();
             </div>
 
             <form class="login-form" action="login.php" method="post" autocomplete="on">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars(ironinvest_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
                 <div class="login-campo">
                     <label for="loginEmail">
                         <span class="login-label-icon login-label-email" aria-hidden="true"></span>
@@ -134,12 +135,12 @@ ironinvest_header_html();
 
                             <details class="suporte-pergunta">
                                 <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Existe taxa para abertura de conta?</summary>
-                                <p>Não. A abertura e a manutenção da conta são gratuitas para clientes IronInvest.</p>
+                                <p>Não! A abertura de conta na IronInvest é 100% gratuita. Também não cobramos taxa de manutenção mensal. Você só paga taxas quando realizar operações específicas, e sempre de forma transparente.</p>
                             </details>
 
                             <details class="suporte-pergunta">
                                 <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Encerrei minha conta, como faço para reabri-la?</summary>
-                                <p>Entre em contato com nossa equipe de suporte para confirmar seus dados e solicitar a reativação com segurança.</p>
+                                <p>Para reabrir sua conta, entre em contato com nosso suporte através do telefone 0800 123 4567 ou pelo e-mail suporte@ironinvest.com.br. Nossa equipe irá verificar sua solicitação e orientar sobre os próximos passos. O processo é rápido e você poderá voltar a investir em breve.</p>
                             </details>
                         </div>
                     </details>
@@ -154,17 +155,17 @@ ironinvest_header_html();
                         <div class="suporte-perguntas">
                             <details class="suporte-pergunta">
                                 <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Qual o valor mínimo para começar a investir?</summary>
-                                <p>Você pode começar com valores baixos em produtos como Tesouro Direto e renda fixa. Cada produto mostra o valor mínimo antes da aplicação.</p>
+                                <p>Você pode começar a investir com valores a partir de R$ 1,00 em alguns produtos como fundos de investimento. Para ações e outros ativos, o valor mínimo varia conforme o preço unitário de cada ativo no mercado.</p>
                             </details>
 
                             <details class="suporte-pergunta">
                                 <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Como funciona a tributação dos investimentos?</summary>
-                                <p>A tributação depende do tipo de investimento, prazo e produto escolhido. A plataforma mostra as informações principais antes da confirmação.</p>
+                                <p>A tributação varia conforme o tipo de investimento. Renda fixa geralmente segue a tabela regressiva do IR (de 22,5% a 15%). Ações têm alíquota de 15% sobre o lucro em operações comuns. Oferecemos relatórios completos para sua declaração de IR.</p>
                             </details>
 
                             <details class="suporte-pergunta">
                                 <summary><span aria-hidden="true"><?php ironinvest_icon('icon-question'); ?></span> Como escolher o melhor investimento para mim?</summary>
-                                <p>Use o simulador, confira seu perfil de investidor e conte com nossos conteúdos educativos para comparar risco, prazo e rentabilidade.</p>
+                                <p>Ao abrir sua conta, você responderá um questionário de suitability que identifica seu perfil de investidor (conservador, moderado ou arrojado). Com base nisso, recomendamos produtos adequados ao seu perfil, objetivos e prazo.</p>
                             </details>
                         </div>
                     </details>
