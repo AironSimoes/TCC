@@ -30,7 +30,7 @@ ironinvest_header_html();
     <header class="header">
         <div class="container header-container">
             <a href="index.html" class="logo-link">
-                <img src="assets/img/iron 300x80.png" alt="Logo IronInvest" class="logo" width="300" height="80" decoding="async">
+                <img src="assets/img/iron 300x80.png" alt="Logo IronInvest" class="logo" width="90" height="24" decoding="async">
             </a>
 
             <nav class="nav" role="navigation" aria-label="Menu principal">
@@ -42,10 +42,11 @@ ironinvest_header_html();
                 </button>
                 <ul class="menu" id="main-menu">
                     <li><a href="acesso.php?pagina=sobre" aria-current="page">Sobre</a></li>
-                    <li><a href="index.html#produtos">Produtos</a></li>
+                    <li><a href="produtos.php">Produtos</a></li>
                     <li><a class="menu-restrito" href="acesso.php?pagina=analises">Análises</a></li>
                     <li><a class="menu-restrito" href="acesso.php?pagina=educacao">Educação</a></li>
                     <li><a href="acesso.php?pagina=suporte">Suporte</a></li>
+                    <li class="menu-mobile-acao"><a href="cadastro.html">Abrir Conta</a></li>
                 </ul>
             </nav>
 
@@ -283,12 +284,12 @@ ironinvest_header_html();
 
                 <div class="footer-coluna">
                     <h3>Produtos</h3>
-                    <a href="index.html#produtos">Ações</a>
-                    <a href="index.html#produtos">Fundos Imobiliários</a>
-                    <a href="index.html#produtos">Tesouro Direto</a>
-                    <a href="index.html#produtos">CDB/LCI/LCA</a>
-                    <a href="index.html#produtos">Fundos de Investimento</a>
-                    <a href="index.html#produtos">Previdência Privada</a>
+                    <a href="produtos.php#acoes">Ações</a>
+                    <a href="produtos.php#fundos-imobiliarios">Fundos Imobiliários</a>
+                    <a href="produtos.php#tesouro-direto">Tesouro Direto</a>
+                    <a href="produtos.php#cdb-lci-lca">CDB/LCI/LCA</a>
+                    <a href="produtos.php#coe">COE</a>
+                    <a href="produtos.php#fundos-multimercado">Fundos Multimercado</a>
                 </div>
 
                 <div class="footer-coluna">
@@ -341,5 +342,6 @@ ironinvest_header_html();
     </footer>
 
     <script src="assets/js/site.js" defer></script>
+    <script src="assets/js/perfil-investidor.js" defer></script>
 </body>
 </html>

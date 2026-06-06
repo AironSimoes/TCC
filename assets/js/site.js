@@ -82,6 +82,7 @@
     let focoAntesLogin = null;
     let usuarioLogado = false;
     let csrfToken = "";
+    let destinoLoginPendente = "";
 
     const formatarMoeda = (valor) => moeda.format(valor);
     const somenteDigitos = (valor) => valor.replace(/\D/g, "");
@@ -90,6 +91,31 @@
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase()
         .trim();
+
+    function manterFocoNoModal(modal, evento) {
+        if (evento.key !== "Tab" || !modal || modal.hidden) return;
+
+        const controles = Array.from(
+            modal.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')
+        ).filter((controle) =>
+            controle instanceof HTMLElement &&
+            !controle.hidden &&
+            controle.getClientRects().length > 0
+        );
+
+        if (controles.length === 0) return;
+
+        const primeiro = controles[0];
+        const ultimo = controles[controles.length - 1];
+
+        if (evento.shiftKey && document.activeElement === primeiro) {
+            evento.preventDefault();
+            ultimo.focus();
+        } else if (!evento.shiftKey && document.activeElement === ultimo) {
+            evento.preventDefault();
+            primeiro.focus();
+        }
+    }
 
     function salvarCookie(nome, valor, dias) {
         const maxAge = Math.max(dias, 1) * 24 * 60 * 60;
@@ -110,13 +136,20 @@
     }
 
     function destinoLoginAtual() {
-        const destino = parametroBusca("destino");
+        const destino = destinoLoginPendente || parametroBusca("destino");
 
         if (!destino || destino.includes("://")) {
             return "";
         }
 
         return destino;
+    }
+
+    function definirDestinoLogin(destino) {
+        destinoLoginPendente = typeof destino === "string" && !destino.includes("://")
+            ? destino
+            : "";
+        preencherDestinoLogin();
     }
 
     function limparUrlLogin() {
@@ -156,7 +189,12 @@
     }
 
     async function carregarSessao() {
-        if (window.location.protocol === "file:") return;
+        if (window.location.protocol === "file:") {
+            return {
+                logado: false,
+                csrf_token: ""
+            };
+        }
 
         try {
             const resposta = await fetch("sessao.php", {
@@ -166,29 +204,44 @@
                 credentials: "same-origin"
             });
 
-            if (!resposta.ok) return;
+            if (!resposta.ok) {
+                return {
+                    logado: false,
+                    csrf_token: ""
+                };
+            }
 
             const sessao = await resposta.json();
             usuarioLogado = Boolean(sessao.logado);
             csrfToken = typeof sessao.csrf_token === "string" ? sessao.csrf_token : csrfToken;
 
-            if (!elementos.loginBotao) return;
+            if (elementos.loginBotao) {
+                const textoBotao = elementos.loginBotao.querySelector("span");
 
-            const textoBotao = elementos.loginBotao.querySelector("span");
-
-            if (usuarioLogado) {
-                textoBotao && (textoBotao.textContent = "Sair");
-                elementos.loginBotao.removeAttribute("aria-haspopup");
-                elementos.loginBotao.removeAttribute("aria-controls");
-                elementos.loginBotao.setAttribute("aria-label", "Sair da conta");
-            } else {
-                textoBotao && (textoBotao.textContent = "Entrar");
-                elementos.loginBotao.setAttribute("aria-haspopup", "dialog");
-                elementos.loginBotao.setAttribute("aria-controls", "loginModal");
-                elementos.loginBotao.removeAttribute("aria-label");
+                if (usuarioLogado) {
+                    textoBotao && (textoBotao.textContent = "Sair");
+                    elementos.loginBotao.removeAttribute("aria-haspopup");
+                    elementos.loginBotao.removeAttribute("aria-controls");
+                    elementos.loginBotao.setAttribute("aria-label", "Sair da conta");
+                } else {
+                    textoBotao && (textoBotao.textContent = "Entrar");
+                    elementos.loginBotao.setAttribute("aria-haspopup", "dialog");
+                    elementos.loginBotao.setAttribute("aria-controls", "loginModal");
+                    elementos.loginBotao.removeAttribute("aria-label");
+                }
             }
+
+            document.dispatchEvent(new CustomEvent("ironinvest:sessao", {
+                detail: sessao
+            }));
+
+            return sessao;
         } catch (erro) {
             // Sem sessao carregada, o login continua funcionando pelo formulario.
+            return {
+                logado: false,
+                csrf_token: ""
+            };
         }
     }
     const textoMeses = (meses) => meses === 1 ? "1 mês" : `${meses} meses`;
@@ -380,6 +433,10 @@
 
         elementos.menu.classList.toggle("open", aberto);
         elementos.menuToggle.setAttribute("aria-expanded", String(aberto));
+        const rotulo = elementos.menuToggle.querySelector(".sr-only");
+        if (rotulo) {
+            rotulo.textContent = aberto ? "Fechar menu" : "Abrir menu";
+        }
     }
 
     function alternarMenu() {
@@ -406,11 +463,21 @@
         elementos.loginModal.setAttribute("aria-hidden", "true");
         elementos.loginModal.hidden = true;
         document.body.classList.remove("login-modal-aberto");
+        destinoLoginPendente = "";
+        preencherDestinoLogin();
 
         if (focoAntesLogin instanceof HTMLElement) {
             focoAntesLogin.focus();
         }
     }
+
+    window.IronInvest = {
+        abrirLogin,
+        carregarSessao,
+        definirDestinoLogin,
+        estaLogado: () => usuarioLogado,
+        obterCsrfToken
+    };
 
     function calcularSimulacao() {
         if (
@@ -659,7 +726,10 @@
         document.addEventListener("keydown", (evento) => {
             if (evento.key === "Escape") {
                 fecharModalAnalise();
+                return;
             }
+
+            manterFocoNoModal(modal, evento);
         });
     }
 
@@ -955,12 +1025,15 @@
         if (evento.key === "Escape") {
             fecharLogin();
             definirMenu(false);
+            return;
         }
+
+        manterFocoNoModal(elementos.loginModal, evento);
     });
 
     definirTema(document.documentElement.dataset.theme === "dark" ? "dark" : "light", false);
     preencherDestinoLogin();
-    carregarSessao();
+    void carregarSessao();
 
     if (elementos.valor && elementos.prazo) {
         calcularSimulacao();
@@ -1003,4 +1076,5 @@
     } else if (window.location.hash === "#login") {
         abrirLogin();
     }
+
 })();

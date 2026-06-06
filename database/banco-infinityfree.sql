@@ -30,3 +30,18 @@ CREATE TABLE IF NOT EXISTS seguranca_tentativas (
 ) ENGINE=InnoDB
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS perfis_investidor (
+    cliente_id INT UNSIGNED NOT NULL,
+    nivel_risco VARCHAR(10) NOT NULL,
+    perfil_nome VARCHAR(20) NOT NULL,
+    pontuacao TINYINT UNSIGNED NOT NULL,
+    respostas_json VARCHAR(255) NOT NULL,
+    atualizado_em DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (cliente_id),
+    CONSTRAINT fk_perfis_investidor_cliente
+        FOREIGN KEY (cliente_id) REFERENCES clientes (id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB
+  DEFAULT CHARSET=utf8mb4
+  COLLATE=utf8mb4_unicode_ci;

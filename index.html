@@ -131,7 +131,7 @@
     <header class="header">
         <div class="container header-container">
             <a href="index.html" class="logo-link">
-                <img src="assets/img/iron 300x80.png" alt="Logo IronInvest" class="logo" width="300" height="80" decoding="async">
+                <img src="assets/img/iron 300x80.png" alt="Logo IronInvest" class="logo" width="90" height="24" decoding="async">
             </a>
 
             <nav class="nav" role="navigation" aria-label="Menu principal">
@@ -147,6 +147,7 @@
                     <li><a class="menu-restrito" href="acesso.php?pagina=analises">Análises</a></li>
                     <li><a class="menu-restrito" href="acesso.php?pagina=educacao">Educação</a></li>
                     <li><a href="acesso.php?pagina=suporte">Suporte</a></li>
+                    <li class="menu-mobile-acao"><a href="cadastro.html">Abrir Conta</a></li>
                 </ul>
             </nav>
 
@@ -371,7 +372,7 @@
                         <strong id="rentabilidade">+0%</strong>
                     </div>
 
-                    <button class="btn-investir" type="button">Começar a Investir <span aria-hidden="true">→</span></button>
+                    <button class="btn-investir" type="button" data-perfil-iniciar>Começar a Investir <span aria-hidden="true">→</span></button>
                 </div>
             </div>
 
@@ -411,7 +412,7 @@
                                 <li>Análises diárias</li>
                             </ul>
 
-                            <button type="button">Saiba Mais</button>
+                            <button type="button" data-produto-detalhes="acoes">Saiba Mais</button>
                         </article>
 
                         <article class="card-produto">
@@ -434,7 +435,7 @@
                                 <li>Diversificação</li>
                             </ul>
 
-                            <button type="button">Saiba Mais</button>
+                            <button type="button" data-produto-detalhes="fundos-imobiliarios">Saiba Mais</button>
                         </article>
 
                         <article class="card-produto">
@@ -457,7 +458,7 @@
                                 <li>A partir de R$ 30</li>
                             </ul>
 
-                            <button type="button">Saiba Mais</button>
+                            <button type="button" data-produto-detalhes="tesouro-direto">Saiba Mais</button>
                         </article>
 
                         <article class="card-produto">
@@ -480,7 +481,7 @@
                                 <li>Liquidez variada</li>
                             </ul>
 
-                            <button type="button">Saiba Mais</button>
+                            <button type="button" data-produto-detalhes="cdb-lci-lca">Saiba Mais</button>
                         </article>
 
                         <article class="card-produto">
@@ -503,7 +504,7 @@
                                 <li>Prazo definido</li>
                             </ul>
 
-                            <button type="button">Saiba Mais</button>
+                            <button type="button" data-produto-detalhes="coe">Saiba Mais</button>
                         </article>
 
                         <article class="card-produto">
@@ -526,7 +527,7 @@
                                 <li>Liquidez semanal</li>
                             </ul>
 
-                            <button type="button">Saiba Mais</button>
+                            <button type="button" data-produto-detalhes="multimercado">Saiba Mais</button>
                         </article>
                     </div>
                 </div>
@@ -536,7 +537,7 @@
             </div>
 
             <div class="produtos-acao">
-                <button type="button">Ver Todos os Produtos</button>
+                <a href="produtos.php">Ver Todos os Produtos</a>
             </div>
         </div>
     </section>
@@ -857,12 +858,12 @@
 
                 <div class="footer-coluna">
                     <h3>Produtos</h3>
-                    <a href="#produtos">Ações</a>
-                    <a href="#produtos">Fundos Imobiliários</a>
-                    <a href="#produtos">Tesouro Direto</a>
-                    <a href="#produtos">CDB/LCI/LCA</a>
-                    <a href="#produtos">Fundos de Investimento</a>
-                    <a href="#produtos">Previdência Privada</a>
+                    <a href="produtos.php#acoes">Ações</a>
+                    <a href="produtos.php#fundos-imobiliarios">Fundos Imobiliários</a>
+                    <a href="produtos.php#tesouro-direto">Tesouro Direto</a>
+                    <a href="produtos.php#cdb-lci-lca">CDB/LCI/LCA</a>
+                    <a href="produtos.php#coe">COE</a>
+                    <a href="produtos.php#fundos-multimercado">Fundos Multimercado</a>
                 </div>
 
                 <div class="footer-coluna">
@@ -915,5 +916,7 @@
     </footer>
 
     <script src="assets/js/site.js" defer></script>
+    <script src="assets/js/perfil-investidor.js" defer></script>
+    <script src="assets/js/produtos-detalhes.js" defer></script>
 </body>
 </html>
