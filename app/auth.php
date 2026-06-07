@@ -289,6 +289,7 @@ function ironinvest_destino_permitido(string $destino): bool
     return in_array($caminho, [
         'index.html',
         'acesso.php',
+        'produtos.php',
         'sobre.php',
         'suporte.php',
         'area-restrita.php',

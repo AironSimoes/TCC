@@ -30,6 +30,7 @@
         cadastroSenha: "#cadastroSenha",
         cadastroConfirmarSenha: "#cadastroConfirmarSenha",
         cadastroStatus: ".cadastro-status",
+        logos: ".logo",
         temaBotao: ".theme-btn",
         temaIcone: ".theme-btn img"
     };
@@ -76,6 +77,8 @@
     };
 
     const chaveTema = "ironinvest-theme";
+    const logoClaro = "assets/img/Iron_logo.svg";
+    const logoEscuro = "assets/img/iron_Tema_white.svg";
     const iconeLua = "assets/img/lua_16_x_16.png";
     const iconeSol = "assets/img/brightness_9253338.png";
     let taxaMensal = 0.0115;
@@ -83,6 +86,8 @@
     let usuarioLogado = false;
     let csrfToken = "";
     let destinoLoginPendente = "";
+    let newsletterStatusTimer = 0;
+    let newsletterLimpezaTimer = 0;
 
     const formatarMoeda = (valor) => moeda.format(valor);
     const somenteDigitos = (valor) => valor.replace(/\D/g, "");
@@ -397,6 +402,12 @@
         }
     }
 
+    function atualizarLogos(escuro) {
+        document.querySelectorAll(seletor.logos).forEach((logo) => {
+            logo.src = escuro ? logoEscuro : logoClaro;
+        });
+    }
+
     function definirTema(tema, salvar = true) {
         const escuro = tema === "dark";
         document.documentElement.dataset.theme = escuro ? "dark" : "light";
@@ -407,6 +418,8 @@
         if (elementos.temaIcone) {
             elementos.temaIcone.src = escuro ? iconeSol : iconeLua;
         }
+
+        atualizarLogos(escuro);
 
         if (!salvar) return;
 
@@ -426,6 +439,39 @@
     function alternarTema() {
         const temaAtual = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
         definirTema(temaAtual === "dark" ? "light" : "dark");
+    }
+
+    function enviarNewsletter(evento) {
+        if (!elementos.newsletter) return;
+
+        evento.preventDefault();
+
+        const status = elementos.newsletter.querySelector(".newsletter-status");
+
+        if (!elementos.newsletter.checkValidity()) {
+            clearTimeout(newsletterStatusTimer);
+            clearTimeout(newsletterLimpezaTimer);
+            if (status) {
+                status.classList.remove("newsletter-status-visivel");
+                status.textContent = "";
+            }
+            elementos.newsletter.reportValidity();
+            return;
+        }
+
+        elementos.newsletter.reset();
+        if (status) {
+            clearTimeout(newsletterStatusTimer);
+            clearTimeout(newsletterLimpezaTimer);
+            status.textContent = "Inscrição feita com sucesso!";
+            status.classList.add("newsletter-status-visivel");
+            newsletterStatusTimer = window.setTimeout(() => {
+                status.classList.remove("newsletter-status-visivel");
+                newsletterLimpezaTimer = window.setTimeout(() => {
+                    status.textContent = "";
+                }, 300);
+            }, 4000);
+        }
     }
 
     function definirMenu(aberto) {
@@ -1018,9 +1064,7 @@
         controle.addEventListener("click", fecharLogin);
     });
     elementos.loginForm?.addEventListener("submit", enviarLogin);
-    elementos.newsletter?.addEventListener("submit", (evento) => {
-        evento.preventDefault();
-    });
+    elementos.newsletter?.addEventListener("submit", enviarNewsletter);
     document.addEventListener("keydown", (evento) => {
         if (evento.key === "Escape") {
             fecharLogin();

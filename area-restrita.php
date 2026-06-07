@@ -54,7 +54,7 @@ if ($area === 'analises') {
     <header class="header">
         <div class="container header-container">
             <a href="index.html" class="logo-link">
-                <img src="assets/img/iron 300x80.png" alt="Logo IronInvest" class="logo" width="90" height="24" decoding="async">
+                <img src="assets/img/Iron_logo.svg" alt="Logo IronInvest" class="logo" width="90" height="34" decoding="async">
             </a>
 
             <nav class="nav" role="navigation" aria-label="Menu principal">
@@ -604,12 +604,12 @@ if ($area === 'analises') {
 
                 <div class="footer-coluna">
                     <h3>Produtos</h3>
-                    <a href="produtos.php#acoes">Ações</a>
-                    <a href="produtos.php#fundos-imobiliarios">Fundos Imobiliários</a>
-                    <a href="produtos.php#tesouro-direto">Tesouro Direto</a>
-                    <a href="produtos.php#cdb-lci-lca">CDB/LCI/LCA</a>
-                    <a href="produtos.php#coe">COE</a>
-                    <a href="produtos.php#fundos-multimercado">Fundos Multimercado</a>
+                    <a href="acesso.php?pagina=produtos&amp;ancora=acoes">Ações</a>
+                    <a href="acesso.php?pagina=produtos&amp;ancora=fundos-imobiliarios">Fundos Imobiliários</a>
+                    <a href="acesso.php?pagina=produtos&amp;ancora=tesouro-direto">Tesouro Direto</a>
+                    <a href="acesso.php?pagina=produtos&amp;ancora=cdb-lci-lca">CDB/LCI/LCA</a>
+                    <a href="acesso.php?pagina=produtos&amp;ancora=coe">COE</a>
+                    <a href="acesso.php?pagina=produtos&amp;ancora=fundos-multimercado">Fundos Multimercado</a>
                 </div>
 
                 <div class="footer-coluna">

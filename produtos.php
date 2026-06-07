@@ -5,6 +5,7 @@ require __DIR__ . '/app/auth.php';
 require __DIR__ . '/app/icon-sprite.php';
 
 ironinvest_iniciar_sessao();
+ironinvest_exigir_login('acesso.php?pagina=produtos');
 ironinvest_header_html();
 
 $produtos = [
@@ -186,7 +187,7 @@ function produtos_h(string $valor): string
     <header class="header">
         <div class="container header-container">
             <a href="index.html" class="logo-link">
-                <img src="assets/img/iron 300x80.png" alt="Logo IronInvest" class="logo" width="90" height="24" decoding="async">
+                <img src="assets/img/Iron_logo.svg" alt="Logo IronInvest" class="logo" width="90" height="34" decoding="async">
             </a>
 
             <nav class="nav" role="navigation" aria-label="Menu principal">

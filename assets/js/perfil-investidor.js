@@ -102,7 +102,7 @@
         <div class="perfil-backdrop" data-perfil-fechar></div>
         <section class="perfil-dialog" role="dialog" aria-modal="true" aria-labelledby="perfilTitulo">
             <div class="perfil-topo">
-                <img src="assets/img/iron 300x80.png" alt="IronInvest" width="90" height="24">
+                <img src="assets/img/Iron_logo.svg" alt="IronInvest" class="logo perfil-logo" width="90" height="34">
                 <button class="perfil-fechar" type="button" aria-label="Fechar questionário" data-perfil-fechar>×</button>
             </div>
             <div class="perfil-conteudo" data-perfil-conteudo></div>
