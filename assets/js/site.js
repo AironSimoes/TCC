@@ -58,7 +58,7 @@
         carrosselAnterior: document.querySelector(seletor.carrosselAnterior),
         carrosselProximo: document.querySelector(seletor.carrosselProximo),
         carrosselPontos: document.querySelector(seletor.carrosselPontos),
-        newsletter: document.querySelector(seletor.newsletter),
+        newsletters: document.querySelectorAll(seletor.newsletter),
         busca: document.querySelector(seletor.busca),
         loginBotao: document.querySelector(seletor.loginBotao),
         loginModal: document.querySelector(seletor.loginModal),
@@ -86,8 +86,7 @@
     let usuarioLogado = false;
     let csrfToken = "";
     let destinoLoginPendente = "";
-    let newsletterStatusTimer = 0;
-    let newsletterLimpezaTimer = 0;
+    const newsletterTimers = new WeakMap();
 
     const formatarMoeda = (valor) => moeda.format(valor);
     const somenteDigitos = (valor) => valor.replace(/\D/g, "");
@@ -441,37 +440,72 @@
         definirTema(temaAtual === "dark" ? "light" : "dark");
     }
 
-    function enviarNewsletter(evento) {
-        if (!elementos.newsletter) return;
+    function obterNewsletterStatus(formulario) {
+        let status = formulario.querySelector(".newsletter-status");
+
+        if (!status) {
+            status = document.createElement("p");
+            status.className = "newsletter-status";
+            status.setAttribute("role", "status");
+            status.setAttribute("aria-live", "polite");
+            formulario.append(status);
+        }
+
+        return status;
+    }
+
+    function cancelarTimersNewsletter(formulario) {
+        const timers = newsletterTimers.get(formulario);
+
+        if (!timers) return;
+
+        clearTimeout(timers.status);
+        clearTimeout(timers.limpeza);
+        newsletterTimers.delete(formulario);
+    }
+
+    function enviarNewsletterGlobal(evento) {
+        const formulario = evento.currentTarget;
+
+        if (!(formulario instanceof HTMLFormElement)) return;
 
         evento.preventDefault();
 
-        const status = elementos.newsletter.querySelector(".newsletter-status");
+        const status = obterNewsletterStatus(formulario);
 
-        if (!elementos.newsletter.checkValidity()) {
-            clearTimeout(newsletterStatusTimer);
-            clearTimeout(newsletterLimpezaTimer);
-            if (status) {
-                status.classList.remove("newsletter-status-visivel");
-                status.textContent = "";
-            }
-            elementos.newsletter.reportValidity();
+        if (!formulario.checkValidity()) {
+            cancelarTimersNewsletter(formulario);
+            status.classList.remove("newsletter-status-visivel");
+            status.textContent = "";
+            formulario.reportValidity();
             return;
         }
 
-        elementos.newsletter.reset();
-        if (status) {
-            clearTimeout(newsletterStatusTimer);
-            clearTimeout(newsletterLimpezaTimer);
-            status.textContent = "Inscrição feita com sucesso!";
-            status.classList.add("newsletter-status-visivel");
-            newsletterStatusTimer = window.setTimeout(() => {
-                status.classList.remove("newsletter-status-visivel");
-                newsletterLimpezaTimer = window.setTimeout(() => {
-                    status.textContent = "";
-                }, 300);
-            }, 4000);
-        }
+        formulario.reset();
+        cancelarTimersNewsletter(formulario);
+        status.textContent = "Inscrição feita com sucesso!";
+        status.classList.add("newsletter-status-visivel");
+
+        const statusTimer = window.setTimeout(() => {
+            status.classList.remove("newsletter-status-visivel");
+            const limpezaTimer = window.setTimeout(() => {
+                status.textContent = "";
+                newsletterTimers.delete(formulario);
+            }, 300);
+
+            newsletterTimers.set(formulario, { limpeza: limpezaTimer });
+        }, 4000);
+
+        newsletterTimers.set(formulario, { status: statusTimer });
+    }
+
+    function iniciarNewsletters() {
+        elementos.newsletters.forEach((formulario) => {
+            const email = formulario.querySelector('input[type="email"]');
+            email?.setAttribute("required", "");
+            obterNewsletterStatus(formulario);
+            formulario.addEventListener("submit", enviarNewsletterGlobal);
+        });
     }
 
     function definirMenu(aberto) {
@@ -1064,7 +1098,7 @@
         controle.addEventListener("click", fecharLogin);
     });
     elementos.loginForm?.addEventListener("submit", enviarLogin);
-    elementos.newsletter?.addEventListener("submit", enviarNewsletter);
+    iniciarNewsletters();
     document.addEventListener("keydown", (evento) => {
         if (evento.key === "Escape") {
             fecharLogin();

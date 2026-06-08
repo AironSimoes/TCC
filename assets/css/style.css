@@ -3756,7 +3756,7 @@ SIMULADOR
 
 .card-produto {
     flex: 0 0 calc((100% - (var(--carousel-gap) * (var(--cards-visiveis) - 1))) / var(--cards-visiveis));
-    min-height: 338px;
+    min-height: 354px;
     background: #ffffff;
     border: 1px solid #f0f0f0;
     border-radius: var(--radius-md);
@@ -3807,7 +3807,7 @@ SIMULADOR
 .risco {
     border-radius: 6px;
     padding: 4px 8px;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
 }
 
@@ -3828,22 +3828,23 @@ SIMULADOR
 
 .card-produto h3 {
     color: #000000;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 500;
+    line-height: 1.25;
     margin-bottom: 10px;
 }
 
 .card-produto strong {
     color: #176a67;
-    font-size: 20px;
+    font-size: 21px;
     line-height: 1.2;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .card-produto p {
     color: #1d3456;
-    font-size: 13px;
-    line-height: 1.45;
+    font-size: 14px;
+    line-height: 1.55;
     margin-bottom: 18px;
 }
 
@@ -3852,8 +3853,8 @@ SIMULADOR
     display: grid;
     gap: 11px;
     color: #1d3456;
-    font-size: 12px;
-    line-height: 1.2;
+    font-size: 13px;
+    line-height: 1.35;
     margin-bottom: 24px;
 }
 
@@ -3869,12 +3870,12 @@ SIMULADOR
 
 .card-produto button {
     width: 100%;
-    min-height: 29px;
+    min-height: 36px;
     margin-top: auto;
     background: var(--color-primary-dark);
     color: #000;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
 }
 
@@ -3996,7 +3997,7 @@ body.produto-modal-aberto {
     max-height: calc(100vh - 48px);
     overflow: hidden auto;
     position: relative;
-    width: min(360px, 100%);
+    width: min(560px, 100%);
 }
 
 .produto-dialog-topo {
@@ -4004,10 +4005,10 @@ body.produto-modal-aberto {
     background: #000000;
     color: #ffffff;
     display: grid;
-    gap: 11px;
-    grid-template-columns: 40px minmax(0, 1fr) 25px;
-    min-height: 66px;
-    padding: 12px 16px;
+    gap: 14px;
+    grid-template-columns: 46px minmax(0, 1fr) 32px;
+    min-height: 78px;
+    padding: 16px 20px;
 }
 
 .produto-dialog-icone {
@@ -4016,32 +4017,32 @@ body.produto-modal-aberto {
     border-radius: 10px;
     color: #ffb433;
     display: inline-flex;
-    height: 40px;
+    height: 46px;
     justify-content: center;
-    width: 40px;
+    width: 46px;
 }
 
 .produto-dialog-icone .site-icon {
-    height: 22px;
+    height: 25px;
     stroke-width: 2;
-    width: 22px;
+    width: 25px;
 }
 
 .produto-dialog-topo div > span {
     color: #ffb433;
     display: block;
-    font-size: 8px;
+    font-size: 11px;
     font-weight: 800;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.08em;
     margin-bottom: 3px;
     text-transform: uppercase;
 }
 
 .produto-dialog-topo h2 {
     color: #ffffff;
-    font-size: 15px;
+    font-size: 22px;
     font-weight: 800;
-    line-height: 1.15;
+    line-height: 1.2;
 }
 
 .produto-dialog-fechar {
@@ -4051,13 +4052,13 @@ body.produto-modal-aberto {
     border-radius: 50%;
     color: #d5d5d5;
     display: inline-flex;
-    font-size: 17px;
-    height: 25px;
+    font-size: 20px;
+    height: 32px;
     justify-content: center;
     line-height: 1;
     margin-top: 2px;
     padding: 0;
-    width: 25px;
+    width: 32px;
 }
 
 .produto-dialog-fechar:hover {
@@ -4066,15 +4067,15 @@ body.produto-modal-aberto {
 }
 
 .produto-dialog-corpo {
-    padding: 17px 17px 16px;
+    padding: 24px;
 }
 
 .produto-explicacao {
     align-items: start;
     display: grid;
-    gap: 10px;
-    grid-template-columns: 22px minmax(0, 1fr);
-    margin-bottom: 14px;
+    gap: 14px;
+    grid-template-columns: 32px minmax(0, 1fr);
+    margin-bottom: 20px;
 }
 
 .produto-explicacao-icone {
@@ -4083,62 +4084,62 @@ body.produto-modal-aberto {
     border-radius: 7px;
     color: #32746d;
     display: inline-flex;
-    height: 22px;
+    height: 32px;
     justify-content: center;
     margin-top: 1px;
     position: relative;
-    width: 22px;
+    width: 32px;
 }
 
 .produto-explicacao-icone .site-icon {
-    height: 12px;
+    height: 17px;
     stroke-width: 1.8;
-    width: 12px;
+    width: 17px;
 }
 
 .produto-icone-lampada::before {
     border: 1.4px solid currentColor;
     border-radius: 50%;
     content: "";
-    height: 7px;
-    left: 7px;
+    height: 11px;
+    left: 10px;
     position: absolute;
-    top: 4px;
-    width: 7px;
+    top: 6px;
+    width: 11px;
 }
 
 .produto-icone-lampada::after {
     border-bottom: 1.4px solid currentColor;
     border-top: 1.4px solid currentColor;
     content: "";
-    height: 3px;
-    left: 9px;
+    height: 4px;
+    left: 13px;
     position: absolute;
-    top: 12px;
-    width: 4px;
+    top: 18px;
+    width: 6px;
 }
 
 .produto-explicacao h3 {
     color: #111827;
-    font-size: 10px;
+    font-size: 15px;
     font-weight: 800;
-    line-height: 1.25;
-    margin-bottom: 5px;
+    line-height: 1.3;
+    margin-bottom: 7px;
 }
 
 .produto-explicacao p {
     color: #344054;
-    font-size: 9px;
-    line-height: 1.72;
+    font-size: 14px;
+    line-height: 1.68;
 }
 
 .produto-resumo {
     border-top: 1px solid #edf0f3;
     display: grid;
-    gap: 10px;
+    gap: 12px;
     grid-template-columns: 1fr 1fr;
-    margin-top: 2px;
-    padding-top: 9px;
+    margin-top: 4px;
+    padding-top: 14px;
 }
 
 .produto-resumo > div {
@@ -4148,21 +4149,21 @@ body.produto-modal-aberto {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 47px;
-    padding: 7px 8px;
+    min-height: 62px;
+    padding: 10px 12px;
 }
 
 .produto-resumo span {
     color: #98a2b3;
-    font-size: 7px;
+    font-size: 11px;
     line-height: 1;
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 }
 
 .produto-resumo strong {
     color: #176a67;
-    font-size: 10px;
-    line-height: 1.1;
+    font-size: 15px;
+    line-height: 1.2;
 }
 
 .produto-risco {
@@ -4189,10 +4190,10 @@ body.produto-modal-aberto {
     background: var(--color-primary-dark);
     border-radius: 6px;
     color: #000000;
-    font-size: 9px;
+    font-size: 14px;
     font-weight: 800;
-    margin-top: 14px;
-    min-height: 26px;
+    margin-top: 18px;
+    min-height: 40px;
     width: 100%;
 }
 
@@ -4207,24 +4208,44 @@ body.produto-modal-aberto {
 
     .produto-dialog {
         max-height: calc(100vh - 24px);
-        width: min(380px, 100%);
+        width: 100%;
     }
 
     .produto-dialog-topo {
+        grid-template-columns: 40px minmax(0, 1fr) 32px;
         padding-inline: 14px;
     }
 
+    .produto-dialog-icone {
+        height: 40px;
+        width: 40px;
+    }
+
+    .produto-dialog-topo h2 {
+        font-size: 20px;
+    }
+
     .produto-dialog-corpo {
-        padding: 16px 14px 14px;
+        padding: 18px 14px 16px;
+    }
+
+    .produto-explicacao {
+        gap: 12px;
+        grid-template-columns: 28px minmax(0, 1fr);
+    }
+
+    .produto-explicacao-icone {
+        height: 28px;
+        width: 28px;
     }
 
     .produto-explicacao h3 {
-        font-size: 11px;
+        font-size: 14px;
     }
 
     .produto-explicacao p {
-        font-size: 10px;
-        line-height: 1.62;
+        font-size: 13px;
+        line-height: 1.65;
     }
 }
 
