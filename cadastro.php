@@ -56,13 +56,20 @@ function cpf_valido(string $cpf): bool
     return true;
 }
 
-$nome = trim($_POST['nome_completo'] ?? '');
-$email = strtolower(trim($_POST['email'] ?? ''));
-$cpf = somente_digitos($_POST['cpf'] ?? '');
-$telefone = somente_digitos($_POST['telefone'] ?? '');
-$senha = $_POST['senha'] ?? '';
-$confirmarSenha = $_POST['confirmar_senha'] ?? '';
-$aceiteTermos = ($_POST['aceite_termos'] ?? '') === '1';
+function cadastro_post_texto(string $campo): string
+{
+    $valor = $_POST[$campo] ?? '';
+
+    return is_string($valor) ? $valor : '';
+}
+
+$nome = trim(cadastro_post_texto('nome_completo'));
+$email = strtolower(trim(cadastro_post_texto('email')));
+$cpf = somente_digitos(cadastro_post_texto('cpf'));
+$telefone = somente_digitos(cadastro_post_texto('telefone'));
+$senha = cadastro_post_texto('senha');
+$confirmarSenha = cadastro_post_texto('confirmar_senha');
+$aceiteTermos = cadastro_post_texto('aceite_termos') === '1';
 
 $erros = [];
 

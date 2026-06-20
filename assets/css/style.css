@@ -3544,6 +3544,7 @@ SIMULADOR
     background: var(--color-primary-dark);
     border-radius: var(--radius-sm);
     color: #000;
+    min-width: 0;
     padding: 32px 30px 30px;
     box-shadow: var(--shadow-card);
 }
@@ -3584,9 +3585,20 @@ SIMULADOR
 
 .valor-final {
     font-size: clamp(34px, 4vw, 42px);
+    font-variant-numeric: tabular-nums;
     line-height: 1.08;
     font-weight: 700;
     margin-bottom: 22px;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+.valor-final.valor-monetario-longo {
+    font-size: clamp(27px, 3vw, 34px);
+}
+
+.valor-final.valor-monetario-extra-longo {
+    font-size: clamp(20px, 2.6vw, 28px);
 }
 
 .detalhes {
@@ -3599,6 +3611,7 @@ SIMULADOR
 .detalhe-card {
     background: rgba(208, 138, 21, 0.35);
     border-radius: var(--radius-sm);
+    min-width: 0;
     padding: 17px;
     min-height: 72px;
 }
@@ -3616,7 +3629,18 @@ SIMULADOR
 .detalhe-card strong {
     display: block;
     font-size: 14px;
+    font-variant-numeric: tabular-nums;
     line-height: 1.2;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+.detalhe-card strong.valor-monetario-longo {
+    font-size: 12.5px;
+}
+
+.detalhe-card strong.valor-monetario-extra-longo {
+    font-size: 11px;
 }
 
 .rentabilidade-card {
@@ -3692,6 +3716,14 @@ SIMULADOR
 
     .valor-final {
         font-size: 32px;
+    }
+
+    .valor-final.valor-monetario-longo {
+        font-size: clamp(22px, 7vw, 28px);
+    }
+
+    .valor-final.valor-monetario-extra-longo {
+        font-size: clamp(18px, 5.8vw, 23px);
     }
 }
 

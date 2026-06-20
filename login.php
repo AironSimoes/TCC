@@ -17,9 +17,16 @@ function ironinvest_login_responder_json(array $dados, int $status): never
     exit;
 }
 
+function ironinvest_login_post_texto(string $campo): string
+{
+    $valor = $_POST[$campo] ?? '';
+
+    return is_string($valor) ? $valor : '';
+}
+
 function ironinvest_login_falhar(string $destinoErro, bool $responderJson): never
 {
-    $email = strtolower(trim($_POST['email'] ?? ''));
+    $email = strtolower(trim(ironinvest_login_post_texto('email')));
     $ip = ironinvest_ip_cliente();
 
     ironinvest_rate_limit_registrar('login_ip', $ip, 30, 900, 900);
@@ -74,9 +81,9 @@ function ironinvest_login_sucesso(string $destino, bool $responderJson): never
     ironinvest_redirecionar($destino);
 }
 
-$email = strtolower(trim($_POST['email'] ?? ''));
-$senha = $_POST['senha'] ?? '';
-$destinoInformado = trim($_POST['destino'] ?? '');
+$email = strtolower(trim(ironinvest_login_post_texto('email')));
+$senha = ironinvest_login_post_texto('senha');
+$destinoInformado = trim(ironinvest_login_post_texto('destino'));
 $destino = ironinvest_destino_login($destinoInformado);
 $destinoErro = ironinvest_destino_permitido($destinoInformado)
     ? '&destino=' . rawurlencode($destinoInformado)
@@ -96,7 +103,7 @@ if (
     ironinvest_login_limite_excedido($destinoErro, $responderJson);
 }
 
-if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($senha) < 8) {
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 160 || strlen($senha) < 8 || strlen($senha) > 72) {
     ironinvest_login_falhar($destinoErro, $responderJson);
 }
 

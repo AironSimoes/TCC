@@ -87,6 +87,11 @@
     let csrfToken = "";
     let destinoLoginPendente = "";
     const newsletterTimers = new WeakMap();
+    const emailMaximo = 160;
+    const senhaMaximo = 72;
+    const buscaSuporteMaximo = 80;
+    const newsletterEmailMaximo = emailMaximo;
+    const valorInvestimentoMaximo = 1000000000000;
 
     const formatarMoeda = (valor) => moeda.format(valor);
     const somenteDigitos = (valor) => valor.replace(/\D/g, "");
@@ -315,6 +320,8 @@
     async function enviarLogin(evento) {
         if (!elementos.loginForm) return;
 
+        limitarCamposLogin();
+
         if (!elementos.loginForm.checkValidity()) {
             evento.preventDefault();
             elementos.loginForm.reportValidity();
@@ -464,6 +471,26 @@
         newsletterTimers.delete(formulario);
     }
 
+    function limitarTextoCampo(campo, maximo) {
+        if (!(campo instanceof HTMLInputElement)) return;
+
+        if (campo.value.length > maximo) {
+            campo.value = campo.value.slice(0, maximo);
+        }
+    }
+
+    function configurarLimiteTexto(campo, maximo) {
+        if (!(campo instanceof HTMLInputElement)) return;
+
+        campo.setAttribute("maxlength", String(maximo));
+        campo.addEventListener("input", () => limitarTextoCampo(campo, maximo));
+        limitarTextoCampo(campo, maximo);
+    }
+
+    function limitarNewsletterEmail(campo) {
+        limitarTextoCampo(campo, newsletterEmailMaximo);
+    }
+
     function enviarNewsletterGlobal(evento) {
         const formulario = evento.currentTarget;
 
@@ -472,6 +499,8 @@
         evento.preventDefault();
 
         const status = obterNewsletterStatus(formulario);
+        const email = formulario.querySelector('input[type="email"]');
+        limitarNewsletterEmail(email);
 
         if (!formulario.checkValidity()) {
             cancelarTimersNewsletter(formulario);
@@ -503,9 +532,38 @@
         elementos.newsletters.forEach((formulario) => {
             const email = formulario.querySelector('input[type="email"]');
             email?.setAttribute("required", "");
+            configurarLimiteTexto(email, newsletterEmailMaximo);
             obterNewsletterStatus(formulario);
             formulario.addEventListener("submit", enviarNewsletterGlobal);
         });
+    }
+
+    function limitarCamposLogin() {
+        const email = elementos.loginForm?.querySelector('input[name="email"]');
+        const senha = elementos.loginForm?.querySelector('input[name="senha"]');
+
+        limitarTextoCampo(email, emailMaximo);
+        limitarTextoCampo(senha, senhaMaximo);
+    }
+
+    function iniciarCamposLogin() {
+        const email = elementos.loginForm?.querySelector('input[name="email"]');
+        const senha = elementos.loginForm?.querySelector('input[name="senha"]');
+
+        configurarLimiteTexto(email, emailMaximo);
+        configurarLimiteTexto(senha, senhaMaximo);
+        senha?.setAttribute("minlength", "8");
+    }
+
+    function iniciarCamposCadastro() {
+        if (!elementos.cadastroForm) return;
+
+        configurarLimiteTexto(elementos.cadastroForm.querySelector('input[name="nome_completo"]'), 120);
+        configurarLimiteTexto(elementos.cadastroForm.querySelector('input[name="email"]'), emailMaximo);
+        configurarLimiteTexto(elementos.cadastroForm.querySelector('input[name="cpf"]'), 14);
+        configurarLimiteTexto(elementos.cadastroForm.querySelector('input[name="telefone"]'), 15);
+        configurarLimiteTexto(elementos.cadastroForm.querySelector('input[name="senha"]'), senhaMaximo);
+        configurarLimiteTexto(elementos.cadastroForm.querySelector('input[name="confirmar_senha"]'), senhaMaximo);
     }
 
     function definirMenu(aberto) {
@@ -559,6 +617,45 @@
         obterCsrfToken
     };
 
+    function limitarValorInvestimento(campo) {
+        if (!(campo instanceof HTMLInputElement)) return 0;
+
+        const valor = Number(campo.value);
+
+        if (valor === Infinity) {
+            campo.value = String(valorInvestimentoMaximo);
+            return valorInvestimentoMaximo;
+        }
+
+        if (!Number.isFinite(valor)) {
+            if (campo.value !== "") {
+                campo.value = "0";
+            }
+
+            return 0;
+        }
+
+        if (valor < 0) {
+            campo.value = "0";
+            return 0;
+        }
+
+        if (valor > valorInvestimentoMaximo) {
+            campo.value = String(valorInvestimentoMaximo);
+            return valorInvestimentoMaximo;
+        }
+
+        return valor;
+    }
+
+    function atualizarTextoResultado(elemento, texto) {
+        if (!(elemento instanceof HTMLElement)) return;
+
+        elemento.textContent = texto;
+        elemento.classList.toggle("valor-monetario-longo", texto.length > 18);
+        elemento.classList.toggle("valor-monetario-extra-longo", texto.length >= 23);
+    }
+
     function calcularSimulacao() {
         if (
             !elementos.valor ||
@@ -572,15 +669,15 @@
             return;
         }
 
-        const valor = Math.max(Number(elementos.valor.value) || 0, 0);
+        const valor = limitarValorInvestimento(elementos.valor);
         const meses = Math.max(Number(elementos.prazo.value) || 1, 1);
         const montante = valor * Math.pow(1 + taxaMensal, meses);
         const lucro = montante - valor;
         const percentual = valor > 0 ? (lucro / valor) * 100 : 0;
 
-        elementos.valorFinal.textContent = formatarMoeda(montante);
-        elementos.valorInvestido.textContent = formatarMoeda(valor);
-        elementos.rendimento.textContent = `+ ${formatarMoeda(lucro)}`;
+        atualizarTextoResultado(elementos.valorFinal, formatarMoeda(montante));
+        atualizarTextoResultado(elementos.valorInvestido, formatarMoeda(valor));
+        atualizarTextoResultado(elementos.rendimento, `+ ${formatarMoeda(lucro)}`);
         elementos.rentabilidade.textContent = `+${percentual.toFixed(2).replace(".", ",")}%`;
         elementos.prazoValor.textContent = textoMeses(meses);
     }
@@ -647,6 +744,13 @@
 
     async function validarCadastro(evento) {
         if (!elementos.cadastroForm) return;
+
+        limitarTextoCampo(elementos.cadastroForm.querySelector('input[name="nome_completo"]'), 120);
+        limitarTextoCampo(elementos.cadastroForm.querySelector('input[name="email"]'), emailMaximo);
+        limitarTextoCampo(elementos.cadastroForm.querySelector('input[name="cpf"]'), 14);
+        limitarTextoCampo(elementos.cadastroForm.querySelector('input[name="telefone"]'), 15);
+        limitarTextoCampo(elementos.cadastroForm.querySelector('input[name="senha"]'), senhaMaximo);
+        limitarTextoCampo(elementos.cadastroForm.querySelector('input[name="confirmar_senha"]'), senhaMaximo);
 
         const senha = elementos.cadastroSenha?.value || "";
         const confirmarSenha = elementos.cadastroConfirmarSenha?.value || "";
@@ -820,6 +924,8 @@
         const categorias = Array.from(document.querySelectorAll(".suporte-categoria"));
         if (!campo || categorias.length === 0) return;
 
+        campo.setAttribute("maxlength", String(buscaSuporteMaximo));
+
         const mensagemVazia = document.createElement("p");
         mensagemVazia.className = "suporte-busca-vazio";
         mensagemVazia.hidden = true;
@@ -883,7 +989,10 @@
             mensagemVazia.hidden = resultados > 0;
         }
 
-        campo.addEventListener("input", filtrarPerguntas);
+        campo.addEventListener("input", () => {
+            limitarTextoCampo(campo, buscaSuporteMaximo);
+            filtrarPerguntas();
+        });
         elementos.busca.addEventListener("submit", (evento) => {
             evento.preventDefault();
             filtrarPerguntas();
@@ -1069,8 +1178,11 @@
     });
     elementos.investimento?.addEventListener("click", selecionarInvestimento);
     elementos.atalhoValor?.addEventListener("click", aplicarValorRapido);
+    elementos.valor?.setAttribute("max", String(valorInvestimentoMaximo));
     elementos.valor?.addEventListener("input", calcularSimulacao);
     elementos.prazo?.addEventListener("input", calcularSimulacao);
+    iniciarCamposLogin();
+    iniciarCamposCadastro();
     elementos.cadastroCpf?.addEventListener("input", () => {
         elementos.cadastroCpf.value = formatarCpf(elementos.cadastroCpf.value);
         elementos.cadastroCpf.setCustomValidity("");

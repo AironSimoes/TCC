@@ -78,7 +78,7 @@ ironinvest_header_html();
                         <span class="login-label-icon login-label-email" aria-hidden="true"></span>
                         E-mail
                     </label>
-                    <input type="email" id="loginEmail" name="email" inputmode="email" autocomplete="email" placeholder="seu@email.com" required>
+                    <input type="email" id="loginEmail" name="email" inputmode="email" autocomplete="email" placeholder="seu@email.com" maxlength="160" required>
                 </div>
 
                 <div class="login-campo">
@@ -86,7 +86,7 @@ ironinvest_header_html();
                         <span class="login-label-icon login-label-lock" aria-hidden="true"></span>
                         Senha
                     </label>
-                    <input type="password" id="loginSenha" name="senha" autocomplete="current-password" minlength="8" placeholder="Mínimo 8 caracteres" required>
+                    <input type="password" id="loginSenha" name="senha" autocomplete="current-password" minlength="8" maxlength="72" placeholder="Mínimo 8 caracteres" required>
                 </div>
 
                 <button class="login-submit" type="submit">
@@ -257,7 +257,7 @@ ironinvest_header_html();
 
                 <form class="newsletter-form">
                     <label class="sr-only" for="newsletterEmail">Seu melhor e-mail</label>
-                    <input type="email" id="newsletterEmail" inputmode="email" autocomplete="email" placeholder="Seu melhor e-mail">
+                    <input type="email" id="newsletterEmail" inputmode="email" autocomplete="email" placeholder="Seu melhor e-mail" maxlength="160" required>
                     <button type="submit">Inscrever-se</button>
                 </form>
             </section>
